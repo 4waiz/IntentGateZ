@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# IntentGate Z secret guard: refuses commits that stage private keys, tokens or huge files.
+set -u
+fail=0
+files=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$files" ] && exit 0
+
+pattern='-----BEGIN [A-Z ]*PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,}|AKIA[0-9A-Z]{16}|xox[baprs]-[A-Za-z0-9-]{10,}|sk-[A-Za-z0-9]{32,}|sk-ant-[A-Za-z0-9_-]{20,}'
+
+while IFS= read -r f; do
+  [ -f "$f" ] || continue
+  case "$f" in
+    .githooks/pre-commit) continue ;;
+  esac
+  size=$(wc -c < "$f" | tr -d ' ')
+  if [ "$size" -gt 95000000 ]; then
+    echo "secret-guard: $f is larger than 95MB, refusing" >&2
+    fail=1
+    continue
+  fi
+  if git show ":$f" 2>/dev/null | grep -aEq -- "$pattern"; then
+    echo "secret-guard: possible secret in $f, refusing commit" >&2
+    fail=1
+  fi
+done <<< "$files"
+
+exit $fail

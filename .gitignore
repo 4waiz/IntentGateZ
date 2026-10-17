@@ -1,0 +1,52 @@
+# ---- secrets: never commit ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.ppk
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+secrets/
+deploy/secrets/
+**/operator_token*
+**/jupyter_token*
+
+# ---- python ----
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.ipynb_checkpoints/
+
+# ---- node / frontend ----
+node_modules/
+frontend/dist/
+frontend/.vite/
+*.tsbuildinfo
+playwright-report/
+test-results/
+blob-report/
+
+# ---- runtime state ----
+backend/data/*.db
+backend/data/*.db-*
+*.sqlite3
+*.log
+logs/
+
+# ---- media scratch (final deliverables live in submission/) ----
+assets/recordings/raw/
+*.tmp
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
