@@ -1,0 +1,14 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.mp4 binary
+*.webm binary
+*.glb binary
+*.onnx binary
+*.pkl binary
+*.joblib binary
+*.pptx binary
+*.pdf binary
+*.wav binary
+*.mp3 binary
+*.woff2 binary
