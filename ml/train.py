@@ -394,7 +394,8 @@ def main() -> None:
             "train_seconds": timing.get(name),
             "latency": lat,
         }
-        print(f"{name:24s} val hybrid F1={f1_h:.4f}  ml-only F1={f1_m:.4f}  p50={lat['single_p50_ms']}ms  feasible={feasible}")
+        p50s = f"cpu {lat['cpu']['single_p50_ms']}ms / nnpa {lat['nnpa']['single_p50_ms']}ms" if "cpu" in lat else f"{lat['single_p50_ms']}ms"
+        print(f"{name:24s} val hybrid F1={f1_h:.4f}  ml-only F1={f1_m:.4f}  p50={p50s}  feasible={feasible}")
 
     def p50(n):
         lat = val_report[n]["latency"]
