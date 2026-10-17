@@ -22,12 +22,12 @@ from typing import Any
 STARTED_AT = time.time()
 
 MACHINE_TYPES = {
-    "9175": "IBM z17 / LinuxONE Emperor 5",
-    "9176": "IBM z17 / LinuxONE Rockhopper 5",
-    "3931": "IBM z16 / LinuxONE Emperor 4",
-    "3932": "IBM z16 A02 / LinuxONE Rockhopper 4",
-    "8561": "IBM z15 / LinuxONE III",
-    "8562": "IBM z15 T02 / LinuxONE III LT2",
+    "9175": "IBM z17",
+    "9176": "IBM z17",
+    "3931": "IBM z16",
+    "3932": "IBM z16",
+    "8561": "IBM z15",
+    "8562": "IBM z15",
 }
 
 
@@ -87,6 +87,9 @@ def static_facts() -> dict[str, Any]:
     if m:
         vendor = m.group(1).strip()
     nnpa = "nnpa" in features or "nnpa" in lscpu.lower()
+    sysinfo = _read("/proc/sysinfo")
+    model_line = re.search(r"^Model:\s+(.+)$", sysinfo, re.MULTILINE)
+    vm_line = re.search(r"^VM00 Control Program:\s+(.+)$", sysinfo, re.MULTILINE)
     return {
         "architecture": u.machine,
         "is_ibm_z": u.machine == "s390x",
@@ -97,6 +100,8 @@ def static_facts() -> dict[str, Any]:
         "cpu_vendor": vendor,
         "machine_type": machine_type,
         "machine_model": MACHINE_TYPES.get(machine_type or "", None),
+        "machine_model_sysinfo": " ".join(model_line.group(1).split()) if model_line else None,
+        "control_program": " ".join(vm_line.group(1).split()) if vm_line else None,
         "cpu_count": os.cpu_count(),
         "hypervisor": lscpu_fields.get("Hypervisor vendor") or lscpu_fields.get("Hypervisor"),
         "virtualization": lscpu_fields.get("Virtualization type"),
