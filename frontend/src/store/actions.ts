@@ -344,6 +344,22 @@ export function decisionWorld(d: Decision): [number, number] | null {
   }
 }
 
+/** Point the camera at whatever a decision is about (blocked plans frame their ghost route). */
+export function frameDecision(d: Decision): void {
+  const p = d.action.parameters;
+  if (d.verdict === "BLOCK" && d.ghost_route && d.ghost_route.length > 1) {
+    commandCamera("blocked");
+    return;
+  }
+  const amb = str(p.ambulance_id);
+  if (amb) {
+    commandCamera("ambulance", amb);
+    return;
+  }
+  const hosp = str(p.delivery_hospital_id) ?? str(p.hospital_id);
+  if (hosp) commandCamera("hospital", hosp);
+}
+
 function spawnEffect(d: Decision): void {
   const pos = decisionWorld(d);
   if (!pos) return;
@@ -622,6 +638,7 @@ export async function submitAction(body: AgentActionIn): Promise<Decision | null
     ingestDecision(d);
     setState({ followLatest: true, selectedDecisionId: null });
     await Promise.all([refreshState(), refreshDecisions()]);
+    frameDecision(d);
     void refreshAudit();
     return d;
   } catch (err) {
