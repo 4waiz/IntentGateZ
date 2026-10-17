@@ -1,0 +1,4 @@
+$ df -h /
+# captured 2026-10-17T09:10:05Z via SSH on the IntentGate Z LinuxONE VM
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/dasda1      50G  8.6G   39G  19% /

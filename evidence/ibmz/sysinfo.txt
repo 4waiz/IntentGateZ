@@ -1,0 +1,17 @@
+$ cat /proc/sysinfo | grep -E 'Manufacturer|Type|Model|LPAR Name|VM00 Control Program|VM00 Name' || true
+# captured 2026-10-17T09:09:59Z via SSH on the IntentGate Z LinuxONE VM
+Manufacturer:         IBM             
+Type:                 9175
+Model:                702              ME1             
+Model Capacity:       702              00000582
+Model Perm. Capacity: 702              00000582
+Model Temp. Capacity: 702              00000582
+Model Var. Capacity:  702              00000582
+Type 1 Percentage:    0
+Type 2 Percentage:    0
+Type 3 Percentage:    0
+Type 4 Percentage:    0
+Type 5 Percentage:    0
+LPAR Name:            SSI42   
+VM00 Name:            L5015210
+VM00 Control Program: z/VM    7.3.0   

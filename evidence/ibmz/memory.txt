@@ -1,0 +1,5 @@
+$ free -h
+# captured 2026-10-17T09:10:02Z via SSH on the IntentGate Z LinuxONE VM
+               total        used        free      shared  buff/cache   available
+Mem:           3.9Gi       1.4Gi        56Mi       6.2Mi       2.6Gi       2.5Gi
+Swap:          4.0Gi       512Ki       4.0Gi

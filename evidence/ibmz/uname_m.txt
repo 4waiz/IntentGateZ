@@ -1,0 +1,3 @@
+$ uname -m
+# captured 2026-10-17T09:09:34Z via SSH on the IntentGate Z LinuxONE VM
+s390x

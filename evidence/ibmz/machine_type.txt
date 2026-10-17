@@ -1,0 +1,3 @@
+$ grep -m1 -o 'machine = [0-9A-F]*' /proc/cpuinfo
+# captured 2026-10-17T09:09:53Z via SSH on the IntentGate Z LinuxONE VM
+machine = 9175
