@@ -139,8 +139,6 @@ export function buildLayout(idx: CityIndex, kit: Kit, quality: Quality): CityLay
   const nearFacility = (x: number, z: number, pad: number) => facilities.some((f) => Math.hypot(f.x - x, f.z - z) < f.r + pad);
 
   const officeComplex = kitAssets(kit, "office-complex")[0];
-  const mall = kitAssets(kit, "mall")[0];
-  let mallPlaced = false;
   const density = quality === "low" ? 0.55 : 1;
 
   for (const b of blockCentres(idx)) {
@@ -150,12 +148,7 @@ export function buildLayout(idx: CityIndex, kit: Kit, quality: Quality): CityLay
     if (outer && quality === "low") continue;
     // landmark blocks
     let innerTaken = false;
-    if (!outer && b.district === "university" && !mallPlaced && mall && !nearFacility(b.x, b.z, 4)) {
-      const sc = KIT * 1.2;
-      buildings.push({ file: mall.file, node: mall.node, x: b.x, y: GROUND_Y, z: b.z, rot: 0, sx: sc, sy: sc, sz: sc, style: 1, tint: [1, 0.97, 0.92] });
-      innerTaken = true;
-      mallPlaced = true;
-    } else if (!outer && b.district === "financial" && officeComplex && rnd() < 0.45 && !nearFacility(b.x, b.z, 4)) {
+    if (!outer && b.district === "financial" && officeComplex && rnd() < 0.45 && !nearFacility(b.x, b.z, 4)) {
       const sc = KIT * 1.15 * (b.bias > 2 ? 1.12 : 1);
       buildings.push({ file: officeComplex.file, node: officeComplex.node, x: b.x, y: GROUND_Y, z: b.z, rot: rnd() < 0.5 ? 0 : Math.PI / 2, sx: sc, sy: sc * (1 + rnd() * 0.25), sz: sc, style: 1, tint: [1, 1, 1] });
       innerTaken = true;

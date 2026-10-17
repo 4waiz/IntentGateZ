@@ -40,7 +40,6 @@ export const KIT_FILES = [
   "villa.glb",
   "commercial-podium.glb",
   "office-complex.glb",
-  "mall.glb",
   "hospital.glb",
   "emergency-ops.glb",
   "palm.glb",
