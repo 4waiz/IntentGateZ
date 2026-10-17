@@ -17,7 +17,7 @@ from typing import Any
 from .city import City, build_city, edge_id
 from .schemas import AgentAction, OperationType
 
-SIM_SPEEDUP = 15.0  # one real second = 15 simulated seconds, so an 8-minute run takes ~32 s on screen
+SIM_SPEEDUP = 8.0  # one real second = 8 simulated seconds; a 4-minute run takes ~30 s on screen
 
 SUPPLY_CATALOG = {
     "sku_trauma_kit": {"name": "Trauma response kit", "unit_price_usd": 50.0},

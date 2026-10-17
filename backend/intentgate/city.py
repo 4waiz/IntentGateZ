@@ -14,7 +14,7 @@ from functools import lru_cache
 
 ROWS = 8
 COLS = 10
-SPACING_M = 120.0
+SPACING_M = 400.0
 CITY_SEED = 20261017
 
 # Road classes: (speed km/h, lane width hint for the renderer)
