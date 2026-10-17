@@ -19,7 +19,7 @@ ring.rotateX(-Math.PI / 2);
 const IncidentMarker = memo(function IncidentMarker({ inc, pos }: { inc: Incident; pos: [number, number] }) {
   const color = SEV_COLOR(inc.severity);
   const open = inc.status === "open";
-  const beam = useMemo(() => createBeamMaterial(color, open ? 0.85 : 0.45), [color, open]);
+  const beam = useMemo(() => createBeamMaterial(color, open ? 0.85 : 0.3), [color, open]);
   const pulse = useRef<THREE.Mesh>(null);
   const pulseMat = useRef<THREE.MeshBasicMaterial>(null);
   const core = useRef<THREE.Mesh>(null);

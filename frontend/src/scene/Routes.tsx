@@ -12,6 +12,8 @@ import { createHexShieldMaterial, createRibbonMaterial } from "./materials";
 
 const destRing = new THREE.RingGeometry(3.2, 3.8, 48);
 destRing.rotateX(-Math.PI / 2);
+const hexRing = new THREE.RingGeometry(6.2, 7.0, 6, 1, Math.PI / 6);
+hexRing.rotateX(-Math.PI / 2);
 
 /** Route the backend assigned to a unit. Authorised (agent action executed) routes glow teal. */
 function ActiveRoute({ amb, idx }: { amb: Ambulance; idx: CityIndex }) {
@@ -63,7 +65,11 @@ function GhostRoute({ d, idx, emphasized }: { d: Decision; idx: CityIndex; empha
     m.uniforms.uFlicker.value = 1;
     return m;
   }, []);
-  const shieldMat = useMemo(() => createHexShieldMaterial("#ff5d70"), []);
+  const shieldMat = useMemo(() => {
+    const m = createHexShieldMaterial("#ff5d70");
+    m.uniforms.uScale.value.set(16, 4.2);
+    return m;
+  }, []);
   useEffect(
     () => () => {
       geo?.dispose();
@@ -81,23 +87,24 @@ function GhostRoute({ d, idx, emphasized }: { d: Decision; idx: CityIndex; empha
   });
   if (!geo || pts.length < 2) return null;
   const total = polylineLength(pts);
-  const at = pointAlong(pts, Math.min(7, total * 0.25));
+  const at = pointAlong(pts, Math.min(2, total * 0.1));
   const heading = Math.atan2(at.dirX, at.dirZ);
+  const start = pts[0];
   const end = pts[pts.length - 1];
   const codes = d.findings.filter((f) => f.outcome === "block").map((f) => f.code);
   return (
     <group>
       <mesh geometry={geo} material={mat} renderOrder={6} />
-      <group position={[at.x, 0, at.z]} rotation-y={heading}>
-        <mesh position={[0, 3.4, 0]} material={shieldMat} renderOrder={7}>
-          <planeGeometry args={[11, 6.8]} />
+      {/* IntentGate checkpoint: a hexagonal force field holding the unit where the blocked plan would start */}
+      <group position={[start[0], 0, start[1]]} rotation-y={heading}>
+        <mesh position={[0, 3.6, 0]} material={shieldMat} renderOrder={7}>
+          <cylinderGeometry args={[6.5, 6.5, 7.2, 6, 1, true]} />
         </mesh>
-        <mesh position={[0, 0.25, 0]} renderOrder={7}>
-          <boxGeometry args={[11.4, 0.18, 0.5]} />
-          <meshBasicMaterial color="#ff5d70" transparent opacity={emphasized ? 0.95 : 0.5} />
+        <mesh geometry={hexRing} position={[0, 0.26, 0]} renderOrder={7}>
+          <meshBasicMaterial color="#ff5d70" transparent opacity={emphasized ? 0.9 : 0.45} depthWrite={false} blending={THREE.AdditiveBlending} />
         </mesh>
         {emphasized && (
-          <Html position={[0, 13, 0]} center zIndexRange={[34, 10]} style={{ pointerEvents: "none" }}>
+          <Html position={[0, 12.5, 0]} center zIndexRange={[34, 10]} style={{ pointerEvents: "none" }}>
             <div className="ig-scene-label rounded-[4px] border border-[#ff5d70]/70 bg-[#1a0910]/90 px-2 py-1 shadow-[0_0_24px_rgba(255,93,112,0.35)]">
               <div className="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.14em] text-[#ff5d70]">
                 <svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true">

@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Bot, FlaskConical, GitCommitVertical, Radio, Sparkles, UserRound } from "lucide-react";
 import type { Decision } from "../../api/types";
@@ -78,6 +78,11 @@ export function Inspector() {
   const challenge = useStore((s) => (d ? s.sim?.challenges.find((c) => c.decision_id === d.decision_id) ?? null : null)) ?? d?.challenge ?? null;
   const names = useNames();
   const explaining = useStore((s) => (d ? s.explain[d.decision_id]?.status === "loading" : false));
+  const scroller = useRef<HTMLDivElement>(null);
+  const shownId = d?.decision_id;
+  useEffect(() => {
+    scroller.current?.scrollTo({ top: 0 });
+  }, [shownId]);
 
   return (
     <div className="flex h-full flex-col">
@@ -118,7 +123,7 @@ export function Inspector() {
         </div>
       ) : (
         <>
-          <div className="min-h-0 flex-1 overflow-y-auto">
+          <div ref={scroller} className="min-h-0 flex-1 overflow-y-auto">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div key={d.decision_id} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.18 }}>
                 <Hero d={d} />

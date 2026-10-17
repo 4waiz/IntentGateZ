@@ -12,9 +12,6 @@ import { Routes } from "./Routes";
 
 const PostFX = lazy(() => import("./PostFX"));
 
-const DBG = new URLSearchParams(window.location.search).get("hide")?.split(",") ?? [];
-const on = (k: string) => !DBG.includes(k);
-
 function World() {
   const idx = useStore((s) => s.cityIndex);
   const quality = useStore((s) => s.quality);
@@ -27,16 +24,16 @@ function World() {
       <hemisphereLight args={["#2d5378", "#050b12", 0.9]} />
       <directionalLight position={[-160, 260, 120]} intensity={2.2} color="#e3edf7" />
       <directionalLight position={[180, 120, -160]} intensity={0.5} color="#4589ff" />
-      {on("ground") && <Ground idx={idx} quality={quality} />}
-      {on("roads") && <Roads idx={idx} quality={quality} />}
-      {on("buildings") && <Buildings idx={idx} quality={quality} />}
-      {on("facilities") && <Facilities idx={idx} />}
-      {on("closures") && <Closures idx={idx} />}
-      {on("incidents") && <Incidents idx={idx} />}
-      {on("routes") && <Routes idx={idx} />}
-      {on("ambulances") && <Ambulances idx={idx} />}
-      {on("markers") && <ChallengeMarkers idx={idx} />}
-      {on("effects") && <Effects />}
+      <Ground idx={idx} quality={quality} />
+      <Roads idx={idx} quality={quality} />
+      <Buildings idx={idx} quality={quality} />
+      <Facilities idx={idx} />
+      <Closures idx={idx} />
+      <Incidents idx={idx} />
+      <Routes idx={idx} />
+      <Ambulances idx={idx} />
+      <ChallengeMarkers idx={idx} />
+      <Effects />
       <CameraRig idx={idx} />
     </>
   );

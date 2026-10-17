@@ -190,14 +190,17 @@ export function RiskBlock({ d }: { d: Decision }) {
   const r = d.risk;
   const mlFinding = d.findings.find((f) => f.code === "IG-ML-000");
   const fusion = (
-    <div className="mt-2.5 flex items-center gap-1.5 text-[10.5px] text-muted">
-      <span>Hard policy</span>
-      <VerdictChip verdict={d.hard_verdict} size="xs" />
-      <span>⊕ ML</span>
-      {r ? <VerdictChip verdict={r.ml_verdict} size="xs" /> : <span className="text-dim">n/a</span>}
-      <ArrowRight size={11} />
-      <VerdictChip verdict={d.verdict} size="xs" />
-      <span className="ml-auto text-dim">ML can escalate, never relax</span>
+    <div className="mt-2.5 border-t border-line pt-2">
+      <div className="flex flex-wrap items-center gap-1.5 text-[10.5px] whitespace-nowrap text-muted">
+        <span>Hard policy</span>
+        <VerdictChip verdict={d.hard_verdict} size="xs" />
+        <span>+ ML</span>
+        {r ? <VerdictChip verdict={r.ml_verdict} size="xs" /> : <span className="text-dim">n/a</span>}
+        <ArrowRight size={11} />
+        <span>final</span>
+        <VerdictChip verdict={d.verdict} size="xs" />
+      </div>
+      <div className="mt-1 text-[10px] text-dim">Fusion takes the stricter verdict: the model can escalate, never relax.</div>
     </div>
   );
   if (!r) {

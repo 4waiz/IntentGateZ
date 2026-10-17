@@ -245,7 +245,7 @@ export function createRibbonMaterial(color: string, dashed = false): THREE.Shade
       void main() {
         float a = abs(vAcross);
         float core = 1.0 - smoothstep(0.14, 0.36, a);
-        float glow = pow(max(0.0, 1.0 - a), 2.2) * 0.5;
+        float glow = pow(clamp(1.0 - a, 0.0, 1.0), 2.2) * 0.5;
         float alpha = core * 0.9 + glow;
         vec3 col = uColor * (0.55 + 0.9 * core);
         if (uDashed > 0.5) {
@@ -260,7 +260,7 @@ export function createRibbonMaterial(color: string, dashed = false): THREE.Shade
         }
         float done = 1.0 - step(uTraveled, vDist);
         alpha *= mix(1.0, 0.16, done);
-        gl_FragColor = vec4(col * alpha * uOpacity, 1.0);
+        gl_FragColor = vec4(col * max(alpha, 0.0) * max(uOpacity, 0.0), 1.0);
         ${FRAG_TAIL}
       }`,
   });
@@ -310,11 +310,11 @@ export function createHexShieldMaterial(color = "#ff5d70"): THREE.ShaderMaterial
         float rnd = h21(hc.zw);
         float cellPulse = 0.5 + 0.5 * sin(uTime * 3.0 + rnd * 6.28);
         float fill = 0.06 + 0.12 * cellPulse * step(0.6, rnd);
-        float fade = smoothstep(1.0, 0.25, vUv.y) * smoothstep(0.0, 0.06, vUv.y) * smoothstep(0.0, 0.08, vUv.x) * smoothstep(1.0, 0.92, vUv.x);
+        float fade = (1.0 - smoothstep(0.25, 1.0, vUv.y)) * smoothstep(0.0, 0.06, vUv.y) * smoothstep(0.0, 0.08, vUv.x) * (1.0 - smoothstep(0.92, 1.0, vUv.x));
         float base = (1.0 - smoothstep(0.0, 0.06, vUv.y)) * 1.5;
-        float scan = smoothstep(0.03, 0.0, abs(fract(vUv.y - uTime * 0.35) - 0.5) - 0.47);
-        float alpha = (edge * 0.75 + fill + scan * 0.25) * fade + base * 0.35;
-        vec3 col = uColor * alpha * uOpacity;
+        float scan = 1.0 - smoothstep(0.0, 0.03, abs(fract(vUv.y - uTime * 0.35) - 0.5) - 0.47);
+        float alpha = max(0.0, (edge * 0.75 + fill + scan * 0.25) * fade + base * 0.35);
+        vec3 col = uColor * alpha * max(uOpacity, 0.0);
         gl_FragColor = vec4(col, 1.0);
         #include <colorspace_fragment>
       }`,
@@ -342,10 +342,12 @@ export function createBeamMaterial(color: string, strength = 0.8): THREE.ShaderM
       uniform float uStrength;
       varying vec2 vUv;
       void main() {
-        float a = pow(1.0 - vUv.y, 1.6);
+        // clamp: interpolation can push uv.y a hair above 1, and pow() of a negative base is NaN,
+        // which the bloom mip-chain would smear across the whole HDR frame.
+        float a = pow(clamp(1.0 - vUv.y, 0.0, 1.0), 1.6);
         float band = 0.85 + 0.15 * sin(vUv.y * 40.0 - uTime * 4.0);
         float side = 1.0 - abs(vUv.x - 0.5) * 2.0;
-        side = pow(max(side, 0.0), 0.6);
+        side = pow(clamp(side, 0.0, 1.0), 0.6);
         float alpha = a * band * side * uStrength;
         gl_FragColor = vec4(uColor * alpha, 1.0);
         #include <colorspace_fragment>

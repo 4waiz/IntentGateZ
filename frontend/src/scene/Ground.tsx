@@ -35,7 +35,7 @@ export function Ground({ idx, quality }: { idx: CityIndex; quality: Quality }) {
     tintGeo.rotateX(-Math.PI / 2);
     const tintMesh = new THREE.InstancedMesh(
       tintGeo,
-      new THREE.MeshBasicMaterial({ color: "#ffffff", transparent: true, opacity: 0.075, depthWrite: false }),
+      new THREE.MeshBasicMaterial({ color: "#ffffff", transparent: true, opacity: quality === "high" ? 0.05 : 0.075, depthWrite: false }),
       idx.blocks.length,
     );
     const m = new THREE.Matrix4();
@@ -53,7 +53,7 @@ export function Ground({ idx, quality }: { idx: CityIndex; quality: Quality }) {
     tintMesh.instanceMatrix.needsUpdate = true;
     if (tintMesh.instanceColor) tintMesh.instanceColor.needsUpdate = true;
     return { plinths: plinthMesh, tints: tintMesh };
-  }, [idx]);
+  }, [idx, quality]);
 
   useEffect(
     () => () => {
