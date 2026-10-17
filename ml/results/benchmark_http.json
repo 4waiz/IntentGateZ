@@ -1,0 +1,109 @@
+{
+  "mode": "HTTP POST /api/actions/evaluate (client on the same VM; includes setup per worker excluded from latency)",
+  "server": {
+    "status": "ok",
+    "version": "1.0.0",
+    "uptime_s": 18.9,
+    "model": {
+      "available": true,
+      "runtime": "PyTorch MLP on IBM Telum NNPA (torch_nnpa)",
+      "version": "igz-risk-torch-mlp-202610170926-5efd2225",
+      "accelerator": {
+        "device": "nnpa",
+        "requested_device": "nnpa",
+        "parameter_device": "nnpa",
+        "torch_nnpa": {
+          "torch_nnpa_installed": true,
+          "available": true,
+          "device_count": 1,
+          "smoke_test": true,
+          "torch_nnpa_version": "1.5.0+gite861108"
+        },
+        "max_abs_prob_diff_vs_cpu": 0.002543,
+        "verified": true
+      }
+    },
+    "platform": {
+      "architecture": "s390x",
+      "is_ibm_z": true,
+      "machine_model": "IBM z17 / LinuxONE Emperor 5",
+      "os": "Ubuntu 24.04.5 LTS"
+    },
+    "server_time": 1792229628.9969487
+  },
+  "levels": [
+    {
+      "concurrency": 1,
+      "requests": 1200,
+      "errors": 0,
+      "latency_ms": {
+        "n": 1200,
+        "p50": 2.234,
+        "p95": 3.12,
+        "p99": 8.211,
+        "mean": 2.659,
+        "max": 73.883
+      },
+      "throughput_rps": 372.7,
+      "host_cpu_pct_mean": 48.2,
+      "server_rss_mb": 387.81640625
+    },
+    {
+      "concurrency": 4,
+      "requests": 1200,
+      "errors": 0,
+      "latency_ms": {
+        "n": 1200,
+        "p50": 8.259,
+        "p95": 13.788,
+        "p99": 51.666,
+        "mean": 10.038,
+        "max": 107.712
+      },
+      "throughput_rps": 384.9,
+      "host_cpu_pct_mean": 53.6,
+      "server_rss_mb": 430.1640625
+    },
+    {
+      "concurrency": 8,
+      "requests": 1200,
+      "errors": 0,
+      "latency_ms": {
+        "n": 1200,
+        "p50": 15.689,
+        "p95": 48.119,
+        "p99": 58.063,
+        "mean": 18.669,
+        "max": 144.761
+      },
+      "throughput_rps": 395.6,
+      "host_cpu_pct_mean": 54.1,
+      "server_rss_mb": 473.734375
+    },
+    {
+      "concurrency": 16,
+      "requests": 1200,
+      "errors": 0,
+      "latency_ms": {
+        "n": 1200,
+        "p50": 31.465,
+        "p95": 79.476,
+        "p99": 217.203,
+        "mean": 39.615,
+        "max": 229.764
+      },
+      "throughput_rps": 352.4,
+      "host_cpu_pct_mean": 56.7,
+      "server_rss_mb": 518.65234375
+    }
+  ],
+  "host": {
+    "architecture": "s390x",
+    "machine_type": "9175",
+    "nnpa_facility": true,
+    "cpu_count": 2,
+    "python": "3.12.15",
+    "system": "Linux 6.8.0-147-generic"
+  },
+  "started_at": "2026-10-17T09:33:35Z"
+}
