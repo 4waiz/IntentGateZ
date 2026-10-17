@@ -1,0 +1,39 @@
+# Public HTTPS front door on the LinuxONE VM.
+# IG_DOMAIN is <public-ip-with-dashes>.sslip.io (wildcard DNS that resolves to the IP), so
+# Caddy can obtain a Let's Encrypt certificate without registering a domain.
+{
+	email {$IG_ACME_EMAIL}
+}
+
+{$IG_DOMAIN} {
+	encode zstd gzip
+
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "no-referrer"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		-Server
+	}
+
+	# Only the IntentGate API is proxied. Jupyter (38888) and SSH are never exposed here.
+	handle /api/* {
+		reverse_proxy 127.0.0.1:8000 {
+			flush_interval -1
+			header_up X-Forwarded-For {remote_host}
+		}
+	}
+
+	handle {
+		root * /srv/intentgate
+		try_files {path} /index.html
+		file_server
+	}
+
+	log {
+		output file /var/log/caddy/intentgate.log {
+			roll_size 10mb
+			roll_keep 3
+		}
+	}
+}

@@ -1,0 +1,104 @@
+{
+  "mode": "in-process gateway (single thread, includes SQLite audit writes and simulation execution)",
+  "model_runtime": "scikit-learn LogisticRegression (CPU)",
+  "model_version": "igz-risk-logistic-regression-202610171247-7b788cc6",
+  "accelerator": {
+    "device": "cpu",
+    "nnpa_device_listed": false,
+    "verified": false
+  },
+  "decisions_per_rep": 600,
+  "repetitions": 2,
+  "runs": [
+    {
+      "decision_ms": {
+        "n": 600,
+        "p50": 0.445,
+        "p95": 0.593,
+        "p99": 1.017,
+        "mean": 0.479,
+        "max": 1.478
+      },
+      "inference_ms": {
+        "n": 600,
+        "p50": 0.193,
+        "p95": 0.219,
+        "p99": 0.26,
+        "mean": 0.196,
+        "max": 0.357
+      },
+      "policy_ms": {
+        "n": 600,
+        "p50": 0.038,
+        "p95": 0.134,
+        "p99": 0.156,
+        "mean": 0.072,
+        "max": 0.495
+      },
+      "end_to_end_ms": {
+        "n": 600,
+        "p50": 0.521,
+        "p95": 0.668,
+        "p99": 1.09,
+        "mean": 0.551,
+        "max": 1.569
+      },
+      "throughput_decisions_per_s": 1520.6,
+      "verdicts": {
+        "BLOCK": 600
+      }
+    },
+    {
+      "decision_ms": {
+        "n": 600,
+        "p50": 0.444,
+        "p95": 0.595,
+        "p99": 0.641,
+        "mean": 0.546,
+        "max": 44.882
+      },
+      "inference_ms": {
+        "n": 600,
+        "p50": 0.194,
+        "p95": 0.224,
+        "p99": 0.246,
+        "mean": 0.198,
+        "max": 0.599
+      },
+      "policy_ms": {
+        "n": 600,
+        "p50": 0.038,
+        "p95": 0.136,
+        "p99": 0.169,
+        "mean": 0.145,
+        "max": 44.285
+      },
+      "end_to_end_ms": {
+        "n": 600,
+        "p50": 0.516,
+        "p95": 0.674,
+        "p99": 0.729,
+        "mean": 0.618,
+        "max": 45.022
+      },
+      "throughput_decisions_per_s": 1466.2,
+      "verdicts": {
+        "BLOCK": 600
+      }
+    }
+  ],
+  "summary": {
+    "decision_p50_ms_median_of_reps": 0.445,
+    "decision_p95_ms_median_of_reps": 0.594,
+    "throughput_median_of_reps": 1493.4
+  },
+  "host": {
+    "architecture": "AMD64",
+    "machine_type": null,
+    "nnpa_facility": false,
+    "cpu_count": 24,
+    "python": "3.12.10",
+    "system": "Windows 11"
+  },
+  "started_at": "2026-10-17T08:50:06Z"
+}
