@@ -89,8 +89,11 @@ console.log("1440x900 walkthrough");
   await page.waitForTimeout(2000);
   await page.getByRole("button", { name: /Replay approval/ }).click();
   await page.waitForTimeout(2000);
-  await page.getByText("Server responses", { exact: true }).scrollIntoViewIfNeeded();
-  await page.waitForTimeout(400);
+  await page.evaluate(() => {
+    const label = [...document.querySelectorAll("div")].find((d) => d.textContent === "Server responses");
+    label?.parentElement?.scrollIntoView({ block: "end" });
+  });
+  await page.waitForTimeout(500);
   await shot(page, "04-challenge-security-tests");
   const log = await page.evaluate(() => {
     const el = [...document.querySelectorAll("div")].find((d) => d.firstElementChild?.textContent === "Server responses");
@@ -122,12 +125,16 @@ console.log("1440x900 walkthrough");
   await page.getByRole("button", { name: "IBM Z Proof" }).click();
   await page.waitForTimeout(3000);
   await shot(page, "09-ibm-z-proof");
-  await page.mouse.move(720, 450);
-  await page.mouse.wheel(0, 1650);
+  const scrollToHeading = (text) =>
+    page.evaluate((t) => {
+      const h = [...document.querySelectorAll("h2")].find((x) => x.textContent === t);
+      h?.closest("section")?.scrollIntoView({ block: "start" });
+    }, text);
+  await scrollToHeading("Model execution facts");
   await page.waitForTimeout(1000);
   await shot(page, "10-proof-model-accelerator");
-  await page.mouse.wheel(0, 1100);
-  await page.waitForTimeout(1800);
+  await scrollToHeading("Benchmark results");
+  await page.waitForTimeout(2000);
   await shot(page, "11-proof-benchmarks");
 
   await page.getByRole("button", { name: "Audit", exact: true }).click();

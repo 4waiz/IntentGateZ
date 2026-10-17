@@ -59,7 +59,7 @@ export function startLive(): void {
     window.setInterval(() => void refreshState(), 1000),
     window.setInterval(() => void refreshDecisions(), 4000),
     window.setInterval(() => void refreshAudit(), 7000),
-    window.setInterval(() => void refreshHealth(), 10000),
+    window.setInterval(() => void refreshHealth(), 5000),
   );
 }
 

@@ -128,7 +128,19 @@ function noteBackendError(err: unknown): void {
 
 // ------------------------------------------------------------------ bootstrap & refresh
 
-export async function bootstrap(): Promise<void> {
+let booting: Promise<void> | null = null;
+
+/** Single-flight: React StrictMode (dev) and retry clicks must not create parallel sandboxes. */
+export function bootstrap(): Promise<void> {
+  if (!booting) {
+    booting = doBootstrap().finally(() => {
+      booting = null;
+    });
+  }
+  return booting;
+}
+
+async function doBootstrap(): Promise<void> {
   setState({ boot: "loading", bootError: null, bootStep: "Contacting gateway" });
   try {
     const health = await api.health();
@@ -181,7 +193,9 @@ export async function refreshHealth(): Promise<void> {
     const health = await api.health();
     setState({ health, backendOk: true, backendError: null });
   } catch (err) {
-    noteBackendError(err);
+    // /health never legitimately fails, so any error (network, proxy 502/500, timeout) means
+    // the gateway is not serving.
+    setState({ backendOk: false, backendError: errorText(err) });
   }
 }
 
