@@ -122,7 +122,7 @@ export function ChartGallery({ names }: { names: string[] }) {
     <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
       {names.map((n) => (
         <figure key={n} className="ig-card overflow-hidden">
-          <img src={api.benchmarkChartUrl(n)} alt={n} className="block w-full bg-white" loading="lazy" onError={(e) => ((e.currentTarget.parentElement as HTMLElement).style.display = "none")} />
+          <img src={api.benchmarkChartUrl(n)} alt={n} className="block w-full bg-[#0b1621]" loading="lazy" onError={(e) => ((e.currentTarget.parentElement as HTMLElement).style.display = "none")} />
           <figcaption className="ig-mono border-t border-line px-2.5 py-1.5 text-[10.5px] text-muted">{n}.png</figcaption>
         </figure>
       ))}

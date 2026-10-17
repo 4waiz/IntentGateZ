@@ -49,14 +49,14 @@ export function VerdictChip({ verdict, size = "sm", className }: { verdict: Verd
       : size === "md"
         ? "h-6 px-2 text-[11.5px] tracking-[0.14em] gap-1.5"
         : size === "xs"
-          ? "h-[17px] px-1.5 text-[9.5px] tracking-[0.12em] gap-1"
+          ? "h-[17px] px-1 text-[9.5px] tracking-[0.07em] gap-1"
           : "h-5 px-1.5 text-[10.5px] tracking-[0.12em] gap-1.5";
   return (
     <span
       className={cx("inline-flex shrink-0 items-center rounded-[3px] border font-semibold uppercase leading-none", s, className)}
       style={{ color: VERDICT_COLOR[verdict], background: VERDICT_BG[verdict], borderColor: VERDICT_BORDER[verdict] }}
     >
-      <VerdictGlyph verdict={verdict} size={size === "lg" ? 15 : size === "md" ? 11 : 9} />
+      <VerdictGlyph verdict={verdict} size={size === "lg" ? 15 : size === "md" ? 11 : size === "xs" ? 8 : 9} />
       {verdict}
     </span>
   );

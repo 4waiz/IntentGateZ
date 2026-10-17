@@ -30,7 +30,7 @@ function Card({ title, subtitle, icon, children, className, right }: { title: st
 function Fact({ k, v, src, tone }: { k: string; v: ReactNode; src?: string; tone?: "ok" | "warn" | "bad" | "muted" }) {
   const color = tone === "ok" ? "text-allow" : tone === "warn" ? "text-challenge" : tone === "bad" ? "text-block" : tone === "muted" ? "text-dim" : "text-fg";
   return (
-    <div className="grid grid-cols-[170px_1fr_auto] items-baseline gap-3 border-b border-white/[0.04] py-[6px] last:border-0">
+    <div className="grid grid-cols-[minmax(110px,170px)_minmax(0,1fr)_auto] items-baseline gap-3 border-b border-white/[0.04] py-[6px] last:border-0">
       <span className="text-[11.5px] text-muted">{k}</span>
       <span className={cx("ig-mono min-w-0 text-[12px] break-words", color)}>{v}</span>
       {src ? <span className="ig-mono shrink-0 rounded-[2px] bg-white/[0.04] px-1.5 text-[9.5px] leading-[16px] text-dim">{src}</span> : <span />}
@@ -271,7 +271,7 @@ export default function ProofView() {
                   </tbody>
                 </table>
                 {!metrics.latency.decision_ms && <div className="mt-1 text-[11px] text-dim">No decisions served yet; run a scenario to populate latency percentiles.</div>}
-                <div className="mt-3 grid grid-cols-1 gap-x-6 md:grid-cols-2">
+                <div className="mt-3 grid grid-cols-1">
                   <Fact k="Process RSS" v={metrics.memory.process_rss_mb !== null ? `${metrics.memory.process_rss_mb.toFixed(1)} MB` : none} src="/proc/self/status" />
                   <Fact
                     k="Host memory"

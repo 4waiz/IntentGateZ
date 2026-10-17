@@ -197,9 +197,12 @@ export function FeedList() {
             </div>
             <p className={cx("mt-1 text-[11px] leading-snug", flagged ? "text-fg" : "text-fg-2")}>{f.text}</p>
             {flagged && (
-              <div className="mt-1.5 flex items-center gap-1.5 text-[10.5px] font-medium text-block">
-                <ShieldAlert size={12} /> Cited by a BLOCK: agent-directed instructions in untrusted data
-                <span className="ig-mono font-normal text-block/80">{blockedBy}</span>
+              <div className="mt-1.5 flex items-start gap-1.5 text-[10.5px] text-block">
+                <ShieldAlert size={12} className="mt-px shrink-0" />
+                <span>
+                  <span className="font-medium">Cited by a BLOCK</span>: agent-directed instructions found in untrusted data.
+                  <span className="ig-mono ml-1 text-block/75">{blockedBy}</span>
+                </span>
               </div>
             )}
           </div>

@@ -21,18 +21,18 @@ function GatewayPill() {
     ? `Gateway ${health.version} · uptime ${duration(health.uptime_s)} · risk model: ${health.model.runtime} (${health.model.version})`
     : "Gateway status unknown";
   return (
-    <div className="flex h-7 items-stretch overflow-hidden rounded-[4px] border border-line text-[11px]" title={title}>
+    <div className="flex h-7 shrink-0 items-stretch overflow-hidden rounded-[4px] border border-line text-[11px] whitespace-nowrap" title={title}>
       <div className="flex items-center gap-1.5 px-2.5">
         <Dot color={ok ? "#00D5B5" : "#FF5D70"} pulse={!ok} />
-        <span className="font-medium text-fg">{ok ? "Gateway online" : "Gateway offline"}</span>
-        {health && <span className="ig-mono text-[10.5px] text-muted">v{health.version}</span>}
+        <span className="font-medium text-fg">{ok ? "Gateway" : "Gateway offline"}</span>
+        {health && <span className="ig-mono hidden text-[10.5px] text-muted min-[1600px]:inline">v{health.version}</span>}
         <span className={cx("ml-1 text-[10px] tracking-[0.1em]", live ? "text-allow" : "text-dim")} title={live ? "Live event stream connected" : "Event stream reconnecting; polling every second"}>
           {live ? "LIVE" : "POLL"}
         </span>
       </div>
       <div className="flex items-center gap-1.5 border-l border-line px-2.5">
         <span className="ig-label-sm">ML</span>
-        <span className={modelOk ? "text-allow" : "text-challenge"}>{modelOk ? health?.model.version : "model not loaded"}</span>
+        <span className={cx("max-w-[150px] truncate", modelOk ? "text-allow" : "text-challenge")}>{modelOk ? health?.model.runtime : "model not loaded"}</span>
       </div>
     </div>
   );
@@ -50,7 +50,7 @@ function IbmZPill() {
       type="button"
       onClick={() => setState({ view: "proof" })}
       title={`${label}${platform?.machine_type ? ` · machine type ${platform.machine_type}` : ""} · reported live by /api/platform`}
-      className="flex h-7 max-w-[300px] items-center gap-2 rounded-[4px] border px-2.5 text-[11px] font-medium"
+      className="flex h-7 max-w-[300px] min-w-0 shrink items-center gap-2 rounded-[4px] border px-2.5 text-[11px] font-medium whitespace-nowrap"
       style={{
         color: isZ ? "#00D5B5" : "#FFBC5C",
         borderColor: isZ ? "rgba(0,213,181,0.4)" : "rgba(255,188,92,0.4)",
@@ -73,7 +73,7 @@ function QualityToggle() {
     { id: "high", label: "High" },
   ];
   return (
-    <div className="flex h-7 items-center rounded-[4px] border border-line p-0.5" title="3D quality preset">
+    <div className="flex h-7 shrink-0 items-center rounded-[4px] border border-line p-0.5" title="3D quality preset">
       {opts.map((o) => (
         <button
           key={o.id}
@@ -103,14 +103,14 @@ export function TopBar() {
         <Wordmark compact />
       </div>
 
-      <nav className="flex h-full items-stretch" aria-label="Views">
+      <nav className="flex h-full shrink-0 items-stretch" aria-label="Views">
         {TABS.map((t) => (
           <button
             key={t.id}
             type="button"
             onClick={() => setState({ view: t.id })}
             className={cx(
-              "relative flex items-center px-3 text-[12.5px] font-medium tracking-[0.02em] transition-colors",
+              "relative flex items-center px-3 text-[12.5px] font-medium tracking-[0.02em] whitespace-nowrap transition-colors",
               view === t.id ? "text-fg" : "text-muted hover:text-fg-2",
             )}
           >
@@ -120,7 +120,7 @@ export function TopBar() {
         ))}
       </nav>
 
-      <div className="ml-auto flex items-center gap-2">
+      <div className="ml-auto flex min-w-0 items-center gap-2">
         <GatewayPill />
         <IbmZPill />
         <QualityToggle />
