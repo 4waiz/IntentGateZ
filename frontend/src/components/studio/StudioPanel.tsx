@@ -153,11 +153,18 @@ function Composer({ onNeedIntent }: { onNeedIntent: () => void }) {
   const names = useNames();
   const intents = useMemo(() => [...(sim?.intents ?? [])].sort((a, b) => b.created_at - a.created_at), [sim?.intents]);
 
-  const [agentId, setAgentId] = useState(agents[0]?.agent_id ?? "");
-  const agent = agents.find((a) => a.agent_id === agentId);
-  const [op, setOp] = useState<OperationType>(agent?.capabilities[0] ?? "reroute_ambulance");
   const [intentKey, setIntentKey] = useState("");
   const intent = intents.find((i) => `${i.intent_id}:${i.version}` === intentKey) ?? intents[0];
+  // Default to an agent/operation the selected intent actually covers (users can still pick a mismatch).
+  const initial = (() => {
+    const wanted = intent?.authorized_operations[0];
+    const a = (wanted && agents.find((x) => x.capabilities.includes(wanted))) || agents[0];
+    return { agentId: a?.agent_id ?? "", op: (wanted && a?.capabilities.includes(wanted) ? wanted : a?.capabilities[0]) ?? "reroute_ambulance" };
+  })();
+  const [agentId, setAgentId] = useState(initial.agentId);
+  const agent = agents.find((a) => a.agent_id === agentId);
+  const [op, setOp] = useState<OperationType>(initial.op);
+  const caps = useMemo(() => ALL_OPERATIONS.filter((o) => agent?.capabilities.includes(o)), [agent]);
   const [values, setValues] = useState<Record<string, string>>(() => defaultsFor(op, intent, sim));
   const [useFeed, setUseFeed] = useState(false);
   const [feedId, setFeedId] = useState("");
@@ -167,11 +174,28 @@ function Composer({ onNeedIntent }: { onNeedIntent: () => void }) {
   const feed = feeds.find((f) => f.id === feedId) ?? feeds.find((f) => f.malicious) ?? feeds[feeds.length - 1];
 
   useEffect(() => {
-    if (agent && !agent.capabilities.includes(op)) setOp(agent.capabilities[0]);
-  }, [agent, op]);
+    if (agent && !agent.capabilities.includes(op)) setOp(caps[0] ?? agent.capabilities[0]);
+  }, [agent, op, caps]);
 
   // Re-seed parameters when the operation or the governing intent changes.
   const intentId = intent ? `${intent.intent_id}:${intent.version}` : "";
+  useEffect(() => {
+    const it = intents.find((i) => `${i.intent_id}:${i.version}` === intentId);
+    const wanted = it?.authorized_operations.find((o) => agents.some((a) => a.capabilities.includes(o)));
+    if (!wanted) return;
+    const a = agents.find((x) => x.agent_id === agentId);
+    if (a?.capabilities.includes(wanted)) {
+      if (!it?.authorized_operations.includes(op)) setOp(wanted);
+      return;
+    }
+    const other = agents.find((x) => x.capabilities.includes(wanted));
+    if (other) {
+      setAgentId(other.agent_id);
+      setOp(wanted);
+    }
+    // only when the cited intent changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [intentId]);
   useEffect(() => {
     setValues(defaultsFor(op, intents.find((i) => `${i.intent_id}:${i.version}` === intentId), useStore.getState().sim));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -258,7 +282,7 @@ function Composer({ onNeedIntent }: { onNeedIntent: () => void }) {
       </Field>
       <Field label="Tool call">
         <select className="ig-input" value={op} onChange={(e) => setOp(e.target.value as OperationType)}>
-          {(agent?.capabilities ?? []).map((c) => (
+          {caps.map((c) => (
             <option key={c} value={c}>
               {OPERATION_LABEL[c]} · {TOOL_FOR_OPERATION[c]}
             </option>
