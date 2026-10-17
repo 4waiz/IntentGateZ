@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="IBM Plex Sans, Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#07111b"/>
+      <stop offset="1" stop-color="#050B12"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8496A8"/>
+    </marker>
+    <marker id="arrowT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#00D5B5"/>
+    </marker>
+    <marker id="arrowR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#FF5D70"/>
+    </marker>
+    <style>
+      .t { fill: #E8F0F7; }
+      .m { fill: #8496A8; }
+      .box { fill: #0C1A28; stroke: rgba(132,150,168,0.35); stroke-width: 1.5; }
+      .lbl { font-size: 13px; letter-spacing: 2px; fill: #8496A8; }
+      .h { font-size: 20px; font-weight: 600; fill: #E8F0F7; }
+      .s { font-size: 15px; fill: #8496A8; }
+      .mono { font-family: IBM Plex Mono, Consolas, monospace; }
+    </style>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <text x="60" y="70" class="t" font-size="34" font-weight="700" letter-spacing="3">INTENTGATE Z</text>
+  <text x="60" y="102" class="m" font-size="18">Architecture: every sensitive agent action passes the gateway on IBM LinuxONE before it can execute</text>
+
+  <!-- Operator -->
+  <rect x="60" y="170" width="250" height="150" rx="14" class="box"/>
+  <text x="80" y="200" class="lbl">HUMAN OPERATOR</text>
+  <text x="80" y="232" class="h">Dispatcher / officer</text>
+  <text x="80" y="260" class="s">Registers intent: operations,</text>
+  <text x="80" y="282" class="s">targets, budget, ETA, expiry</text>
+  <text x="80" y="304" class="s mono" font-size="13">signed · versioned · immutable</text>
+
+  <!-- Agent -->
+  <rect x="60" y="400" width="250" height="150" rx="14" class="box"/>
+  <text x="80" y="430" class="lbl">AUTONOMOUS AGENT</text>
+  <text x="80" y="462" class="h">Routing · Procurement</text>
+  <text x="80" y="486" class="h">· Coordination</text>
+  <text x="80" y="514" class="s">Proposes tool calls with</text>
+  <text x="80" y="536" class="s">parameter-level provenance</text>
+
+  <!-- Untrusted -->
+  <rect x="60" y="630" width="250" height="130" rx="14" fill="#1a0f15" stroke="#FF5D70" stroke-opacity="0.6" stroke-width="1.5"/>
+  <text x="80" y="660" class="lbl" fill="#FF5D70">UNTRUSTED INPUT</text>
+  <text x="80" y="692" class="h">External feeds, docs,</text>
+  <text x="80" y="716" class="h">vendor messages</text>
+  <text x="80" y="742" class="s">May contain injected instructions</text>
+
+  <line x1="185" y1="630" x2="185" y2="556" stroke="#FF5D70" stroke-width="2" stroke-dasharray="6 6" marker-end="url(#arrowR)"/>
+  <line x1="185" y1="320" x2="185" y2="394" stroke="#8496A8" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="196" y="364" class="s" font-size="13">instruction</text>
+
+  <!-- LinuxONE frame -->
+  <rect x="400" y="140" width="820" height="680" rx="20" fill="#08131f" stroke="#0F62FE" stroke-width="2"/>
+  <text x="430" y="178" font-size="14" letter-spacing="3" fill="#0F62FE" font-weight="600">IBM LINUXONE · s390x · CONTAINERISED (DOCKER)</text>
+  <text x="430" y="206" class="h" font-size="24">IntentGate Z gateway (FastAPI)</text>
+
+  <line x1="310" y1="475" x2="430" y2="475" stroke="#8496A8" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="318" y="462" class="s" font-size="13">proposal</text>
+  <line x1="310" y1="245" x2="430" y2="300" stroke="#8496A8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- pipeline -->
+  <g>
+    <rect x="440" y="250" width="240" height="96" rx="12" class="box"/>
+    <text x="458" y="278" class="lbl">1 · IDENTITY</text>
+    <text x="458" y="306" class="h" font-size="18">Agent + tool capability</text>
+    <text x="458" y="330" class="s" font-size="14">Intent signature + version</text>
+
+    <rect x="700" y="250" width="240" height="96" rx="12" class="box"/>
+    <text x="718" y="278" class="lbl">2 · HARD POLICY</text>
+    <text x="718" y="306" class="h" font-size="18">Scope · budget · capacity</text>
+    <text x="718" y="330" class="s" font-size="14">route · trust boundary · PHI</text>
+
+    <rect x="960" y="250" width="240" height="96" rx="12" class="box"/>
+    <text x="978" y="278" class="lbl">3 · FEATURES</text>
+    <text x="978" y="306" class="h" font-size="18">43 contextual signals</text>
+    <text x="978" y="330" class="s" font-size="14">intent · provenance · history</text>
+
+    <rect x="440" y="380" width="370" height="120" rx="12" class="box"/>
+    <text x="458" y="408" class="lbl">4 · AI ON LINUXONE</text>
+    <text x="458" y="436" class="h" font-size="18">Feed + rationale text models</text>
+    <text x="458" y="460" class="h" font-size="18">Risk model (scikit-learn / XGBoost)</text>
+    <text x="458" y="484" class="s" font-size="14">Keras MLP on TensorFlow + IBM zDNN (Telum NNPA)</text>
+
+    <rect x="830" y="380" width="370" height="120" rx="12" class="box"/>
+    <text x="848" y="408" class="lbl">5 · FUSION</text>
+    <text x="848" y="436" class="h" font-size="18">Hard rules first; ML can only</text>
+    <text x="848" y="460" class="h" font-size="18">escalate, never relax</text>
+    <text x="848" y="484" class="s" font-size="14">thresholds tuned on validation (≤2% false blocks)</text>
+
+    <line x1="680" y1="298" x2="696" y2="298" stroke="#8496A8" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="940" y1="298" x2="956" y2="298" stroke="#8496A8" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="1080" y1="346" x2="700" y2="376" stroke="#8496A8" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="810" y1="440" x2="826" y2="440" stroke="#8496A8" stroke-width="2" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- verdicts -->
+  <rect x="440" y="540" width="240" height="110" rx="12" fill="#06201c" stroke="#00D5B5" stroke-width="1.5"/>
+  <text x="458" y="572" font-size="22" font-weight="700" fill="#00D5B5" letter-spacing="2">ALLOW</text>
+  <text x="458" y="600" class="s" font-size="14">Executes in the simulator</text>
+  <text x="458" y="622" class="s" font-size="14">immediately</text>
+
+  <rect x="700" y="540" width="240" height="110" rx="12" fill="#231a0b" stroke="#FFBC5C" stroke-width="1.5"/>
+  <text x="718" y="572" font-size="22" font-weight="700" fill="#FFBC5C" letter-spacing="2">CHALLENGE</text>
+  <text x="718" y="600" class="s" font-size="14">Supervisor grant: single-use,</text>
+  <text x="718" y="622" class="s" font-size="14">120 s, fingerprint-bound, re-checked</text>
+
+  <rect x="960" y="540" width="240" height="110" rx="12" fill="#240e14" stroke="#FF5D70" stroke-width="1.5"/>
+  <text x="978" y="572" font-size="22" font-weight="700" fill="#FF5D70" letter-spacing="2">BLOCK</text>
+  <text x="978" y="600" class="s" font-size="14">Prevented; state unchanged;</text>
+  <text x="978" y="622" class="s" font-size="14">ghost route shown only</text>
+
+  <line x1="1015" y1="500" x2="560" y2="536" stroke="#00D5B5" stroke-opacity="0.6" stroke-width="1.5" marker-end="url(#arrowT)"/>
+  <line x1="1015" y1="500" x2="820" y2="536" stroke="#FFBC5C" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="1015" y1="500" x2="1080" y2="536" stroke="#FF5D70" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrowR)"/>
+
+  <!-- audit -->
+  <rect x="440" y="680" width="760" height="110" rx="12" class="box"/>
+  <text x="458" y="710" class="lbl">TAMPER-EVIDENT AUDIT · SQLITE</text>
+  <text x="458" y="740" class="h" font-size="18">proposed → decision → executed / prevented / challenge</text>
+  <text x="458" y="766" class="s mono" font-size="13">hash = SHA-256(prev_hash | canonical_json(record))   ·   GET /api/audit/verify</text>
+
+  <!-- tools + UI -->
+  <rect x="1290" y="250" width="250" height="170" rx="14" class="box"/>
+  <text x="1310" y="280" class="lbl">SIMULATED TOOLS</text>
+  <text x="1310" y="312" class="h">Ambulance dispatch</text>
+  <text x="1310" y="338" class="h">ICU bed registry</text>
+  <text x="1310" y="364" class="h">Procurement ERP</text>
+  <text x="1310" y="390" class="s">Synthetic city "Nova Meridian"</text>
+  <line x1="1200" y1="595" x2="1286" y2="380" stroke="#00D5B5" stroke-width="2" marker-end="url(#arrowT)"/>
+
+  <rect x="1290" y="480" width="250" height="170" rx="14" class="box"/>
+  <text x="1310" y="510" class="lbl">3D COMMAND CENTER</text>
+  <text x="1310" y="542" class="h">React · Three.js</text>
+  <text x="1310" y="568" class="s">Renders only server-issued</text>
+  <text x="1310" y="590" class="s">decisions and state (SSE)</text>
+  <text x="1310" y="620" class="s mono" font-size="13">HTTPS via Caddy on LinuxONE</text>
+  <line x1="1220" y1="560" x2="1286" y2="560" stroke="#8496A8" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+
+  <text x="60" y="860" class="m" font-size="14">All operational data is synthetic. Fictional city. Educational proof of concept for IBM Z Datathon 2026 (theme: AI Secured: Innovation Without Exposure).</text>
+</svg>
