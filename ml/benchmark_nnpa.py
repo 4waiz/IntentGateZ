@@ -7,7 +7,8 @@ NNPA is reported as used only when torch_nnpa reports the device available and t
 parameters and outputs are verified to live on it.
 
     python ml/benchmark_nnpa.py --reps 30
-Results: ml/results/nnpa_benchmark.json
+    python ml/benchmark_nnpa.py --chart-only     # redraw the chart from the saved JSON (any host)
+Results: ml/results/nnpa_benchmark.json, chart: ml/results/charts/nnpa_vs_cpu.png
 """
 
 from __future__ import annotations
@@ -46,10 +47,54 @@ def bench(model: TorchRisk, X: np.ndarray, reps: int) -> dict:
     return out
 
 
+def chart(res: dict) -> Path | None:
+    """Latency per batch size on CPU vs NNPA, with the CPU/NNPA time ratio, from the saved results."""
+    if "nnpa" not in res.get("runs", {}):
+        return None
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    bg, panel, fg, muted = "#050B12", "#0C1A28", "#E8F0F7", "#8496A8"
+    teal, blue = "#00D5B5", "#4589FF"
+    plt.rcParams.update({"figure.facecolor": bg, "axes.facecolor": panel, "axes.edgecolor": "#24384c", "axes.labelcolor": fg, "xtick.color": muted, "ytick.color": muted, "text.color": fg, "font.size": 10, "axes.titleweight": "bold"})
+    batches = list(res["runs"]["cpu"].keys())
+    cpu = [res["runs"]["cpu"][b]["median_ms"] for b in batches]
+    npu = [res["runs"]["nnpa"][b]["median_ms"] for b in batches]
+    ratio = res.get("cpu_over_nnpa_time_ratio", {})
+    xs = np.arange(len(batches))
+    fig, ax = plt.subplots(figsize=(8.4, 4.2))
+    ax.bar(xs - 0.2, cpu, 0.4, color=blue, label="CPU (s390x)")
+    ax.bar(xs + 0.2, npu, 0.4, color=teal, label="Telum NNPA (torch_nnpa)")
+    ax.set_yscale("log")
+    for x, b in zip(xs, batches):
+        r = ratio.get(b)
+        if r is not None:
+            ax.text(x, max(cpu[x], npu[x]) * 1.35, f"{r:.2f}x", ha="center", fontsize=9, color=teal if r > 1 else muted)
+    ax.set_xticks(xs, [f"batch {b}" for b in batches])
+    ax.set_ylabel("median inference time (ms, log scale)")
+    ax.set_ylim(min(cpu + npu) * 0.6, max(cpu + npu) * 3.2)
+    host = res.get("host", {}).get("architecture", "?")
+    ax.set_title(f"Risk MLP inference on IBM LinuxONE ({host}): CPU vs on-chip AI accelerator")
+    ax.legend(loc="upper left", frameon=False)
+    fig.text(0.99, 0.01, "label = CPU time / NNPA time (> 1: NNPA faster); identical weights and inputs", ha="right", fontsize=8, color=muted)
+    fig.tight_layout()
+    out = ROOT / "ml" / "results" / "charts" / "nnpa_vs_cpu.png"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(out, dpi=150)
+    plt.close(fig)
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--reps", type=int, default=30)
+    ap.add_argument("--chart-only", action="store_true", help="only redraw the chart from ml/results/nnpa_benchmark.json")
     args = ap.parse_args()
+    if args.chart_only:
+        print(chart(json.loads((ROOT / "ml" / "results" / "nnpa_benchmark.json").read_text())))
+        return
     import pandas as pd
     import torch
 
@@ -89,6 +134,10 @@ def main() -> None:
     (ROOT / "ml" / "results").mkdir(parents=True, exist_ok=True)
     (ROOT / "ml" / "results" / "nnpa_benchmark.json").write_text(json.dumps(res, indent=2))
     print(json.dumps({k: res.get(k) for k in ("nnpa_status", "verification", "cpu_over_nnpa_time_ratio", "max_abs_prob_difference", "argmax_agreement")}, indent=2))
+    try:
+        chart(res)
+    except Exception as e:  # charts are optional on minimal hosts
+        print("chart skipped:", e)
 
 
 if __name__ == "__main__":
