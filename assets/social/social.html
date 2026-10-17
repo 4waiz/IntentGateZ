@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; width: 1280px; height: 640px; background: #050B12; overflow: hidden; }
+  body { font-family: "IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif; color: #E8F0F7; position: relative; }
+  .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(132,150,168,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(132,150,168,0.07) 1px, transparent 1px); background-size: 40px 40px; mask-image: radial-gradient(ellipse at 70% 40%, black 30%, transparent 75%); }
+  .glow { position: absolute; width: 900px; height: 900px; right: -260px; top: -320px; background: radial-gradient(circle, rgba(15,98,254,0.28), transparent 60%); }
+  .glow2 { position: absolute; width: 700px; height: 700px; left: -300px; bottom: -420px; background: radial-gradient(circle, rgba(0,213,181,0.16), transparent 60%); }
+  .wrap { position: absolute; left: 80px; top: 92px; right: 80px; }
+  .kicker { font-size: 18px; letter-spacing: 6px; color: #8496A8; text-transform: uppercase; }
+  h1 { font-size: 104px; letter-spacing: 6px; margin: 18px 0 6px; font-weight: 700; }
+  h1 span { color: #00D5B5; }
+  .tag { font-size: 38px; color: #E8F0F7; font-weight: 500; }
+  .sub { margin-top: 16px; font-size: 22px; color: #8496A8; max-width: 860px; line-height: 1.45; }
+  .chips { position: absolute; left: 80px; bottom: 74px; display: flex; gap: 16px; }
+  .chip { font-family: "IBM Plex Mono", Consolas, monospace; font-size: 20px; letter-spacing: 3px; padding: 12px 22px; border-radius: 10px; border: 1.5px solid; font-weight: 600; }
+  .a { color: #00D5B5; border-color: #00D5B5; background: rgba(0,213,181,0.08); }
+  .c { color: #FFBC5C; border-color: #FFBC5C; background: rgba(255,188,92,0.08); }
+  .b { color: #FF5D70; border-color: #FF5D70; background: rgba(255,93,112,0.08); }
+  .z { position: absolute; right: 80px; bottom: 80px; text-align: right; font-family: "IBM Plex Mono", Consolas, monospace; font-size: 18px; color: #8496A8; line-height: 1.6; }
+  .z b { color: #0F62FE; font-weight: 600; letter-spacing: 2px; }
+  .mark { position: absolute; right: 90px; top: 86px; width: 150px; height: 150px; }
+</style>
+</head>
+<body>
+  <div class="grid"></div><div class="glow"></div><div class="glow2"></div>
+  <svg class="mark" viewBox="0 0 120 120" fill="none">
+    <path d="M60 8 L104 26 V58 C104 84 86 104 60 112 C34 104 16 84 16 58 V26 Z" stroke="#00D5B5" stroke-width="4" fill="rgba(0,213,181,0.06)"/>
+    <path d="M42 40 H78 L44 82 H80" stroke="#E8F0F7" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="60" cy="61" r="4.5" fill="#0F62FE"/>
+  </svg>
+  <div class="wrap">
+    <div class="kicker">IBM Z Datathon 2026 · AI Secured</div>
+    <h1>INTENTGATE <span>Z</span></h1>
+    <div class="tag">Authorized doesn't always mean intended.</div>
+    <div class="sub">A real-time gateway that checks every autonomous-agent action against the human's registered intent, before it executes.</div>
+  </div>
+  <div class="chips"><div class="chip a">ALLOW</div><div class="chip c">CHALLENGE</div><div class="chip b">BLOCK</div></div>
+  <div class="z"><b>IBM LINUXONE</b><br>s390x · z17 · Telum NNPA</div>
+</body>
+</html>
