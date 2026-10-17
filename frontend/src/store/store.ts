@@ -104,6 +104,8 @@ export interface AppState {
   challengeUI: Record<string, ChallengeUI>;
   explain: Record<string, ExplainState>;
   busy: Record<string, boolean>;
+  /** decision ids produced by each scenario run in this session */
+  scenarioRuns: Record<string, string[]>;
 
   view: View;
   quality: Quality;
@@ -153,6 +155,7 @@ export const useStore = create<AppState>()(() => ({
   challengeUI: {},
   explain: {},
   busy: {},
+  scenarioRuns: {},
 
   view: "command",
   quality: loadQuality(),

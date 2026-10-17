@@ -66,6 +66,7 @@ function clearSessionScopedState(): void {
     effects: [],
     challengeUI: {},
     explain: {},
+    scenarioRuns: {},
     selectedDecisionId: null,
     followLatest: true,
     traceDecisionId: null,
@@ -369,7 +370,11 @@ export async function runScenario(id: string, opts: { focus?: boolean; quiet?: b
   try {
     const res = await api.runScenario(id);
     for (const d of res.decisions) ingestDecision(d);
-    setState({ followLatest: true, selectedDecisionId: null });
+    setState((s) => ({
+      followLatest: true,
+      selectedDecisionId: null,
+      scenarioRuns: { ...s.scenarioRuns, [id]: res.decisions.map((d) => d.decision_id) },
+    }));
     await Promise.all([refreshState(), refreshDecisions()]);
     void refreshAudit();
     return res;
@@ -397,6 +402,7 @@ export async function resetSandbox(): Promise<boolean> {
       challengeUI: {},
       explain: {},
       effects: [],
+      scenarioRuns: {},
       traceDecisionId: null,
       cameraMode: "static",
       followId: null,
