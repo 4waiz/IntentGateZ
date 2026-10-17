@@ -21,7 +21,7 @@ CITY_SEED = 20261017
 ROAD_CLASSES = {"expressway": 80.0, "arterial": 50.0, "local": 32.0}
 EXPRESSWAY_ROWS = {3}
 EXPRESSWAY_COLS = {6}
-ARTERIAL_ROWS = {0, 5, 7}
+ARTERIAL_ROWS = {1, 5, 7}
 ARTERIAL_COLS = {0, 2, 9}
 
 DISTRICTS = ["harbor", "old_town", "financial", "medical", "residential", "industrial", "university"]
@@ -231,15 +231,11 @@ def build_city() -> City:
     locals_ = sorted((e for e in edges.values() if e.road_class == "local"), key=lambda e: e.id)
     rng.shuffle(locals_)
     removed = 0
-    protected = {
-        # keep the scenario corridors intact
-        edge_id(node_id(1, 2), node_id(1, 3)),
-        edge_id(node_id(2, 3), node_id(2, 4)),
-    }
     for e in locals_:
         if removed >= 9:
             break
-        if e.id in protected:
+        # keep the north-west scenario corridors (rows 0-2) intact
+        if nodes[e.a].r <= 2 and nodes[e.b].r <= 2:
             continue
         trial = {k: v for k, v in edges.items() if k != e.id}
         if _connected(nodes, trial):
