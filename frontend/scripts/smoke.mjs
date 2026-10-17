@@ -9,8 +9,9 @@
  *
  * Everything is driven through the real UI and API: all four scenarios, the supervisor
  * approve -> tamper -> execute -> replay flow, the safe re-plan, trace, IBM Z proof, audit,
- * Studio and presentation mode. Screenshots go to ./screenshots. Exits non-zero on page
- * errors or when the challenge security tests do not return the expected server codes.
+ * Studio and presentation mode. Screenshots go to ./.smoke (gitignored); set
+ * SMOKE_OUT=screenshots to refresh the committed set. Exits non-zero on page errors or when the
+ * challenge security tests do not return the expected server codes.
  */
 import { chromium } from "playwright-core";
 import fs from "node:fs";
@@ -18,7 +19,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const OUT = path.resolve(here, "..", "screenshots");
+const OUT = path.resolve(here, "..", process.env.SMOKE_OUT ?? ".smoke");
 const URL = process.env.SMOKE_URL ?? "http://localhost:5173/";
 fs.mkdirSync(OUT, { recursive: true });
 
@@ -59,7 +60,7 @@ async function newPage(width, height, quality = "med") {
 
 const shot = async (page, name) => {
   await page.screenshot({ path: path.join(OUT, `${name}.png`) });
-  console.log(`  saved screenshots/${name}.png`);
+  console.log(`  saved ${path.relative(path.resolve(here, ".."), path.join(OUT, `${name}.png`))}`);
 };
 
 const scenarioCard = (page, title) => page.locator("div.ig-card", { hasText: title }).first();

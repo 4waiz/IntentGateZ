@@ -11,9 +11,9 @@ const DISTRICT_TINT: Record<string, string> = {
   harbor: "#1b5fd1",
   financial: "#2f7cff",
   medical: "#00d5b5",
-  industrial: "#ffbc5c",
+  industrial: "#8a7356",
   university: "#7fb0ff",
-  old_town: "#c49a6c",
+  old_town: "#8f7a63",
   residential: "#8496a8",
 };
 

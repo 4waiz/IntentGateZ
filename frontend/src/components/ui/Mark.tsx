@@ -38,7 +38,7 @@ export function Wordmark({ compact = false }: { compact?: boolean }) {
           <span className="text-[13.5px] font-semibold tracking-[0.18em] text-fg">INTENTGATE</span>
           <span className="text-[13.5px] font-semibold tracking-[0.1em] text-allow">Z</span>
         </div>
-        {!compact && <span className="mt-1 text-[10.5px] tracking-[0.02em] text-muted">Authorized doesn't always mean intended.</span>}
+        {!compact && <span className="mt-1 text-[10.5px] tracking-[0.02em] whitespace-nowrap text-muted">Authorized doesn't always mean intended.</span>}
       </div>
     </div>
   );

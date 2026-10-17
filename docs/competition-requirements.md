@@ -41,6 +41,26 @@ The Hack2Skill FAQ also lists: working demo or prototype, source code repository
 
 Submission is made on Hack2Skill (https://hack2skill.com/event/datathon-2026), "Abstract submission section" per the H2S FAQ. A how-to video is linked in the guidebook: https://youtu.be/3_L3T__zEco. **The live form fields are unverified until the authenticated portal is inspected.**
 
+## Live Hack2Skill submission form (verified 17 Oct 2026, team account "Team Kanban")
+
+Module "IBM Z Datathon - Project Submissions", window 17/10/2026 03:45 to 18/10/2026 08:30 PM (portal countdown matched 18 Oct 20:30 UAE).
+
+| Field | Required | Limit / format |
+|---|---|---|
+| Challenges (theme) | yes | select: Real-Time AI for Critical Decisions / **AI Secured: Innovation Without Exposure** / Wildcard |
+| What is the Problem you are trying to solve? | yes | 1024 chars |
+| How are you planning to solve the problem? (Brief Overview) | yes | 1024 chars; architecture, tools, approach |
+| How does your solution leverage IBM Z / LinuxONE technologies? | yes | 1024 chars |
+| What value does your solution deliver, and who will benefit from it? | yes | 1024 chars |
+| Upload your pitch deck in PDF format | no | PDF up to 5 MB |
+| GitHub link / zip link (public) | yes | http(s) URL |
+| Video submission link | yes | accessible YouTube/Vimeo video, max 3 minutes, 720p/1080p recommended |
+| Link to pitch deck PDF (if not uploaded) | no | publicly viewable link |
+| Link to all open-source resources used | yes | 1024 chars, direct URLs |
+| Other documents (flowchart / architecture) | no | accessible link |
+
+There is no separate title field; the required title format is applied to the video and deck titles.
+
 ## Judging rubric (4 x 10 points = 40)
 
 From [GB] "Judging Evaluation Criteria and Standardized Scoring Rubric":

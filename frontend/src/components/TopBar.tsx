@@ -95,11 +95,11 @@ export function TopBar() {
   const view = useStore((s) => s.view);
   const resetting = useStore((s) => s.busy.reset ?? false);
   return (
-    <header className="relative z-40 flex h-14 shrink-0 items-center gap-5 border-b border-line bg-[linear-gradient(180deg,rgba(12,26,40,0.95),rgba(7,17,28,0.95))] px-4">
-      <div className="hidden min-[1500px]:block">
+    <header className="relative z-40 flex h-14 shrink-0 items-center gap-5 whitespace-nowrap border-b border-line bg-[linear-gradient(180deg,rgba(12,26,40,0.95),rgba(7,17,28,0.95))] px-4">
+      <div className="hidden min-[1420px]:block">
         <Wordmark />
       </div>
-      <div className="block min-[1500px]:hidden">
+      <div className="block min-[1420px]:hidden">
         <Wordmark compact />
       </div>
 

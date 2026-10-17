@@ -1,0 +1,4 @@
+# local smoke-test output (refresh committed screenshots with SMOKE_OUT=screenshots npm run smoke)
+.smoke/
+node_modules/
+dist/

@@ -56,8 +56,9 @@ SMOKE_BROWSER=/path/to/chromium npm run smoke  # explicit browser binary
 Drives the real UI and API at 1440x900 and 1920x1080: all four scenarios, approve, tamper and
 reuse (expects `409 grant_action_mismatch`), execute, replay (expects `409 grant_replayed`), safe
 re-plan, trace, Granite explain (503 when not configured), IBM Z proof, audit verification,
-Studio, and presentation mode. Screenshots are written to `screenshots/`. It fails on page errors
-or wrong security-test codes and warns about backend 5xx responses.
+Studio, and presentation mode. Screenshots go to `.smoke/` (gitignored); run
+`SMOKE_OUT=screenshots npm run smoke` to refresh the committed set in `screenshots/`. It fails on
+page errors or wrong security-test codes and warns about backend 5xx responses.
 
 ## Using the console
 
