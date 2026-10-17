@@ -228,7 +228,7 @@ export function buildLayout(idx: CityIndex, kit: Kit, quality: Quality): CityLay
     const rnd = seededRandom("skyline");
     sky.forEach((a, k) => {
       const ang = -0.95 + (k / Math.max(1, sky.length - 1)) * 1.4;
-      const dist = 330 + rnd() * 90;
+      const dist = 430 + rnd() * 110;
       const sc = 0.055 + rnd() * 0.02;
       skyline.push({ file: a.file, node: a.node, x: Math.sin(ang) * dist + 60, y: -0.2, z: -Math.cos(ang) * dist - 40, rot: rnd() * 6.28, sx: sc, sy: sc, sz: sc, style: 2, tint: [0.8, 0.84, 0.92] });
     });
