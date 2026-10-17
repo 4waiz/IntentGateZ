@@ -1,0 +1,2560 @@
+{
+  "name": "Nova Meridian (fictional)",
+  "rows": 8,
+  "cols": 10,
+  "spacing_m": 400.0,
+  "nodes": [
+    {
+      "id": "n_0_0",
+      "r": 0,
+      "c": 0,
+      "x": 0.0,
+      "z": 0.0,
+      "street": "Harbor Way & Bayfront Drive"
+    },
+    {
+      "id": "n_0_1",
+      "r": 0,
+      "c": 1,
+      "x": 400.0,
+      "z": 0.0,
+      "street": "Harbor Way & Cedar Lane"
+    },
+    {
+      "id": "n_0_2",
+      "r": 0,
+      "c": 2,
+      "x": 800.0,
+      "z": 0.0,
+      "street": "Harbor Way & Market Street"
+    },
+    {
+      "id": "n_0_3",
+      "r": 0,
+      "c": 3,
+      "x": 1200.0,
+      "z": 0.0,
+      "street": "Harbor Way & Foundry Road"
+    },
+    {
+      "id": "n_0_4",
+      "r": 0,
+      "c": 4,
+      "x": 1600.0,
+      "z": 0.0,
+      "street": "Harbor Way & Kingsway"
+    },
+    {
+      "id": "n_0_5",
+      "r": 0,
+      "c": 5,
+      "x": 2000.0,
+      "z": 0.0,
+      "street": "Harbor Way & Lantern Street"
+    },
+    {
+      "id": "n_0_6",
+      "r": 0,
+      "c": 6,
+      "x": 2400.0,
+      "z": 0.0,
+      "street": "Harbor Way & Skyline Expressway"
+    },
+    {
+      "id": "n_0_7",
+      "r": 0,
+      "c": 7,
+      "x": 2800.0,
+      "z": 0.0,
+      "street": "Harbor Way & Orchard Avenue"
+    },
+    {
+      "id": "n_0_8",
+      "r": 0,
+      "c": 8,
+      "x": 3200.0,
+      "z": 0.0,
+      "street": "Harbor Way & Quarry Lane"
+    },
+    {
+      "id": "n_0_9",
+      "r": 0,
+      "c": 9,
+      "x": 3600.0,
+      "z": 0.0,
+      "street": "Harbor Way & Summit Boulevard"
+    },
+    {
+      "id": "n_1_0",
+      "r": 1,
+      "c": 0,
+      "x": 0.0,
+      "z": 400.0,
+      "street": "Pier Avenue & Bayfront Drive"
+    },
+    {
+      "id": "n_1_1",
+      "r": 1,
+      "c": 1,
+      "x": 400.0,
+      "z": 400.0,
+      "street": "Pier Avenue & Cedar Lane"
+    },
+    {
+      "id": "n_1_2",
+      "r": 1,
+      "c": 2,
+      "x": 800.0,
+      "z": 400.0,
+      "street": "Pier Avenue & Market Street"
+    },
+    {
+      "id": "n_1_3",
+      "r": 1,
+      "c": 3,
+      "x": 1200.0,
+      "z": 400.0,
+      "street": "Pier Avenue & Foundry Road"
+    },
+    {
+      "id": "n_1_4",
+      "r": 1,
+      "c": 4,
+      "x": 1600.0,
+      "z": 400.0,
+      "street": "Pier Avenue & Kingsway"
+    },
+    {
+      "id": "n_1_5",
+      "r": 1,
+      "c": 5,
+      "x": 2000.0,
+      "z": 400.0,
+      "street": "Pier Avenue & Lantern Street"
+    },
+    {
+      "id": "n_1_6",
+      "r": 1,
+      "c": 6,
+      "x": 2400.0,
+      "z": 400.0,
+      "street": "Pier Avenue & Skyline Expressway"
+    },
+    {
+      "id": "n_1_7",
+      "r": 1,
+      "c": 7,
+      "x": 2800.0,
+      "z": 400.0,
+      "street": "Pier Avenue & Orchard Avenue"
+    },
+    {
+      "id": "n_1_8",
+      "r": 1,
+      "c": 8,
+      "x": 3200.0,
+      "z": 400.0,
+      "street": "Pier Avenue & Quarry Lane"
+    },
+    {
+      "id": "n_1_9",
+      "r": 1,
+      "c": 9,
+      "x": 3600.0,
+      "z": 400.0,
+      "street": "Pier Avenue & Summit Boulevard"
+    },
+    {
+      "id": "n_2_0",
+      "r": 2,
+      "c": 0,
+      "x": 0.0,
+      "z": 800.0,
+      "street": "Canal Street & Bayfront Drive"
+    },
+    {
+      "id": "n_2_1",
+      "r": 2,
+      "c": 1,
+      "x": 400.0,
+      "z": 800.0,
+      "street": "Canal Street & Cedar Lane"
+    },
+    {
+      "id": "n_2_2",
+      "r": 2,
+      "c": 2,
+      "x": 800.0,
+      "z": 800.0,
+      "street": "Canal Street & Market Street"
+    },
+    {
+      "id": "n_2_3",
+      "r": 2,
+      "c": 3,
+      "x": 1200.0,
+      "z": 800.0,
+      "street": "Canal Street & Foundry Road"
+    },
+    {
+      "id": "n_2_4",
+      "r": 2,
+      "c": 4,
+      "x": 1600.0,
+      "z": 800.0,
+      "street": "Canal Street & Kingsway"
+    },
+    {
+      "id": "n_2_5",
+      "r": 2,
+      "c": 5,
+      "x": 2000.0,
+      "z": 800.0,
+      "street": "Canal Street & Lantern Street"
+    },
+    {
+      "id": "n_2_6",
+      "r": 2,
+      "c": 6,
+      "x": 2400.0,
+      "z": 800.0,
+      "street": "Canal Street & Skyline Expressway"
+    },
+    {
+      "id": "n_2_7",
+      "r": 2,
+      "c": 7,
+      "x": 2800.0,
+      "z": 800.0,
+      "street": "Canal Street & Orchard Avenue"
+    },
+    {
+      "id": "n_2_8",
+      "r": 2,
+      "c": 8,
+      "x": 3200.0,
+      "z": 800.0,
+      "street": "Canal Street & Quarry Lane"
+    },
+    {
+      "id": "n_2_9",
+      "r": 2,
+      "c": 9,
+      "x": 3600.0,
+      "z": 800.0,
+      "street": "Canal Street & Summit Boulevard"
+    },
+    {
+      "id": "n_3_0",
+      "r": 3,
+      "c": 0,
+      "x": 0.0,
+      "z": 1200.0,
+      "street": "Meridian Expressway & Bayfront Drive"
+    },
+    {
+      "id": "n_3_1",
+      "r": 3,
+      "c": 1,
+      "x": 400.0,
+      "z": 1200.0,
+      "street": "Meridian Expressway & Cedar Lane"
+    },
+    {
+      "id": "n_3_2",
+      "r": 3,
+      "c": 2,
+      "x": 800.0,
+      "z": 1200.0,
+      "street": "Meridian Expressway & Market Street"
+    },
+    {
+      "id": "n_3_3",
+      "r": 3,
+      "c": 3,
+      "x": 1200.0,
+      "z": 1200.0,
+      "street": "Meridian Expressway & Foundry Road"
+    },
+    {
+      "id": "n_3_4",
+      "r": 3,
+      "c": 4,
+      "x": 1600.0,
+      "z": 1200.0,
+      "street": "Meridian Expressway & Kingsway"
+    },
+    {
+      "id": "n_3_5",
+      "r": 3,
+      "c": 5,
+      "x": 2000.0,
+      "z": 1200.0,
+      "street": "Meridian Expressway & Lantern Street"
+    },
+    {
+      "id": "n_3_6",
+      "r": 3,
+      "c": 6,
+      "x": 2400.0,
+      "z": 1200.0,
+      "street": "Meridian Expressway & Skyline Expressway"
+    },
+    {
+      "id": "n_3_7",
+      "r": 3,
+      "c": 7,
+      "x": 2800.0,
+      "z": 1200.0,
+      "street": "Meridian Expressway & Orchard Avenue"
+    },
+    {
+      "id": "n_3_8",
+      "r": 3,
+      "c": 8,
+      "x": 3200.0,
+      "z": 1200.0,
+      "street": "Meridian Expressway & Quarry Lane"
+    },
+    {
+      "id": "n_3_9",
+      "r": 3,
+      "c": 9,
+      "x": 3600.0,
+      "z": 1200.0,
+      "street": "Meridian Expressway & Summit Boulevard"
+    },
+    {
+      "id": "n_4_0",
+      "r": 4,
+      "c": 0,
+      "x": 0.0,
+      "z": 1600.0,
+      "street": "Old Mill Road & Bayfront Drive"
+    },
+    {
+      "id": "n_4_1",
+      "r": 4,
+      "c": 1,
+      "x": 400.0,
+      "z": 1600.0,
+      "street": "Old Mill Road & Cedar Lane"
+    },
+    {
+      "id": "n_4_2",
+      "r": 4,
+      "c": 2,
+      "x": 800.0,
+      "z": 1600.0,
+      "street": "Old Mill Road & Market Street"
+    },
+    {
+      "id": "n_4_3",
+      "r": 4,
+      "c": 3,
+      "x": 1200.0,
+      "z": 1600.0,
+      "street": "Old Mill Road & Foundry Road"
+    },
+    {
+      "id": "n_4_4",
+      "r": 4,
+      "c": 4,
+      "x": 1600.0,
+      "z": 1600.0,
+      "street": "Old Mill Road & Kingsway"
+    },
+    {
+      "id": "n_4_5",
+      "r": 4,
+      "c": 5,
+      "x": 2000.0,
+      "z": 1600.0,
+      "street": "Old Mill Road & Lantern Street"
+    },
+    {
+      "id": "n_4_6",
+      "r": 4,
+      "c": 6,
+      "x": 2400.0,
+      "z": 1600.0,
+      "street": "Old Mill Road & Skyline Expressway"
+    },
+    {
+      "id": "n_4_7",
+      "r": 4,
+      "c": 7,
+      "x": 2800.0,
+      "z": 1600.0,
+      "street": "Old Mill Road & Orchard Avenue"
+    },
+    {
+      "id": "n_4_8",
+      "r": 4,
+      "c": 8,
+      "x": 3200.0,
+      "z": 1600.0,
+      "street": "Old Mill Road & Quarry Lane"
+    },
+    {
+      "id": "n_4_9",
+      "r": 4,
+      "c": 9,
+      "x": 3600.0,
+      "z": 1600.0,
+      "street": "Old Mill Road & Summit Boulevard"
+    },
+    {
+      "id": "n_5_0",
+      "r": 5,
+      "c": 0,
+      "x": 0.0,
+      "z": 2000.0,
+      "street": "Union Boulevard & Bayfront Drive"
+    },
+    {
+      "id": "n_5_1",
+      "r": 5,
+      "c": 1,
+      "x": 400.0,
+      "z": 2000.0,
+      "street": "Union Boulevard & Cedar Lane"
+    },
+    {
+      "id": "n_5_2",
+      "r": 5,
+      "c": 2,
+      "x": 800.0,
+      "z": 2000.0,
+      "street": "Union Boulevard & Market Street"
+    },
+    {
+      "id": "n_5_3",
+      "r": 5,
+      "c": 3,
+      "x": 1200.0,
+      "z": 2000.0,
+      "street": "Union Boulevard & Foundry Road"
+    },
+    {
+      "id": "n_5_4",
+      "r": 5,
+      "c": 4,
+      "x": 1600.0,
+      "z": 2000.0,
+      "street": "Union Boulevard & Kingsway"
+    },
+    {
+      "id": "n_5_5",
+      "r": 5,
+      "c": 5,
+      "x": 2000.0,
+      "z": 2000.0,
+      "street": "Union Boulevard & Lantern Street"
+    },
+    {
+      "id": "n_5_6",
+      "r": 5,
+      "c": 6,
+      "x": 2400.0,
+      "z": 2000.0,
+      "street": "Union Boulevard & Skyline Expressway"
+    },
+    {
+      "id": "n_5_7",
+      "r": 5,
+      "c": 7,
+      "x": 2800.0,
+      "z": 2000.0,
+      "street": "Union Boulevard & Orchard Avenue"
+    },
+    {
+      "id": "n_5_8",
+      "r": 5,
+      "c": 8,
+      "x": 3200.0,
+      "z": 2000.0,
+      "street": "Union Boulevard & Quarry Lane"
+    },
+    {
+      "id": "n_5_9",
+      "r": 5,
+      "c": 9,
+      "x": 3600.0,
+      "z": 2000.0,
+      "street": "Union Boulevard & Summit Boulevard"
+    },
+    {
+      "id": "n_6_0",
+      "r": 6,
+      "c": 0,
+      "x": 0.0,
+      "z": 2400.0,
+      "street": "Elm Street & Bayfront Drive"
+    },
+    {
+      "id": "n_6_1",
+      "r": 6,
+      "c": 1,
+      "x": 400.0,
+      "z": 2400.0,
+      "street": "Elm Street & Cedar Lane"
+    },
+    {
+      "id": "n_6_2",
+      "r": 6,
+      "c": 2,
+      "x": 800.0,
+      "z": 2400.0,
+      "street": "Elm Street & Market Street"
+    },
+    {
+      "id": "n_6_3",
+      "r": 6,
+      "c": 3,
+      "x": 1200.0,
+      "z": 2400.0,
+      "street": "Elm Street & Foundry Road"
+    },
+    {
+      "id": "n_6_4",
+      "r": 6,
+      "c": 4,
+      "x": 1600.0,
+      "z": 2400.0,
+      "street": "Elm Street & Kingsway"
+    },
+    {
+      "id": "n_6_5",
+      "r": 6,
+      "c": 5,
+      "x": 2000.0,
+      "z": 2400.0,
+      "street": "Elm Street & Lantern Street"
+    },
+    {
+      "id": "n_6_6",
+      "r": 6,
+      "c": 6,
+      "x": 2400.0,
+      "z": 2400.0,
+      "street": "Elm Street & Skyline Expressway"
+    },
+    {
+      "id": "n_6_7",
+      "r": 6,
+      "c": 7,
+      "x": 2800.0,
+      "z": 2400.0,
+      "street": "Elm Street & Orchard Avenue"
+    },
+    {
+      "id": "n_6_8",
+      "r": 6,
+      "c": 8,
+      "x": 3200.0,
+      "z": 2400.0,
+      "street": "Elm Street & Quarry Lane"
+    },
+    {
+      "id": "n_6_9",
+      "r": 6,
+      "c": 9,
+      "x": 3600.0,
+      "z": 2400.0,
+      "street": "Elm Street & Summit Boulevard"
+    },
+    {
+      "id": "n_7_0",
+      "r": 7,
+      "c": 0,
+      "x": 0.0,
+      "z": 2800.0,
+      "street": "North Ring Road & Bayfront Drive"
+    },
+    {
+      "id": "n_7_1",
+      "r": 7,
+      "c": 1,
+      "x": 400.0,
+      "z": 2800.0,
+      "street": "North Ring Road & Cedar Lane"
+    },
+    {
+      "id": "n_7_2",
+      "r": 7,
+      "c": 2,
+      "x": 800.0,
+      "z": 2800.0,
+      "street": "North Ring Road & Market Street"
+    },
+    {
+      "id": "n_7_3",
+      "r": 7,
+      "c": 3,
+      "x": 1200.0,
+      "z": 2800.0,
+      "street": "North Ring Road & Foundry Road"
+    },
+    {
+      "id": "n_7_4",
+      "r": 7,
+      "c": 4,
+      "x": 1600.0,
+      "z": 2800.0,
+      "street": "North Ring Road & Kingsway"
+    },
+    {
+      "id": "n_7_5",
+      "r": 7,
+      "c": 5,
+      "x": 2000.0,
+      "z": 2800.0,
+      "street": "North Ring Road & Lantern Street"
+    },
+    {
+      "id": "n_7_6",
+      "r": 7,
+      "c": 6,
+      "x": 2400.0,
+      "z": 2800.0,
+      "street": "North Ring Road & Skyline Expressway"
+    },
+    {
+      "id": "n_7_7",
+      "r": 7,
+      "c": 7,
+      "x": 2800.0,
+      "z": 2800.0,
+      "street": "North Ring Road & Orchard Avenue"
+    },
+    {
+      "id": "n_7_8",
+      "r": 7,
+      "c": 8,
+      "x": 3200.0,
+      "z": 2800.0,
+      "street": "North Ring Road & Quarry Lane"
+    },
+    {
+      "id": "n_7_9",
+      "r": 7,
+      "c": 9,
+      "x": 3600.0,
+      "z": 2800.0,
+      "street": "North Ring Road & Summit Boulevard"
+    }
+  ],
+  "edges": [
+    {
+      "id": "n_0_0__n_0_1",
+      "a": "n_0_0",
+      "b": "n_0_1",
+      "length_m": 406.7,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Harbor Way"
+    },
+    {
+      "id": "n_0_1__n_0_2",
+      "a": "n_0_1",
+      "b": "n_0_2",
+      "length_m": 410.5,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Harbor Way"
+    },
+    {
+      "id": "n_0_2__n_0_3",
+      "a": "n_0_2",
+      "b": "n_0_3",
+      "length_m": 415.9,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Harbor Way"
+    },
+    {
+      "id": "n_0_3__n_0_4",
+      "a": "n_0_3",
+      "b": "n_0_4",
+      "length_m": 411.6,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Harbor Way"
+    },
+    {
+      "id": "n_0_4__n_0_5",
+      "a": "n_0_4",
+      "b": "n_0_5",
+      "length_m": 419.0,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Harbor Way"
+    },
+    {
+      "id": "n_0_5__n_0_6",
+      "a": "n_0_5",
+      "b": "n_0_6",
+      "length_m": 422.5,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Harbor Way"
+    },
+    {
+      "id": "n_0_6__n_0_7",
+      "a": "n_0_6",
+      "b": "n_0_7",
+      "length_m": 412.5,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Harbor Way"
+    },
+    {
+      "id": "n_0_7__n_0_8",
+      "a": "n_0_7",
+      "b": "n_0_8",
+      "length_m": 413.3,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Harbor Way"
+    },
+    {
+      "id": "n_0_8__n_0_9",
+      "a": "n_0_8",
+      "b": "n_0_9",
+      "length_m": 413.3,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Harbor Way"
+    },
+    {
+      "id": "n_1_0__n_1_1",
+      "a": "n_1_0",
+      "b": "n_1_1",
+      "length_m": 407.9,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Pier Avenue"
+    },
+    {
+      "id": "n_1_1__n_1_2",
+      "a": "n_1_1",
+      "b": "n_1_2",
+      "length_m": 404.2,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Pier Avenue"
+    },
+    {
+      "id": "n_1_2__n_1_3",
+      "a": "n_1_2",
+      "b": "n_1_3",
+      "length_m": 422.2,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Pier Avenue"
+    },
+    {
+      "id": "n_1_3__n_1_4",
+      "a": "n_1_3",
+      "b": "n_1_4",
+      "length_m": 412.3,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Pier Avenue"
+    },
+    {
+      "id": "n_1_4__n_1_5",
+      "a": "n_1_4",
+      "b": "n_1_5",
+      "length_m": 413.2,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Pier Avenue"
+    },
+    {
+      "id": "n_1_5__n_1_6",
+      "a": "n_1_5",
+      "b": "n_1_6",
+      "length_m": 402.1,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Pier Avenue"
+    },
+    {
+      "id": "n_1_6__n_1_7",
+      "a": "n_1_6",
+      "b": "n_1_7",
+      "length_m": 417.0,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Pier Avenue"
+    },
+    {
+      "id": "n_1_7__n_1_8",
+      "a": "n_1_7",
+      "b": "n_1_8",
+      "length_m": 403.9,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Pier Avenue"
+    },
+    {
+      "id": "n_1_8__n_1_9",
+      "a": "n_1_8",
+      "b": "n_1_9",
+      "length_m": 407.6,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Pier Avenue"
+    },
+    {
+      "id": "n_2_0__n_2_1",
+      "a": "n_2_0",
+      "b": "n_2_1",
+      "length_m": 410.8,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Canal Street"
+    },
+    {
+      "id": "n_2_1__n_2_2",
+      "a": "n_2_1",
+      "b": "n_2_2",
+      "length_m": 413.6,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Canal Street"
+    },
+    {
+      "id": "n_2_2__n_2_3",
+      "a": "n_2_2",
+      "b": "n_2_3",
+      "length_m": 417.0,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Canal Street"
+    },
+    {
+      "id": "n_2_3__n_2_4",
+      "a": "n_2_3",
+      "b": "n_2_4",
+      "length_m": 400.1,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Canal Street"
+    },
+    {
+      "id": "n_2_4__n_2_5",
+      "a": "n_2_4",
+      "b": "n_2_5",
+      "length_m": 423.4,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Canal Street"
+    },
+    {
+      "id": "n_2_5__n_2_6",
+      "a": "n_2_5",
+      "b": "n_2_6",
+      "length_m": 419.2,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Canal Street"
+    },
+    {
+      "id": "n_2_6__n_2_7",
+      "a": "n_2_6",
+      "b": "n_2_7",
+      "length_m": 413.3,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Canal Street"
+    },
+    {
+      "id": "n_2_7__n_2_8",
+      "a": "n_2_7",
+      "b": "n_2_8",
+      "length_m": 418.8,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Canal Street"
+    },
+    {
+      "id": "n_2_8__n_2_9",
+      "a": "n_2_8",
+      "b": "n_2_9",
+      "length_m": 407.8,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Canal Street"
+    },
+    {
+      "id": "n_3_0__n_3_1",
+      "a": "n_3_0",
+      "b": "n_3_1",
+      "length_m": 412.2,
+      "road_class": "expressway",
+      "speed_kmh": 80.0,
+      "name": "Meridian Expressway"
+    },
+    {
+      "id": "n_3_1__n_3_2",
+      "a": "n_3_1",
+      "b": "n_3_2",
+      "length_m": 411.9,
+      "road_class": "expressway",
+      "speed_kmh": 80.0,
+      "name": "Meridian Expressway"
+    },
+    {
+      "id": "n_3_2__n_3_3",
+      "a": "n_3_2",
+      "b": "n_3_3",
+      "length_m": 423.3,
+      "road_class": "expressway",
+      "speed_kmh": 80.0,
+      "name": "Meridian Expressway"
+    },
+    {
+      "id": "n_3_3__n_3_4",
+      "a": "n_3_3",
+      "b": "n_3_4",
+      "length_m": 418.4,
+      "road_class": "expressway",
+      "speed_kmh": 80.0,
+      "name": "Meridian Expressway"
+    },
+    {
+      "id": "n_3_4__n_3_5",
+      "a": "n_3_4",
+      "b": "n_3_5",
+      "length_m": 405.8,
+      "road_class": "expressway",
+      "speed_kmh": 80.0,
+      "name": "Meridian Expressway"
+    },
+    {
+      "id": "n_3_5__n_3_6",
+      "a": "n_3_5",
+      "b": "n_3_6",
+      "length_m": 407.7,
+      "road_class": "expressway",
+      "speed_kmh": 80.0,
+      "name": "Meridian Expressway"
+    },
+    {
+      "id": "n_3_6__n_3_7",
+      "a": "n_3_6",
+      "b": "n_3_7",
+      "length_m": 409.6,
+      "road_class": "expressway",
+      "speed_kmh": 80.0,
+      "name": "Meridian Expressway"
+    },
+    {
+      "id": "n_3_7__n_3_8",
+      "a": "n_3_7",
+      "b": "n_3_8",
+      "length_m": 407.7,
+      "road_class": "expressway",
+      "speed_kmh": 80.0,
+      "name": "Meridian Expressway"
+    },
+    {
+      "id": "n_3_8__n_3_9",
+      "a": "n_3_8",
+      "b": "n_3_9",
+      "length_m": 407.3,
+      "road_class": "expressway",
+      "speed_kmh": 80.0,
+      "name": "Meridian Expressway"
+    },
+    {
+      "id": "n_4_0__n_4_1",
+      "a": "n_4_0",
+      "b": "n_4_1",
+      "length_m": 401.7,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Old Mill Road"
+    },
+    {
+      "id": "n_4_2__n_4_3",
+      "a": "n_4_2",
+      "b": "n_4_3",
+      "length_m": 413.7,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Old Mill Road"
+    },
+    {
+      "id": "n_4_4__n_4_5",
+      "a": "n_4_4",
+      "b": "n_4_5",
+      "length_m": 417.3,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Old Mill Road"
+    },
+    {
+      "id": "n_4_5__n_4_6",
+      "a": "n_4_5",
+      "b": "n_4_6",
+      "length_m": 422.4,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Old Mill Road"
+    },
+    {
+      "id": "n_4_7__n_4_8",
+      "a": "n_4_7",
+      "b": "n_4_8",
+      "length_m": 409.1,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Old Mill Road"
+    },
+    {
+      "id": "n_4_8__n_4_9",
+      "a": "n_4_8",
+      "b": "n_4_9",
+      "length_m": 406.9,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Old Mill Road"
+    },
+    {
+      "id": "n_5_0__n_5_1",
+      "a": "n_5_0",
+      "b": "n_5_1",
+      "length_m": 407.1,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Union Boulevard"
+    },
+    {
+      "id": "n_5_1__n_5_2",
+      "a": "n_5_1",
+      "b": "n_5_2",
+      "length_m": 403.8,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Union Boulevard"
+    },
+    {
+      "id": "n_5_2__n_5_3",
+      "a": "n_5_2",
+      "b": "n_5_3",
+      "length_m": 422.4,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Union Boulevard"
+    },
+    {
+      "id": "n_5_3__n_5_4",
+      "a": "n_5_3",
+      "b": "n_5_4",
+      "length_m": 410.2,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Union Boulevard"
+    },
+    {
+      "id": "n_5_4__n_5_5",
+      "a": "n_5_4",
+      "b": "n_5_5",
+      "length_m": 416.3,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Union Boulevard"
+    },
+    {
+      "id": "n_5_5__n_5_6",
+      "a": "n_5_5",
+      "b": "n_5_6",
+      "length_m": 411.1,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Union Boulevard"
+    },
+    {
+      "id": "n_5_6__n_5_7",
+      "a": "n_5_6",
+      "b": "n_5_7",
+      "length_m": 403.7,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Union Boulevard"
+    },
+    {
+      "id": "n_5_7__n_5_8",
+      "a": "n_5_7",
+      "b": "n_5_8",
+      "length_m": 410.0,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Union Boulevard"
+    },
+    {
+      "id": "n_5_8__n_5_9",
+      "a": "n_5_8",
+      "b": "n_5_9",
+      "length_m": 407.0,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Union Boulevard"
+    },
+    {
+      "id": "n_6_1__n_6_2",
+      "a": "n_6_1",
+      "b": "n_6_2",
+      "length_m": 421.8,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Elm Street"
+    },
+    {
+      "id": "n_6_2__n_6_3",
+      "a": "n_6_2",
+      "b": "n_6_3",
+      "length_m": 423.6,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Elm Street"
+    },
+    {
+      "id": "n_6_3__n_6_4",
+      "a": "n_6_3",
+      "b": "n_6_4",
+      "length_m": 403.1,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Elm Street"
+    },
+    {
+      "id": "n_6_4__n_6_5",
+      "a": "n_6_4",
+      "b": "n_6_5",
+      "length_m": 418.4,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Elm Street"
+    },
+    {
+      "id": "n_6_5__n_6_6",
+      "a": "n_6_5",
+      "b": "n_6_6",
+      "length_m": 409.2,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Elm Street"
+    },
+    {
+      "id": "n_6_6__n_6_7",
+      "a": "n_6_6",
+      "b": "n_6_7",
+      "length_m": 408.2,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Elm Street"
+    },
+    {
+      "id": "n_6_7__n_6_8",
+      "a": "n_6_7",
+      "b": "n_6_8",
+      "length_m": 415.6,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Elm Street"
+    },
+    {
+      "id": "n_6_8__n_6_9",
+      "a": "n_6_8",
+      "b": "n_6_9",
+      "length_m": 420.3,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Elm Street"
+    },
+    {
+      "id": "n_7_0__n_7_1",
+      "a": "n_7_0",
+      "b": "n_7_1",
+      "length_m": 401.4,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "North Ring Road"
+    },
+    {
+      "id": "n_7_1__n_7_2",
+      "a": "n_7_1",
+      "b": "n_7_2",
+      "length_m": 414.9,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "North Ring Road"
+    },
+    {
+      "id": "n_7_2__n_7_3",
+      "a": "n_7_2",
+      "b": "n_7_3",
+      "length_m": 422.1,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "North Ring Road"
+    },
+    {
+      "id": "n_7_3__n_7_4",
+      "a": "n_7_3",
+      "b": "n_7_4",
+      "length_m": 423.3,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "North Ring Road"
+    },
+    {
+      "id": "n_7_4__n_7_5",
+      "a": "n_7_4",
+      "b": "n_7_5",
+      "length_m": 401.1,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "North Ring Road"
+    },
+    {
+      "id": "n_7_5__n_7_6",
+      "a": "n_7_5",
+      "b": "n_7_6",
+      "length_m": 401.8,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "North Ring Road"
+    },
+    {
+      "id": "n_7_6__n_7_7",
+      "a": "n_7_6",
+      "b": "n_7_7",
+      "length_m": 413.2,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "North Ring Road"
+    },
+    {
+      "id": "n_7_7__n_7_8",
+      "a": "n_7_7",
+      "b": "n_7_8",
+      "length_m": 401.8,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "North Ring Road"
+    },
+    {
+      "id": "n_7_8__n_7_9",
+      "a": "n_7_8",
+      "b": "n_7_9",
+      "length_m": 404.3,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "North Ring Road"
+    },
+    {
+      "id": "n_0_0__n_1_0",
+      "a": "n_0_0",
+      "b": "n_1_0",
+      "length_m": 416.5,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Bayfront Drive"
+    },
+    {
+      "id": "n_1_0__n_2_0",
+      "a": "n_1_0",
+      "b": "n_2_0",
+      "length_m": 412.2,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Bayfront Drive"
+    },
+    {
+      "id": "n_2_0__n_3_0",
+      "a": "n_2_0",
+      "b": "n_3_0",
+      "length_m": 402.7,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Bayfront Drive"
+    },
+    {
+      "id": "n_3_0__n_4_0",
+      "a": "n_3_0",
+      "b": "n_4_0",
+      "length_m": 418.1,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Bayfront Drive"
+    },
+    {
+      "id": "n_4_0__n_5_0",
+      "a": "n_4_0",
+      "b": "n_5_0",
+      "length_m": 420.8,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Bayfront Drive"
+    },
+    {
+      "id": "n_5_0__n_6_0",
+      "a": "n_5_0",
+      "b": "n_6_0",
+      "length_m": 407.1,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Bayfront Drive"
+    },
+    {
+      "id": "n_6_0__n_7_0",
+      "a": "n_6_0",
+      "b": "n_7_0",
+      "length_m": 412.0,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Bayfront Drive"
+    },
+    {
+      "id": "n_0_1__n_1_1",
+      "a": "n_0_1",
+      "b": "n_1_1",
+      "length_m": 421.5,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Cedar Lane"
+    },
+    {
+      "id": "n_1_1__n_2_1",
+      "a": "n_1_1",
+      "b": "n_2_1",
+      "length_m": 421.1,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Cedar Lane"
+    },
+    {
+      "id": "n_2_1__n_3_1",
+      "a": "n_2_1",
+      "b": "n_3_1",
+      "length_m": 415.0,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Cedar Lane"
+    },
+    {
+      "id": "n_3_1__n_4_1",
+      "a": "n_3_1",
+      "b": "n_4_1",
+      "length_m": 405.1,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Cedar Lane"
+    },
+    {
+      "id": "n_4_1__n_5_1",
+      "a": "n_4_1",
+      "b": "n_5_1",
+      "length_m": 400.2,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Cedar Lane"
+    },
+    {
+      "id": "n_6_1__n_7_1",
+      "a": "n_6_1",
+      "b": "n_7_1",
+      "length_m": 412.2,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Cedar Lane"
+    },
+    {
+      "id": "n_0_2__n_1_2",
+      "a": "n_0_2",
+      "b": "n_1_2",
+      "length_m": 422.3,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Market Street"
+    },
+    {
+      "id": "n_1_2__n_2_2",
+      "a": "n_1_2",
+      "b": "n_2_2",
+      "length_m": 411.0,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Market Street"
+    },
+    {
+      "id": "n_2_2__n_3_2",
+      "a": "n_2_2",
+      "b": "n_3_2",
+      "length_m": 405.6,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Market Street"
+    },
+    {
+      "id": "n_3_2__n_4_2",
+      "a": "n_3_2",
+      "b": "n_4_2",
+      "length_m": 408.4,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Market Street"
+    },
+    {
+      "id": "n_4_2__n_5_2",
+      "a": "n_4_2",
+      "b": "n_5_2",
+      "length_m": 408.8,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Market Street"
+    },
+    {
+      "id": "n_5_2__n_6_2",
+      "a": "n_5_2",
+      "b": "n_6_2",
+      "length_m": 409.5,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Market Street"
+    },
+    {
+      "id": "n_6_2__n_7_2",
+      "a": "n_6_2",
+      "b": "n_7_2",
+      "length_m": 410.5,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Market Street"
+    },
+    {
+      "id": "n_0_3__n_1_3",
+      "a": "n_0_3",
+      "b": "n_1_3",
+      "length_m": 411.3,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Foundry Road"
+    },
+    {
+      "id": "n_1_3__n_2_3",
+      "a": "n_1_3",
+      "b": "n_2_3",
+      "length_m": 409.9,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Foundry Road"
+    },
+    {
+      "id": "n_2_3__n_3_3",
+      "a": "n_2_3",
+      "b": "n_3_3",
+      "length_m": 414.2,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Foundry Road"
+    },
+    {
+      "id": "n_3_3__n_4_3",
+      "a": "n_3_3",
+      "b": "n_4_3",
+      "length_m": 415.9,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Foundry Road"
+    },
+    {
+      "id": "n_4_3__n_5_3",
+      "a": "n_4_3",
+      "b": "n_5_3",
+      "length_m": 400.3,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Foundry Road"
+    },
+    {
+      "id": "n_6_3__n_7_3",
+      "a": "n_6_3",
+      "b": "n_7_3",
+      "length_m": 405.4,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Foundry Road"
+    },
+    {
+      "id": "n_0_4__n_1_4",
+      "a": "n_0_4",
+      "b": "n_1_4",
+      "length_m": 403.4,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Kingsway"
+    },
+    {
+      "id": "n_1_4__n_2_4",
+      "a": "n_1_4",
+      "b": "n_2_4",
+      "length_m": 413.4,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Kingsway"
+    },
+    {
+      "id": "n_3_4__n_4_4",
+      "a": "n_3_4",
+      "b": "n_4_4",
+      "length_m": 418.4,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Kingsway"
+    },
+    {
+      "id": "n_4_4__n_5_4",
+      "a": "n_4_4",
+      "b": "n_5_4",
+      "length_m": 400.5,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Kingsway"
+    },
+    {
+      "id": "n_5_4__n_6_4",
+      "a": "n_5_4",
+      "b": "n_6_4",
+      "length_m": 414.1,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Kingsway"
+    },
+    {
+      "id": "n_6_4__n_7_4",
+      "a": "n_6_4",
+      "b": "n_7_4",
+      "length_m": 401.0,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Kingsway"
+    },
+    {
+      "id": "n_0_5__n_1_5",
+      "a": "n_0_5",
+      "b": "n_1_5",
+      "length_m": 418.1,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Lantern Street"
+    },
+    {
+      "id": "n_1_5__n_2_5",
+      "a": "n_1_5",
+      "b": "n_2_5",
+      "length_m": 414.6,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Lantern Street"
+    },
+    {
+      "id": "n_2_5__n_3_5",
+      "a": "n_2_5",
+      "b": "n_3_5",
+      "length_m": 417.3,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Lantern Street"
+    },
+    {
+      "id": "n_3_5__n_4_5",
+      "a": "n_3_5",
+      "b": "n_4_5",
+      "length_m": 400.7,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Lantern Street"
+    },
+    {
+      "id": "n_4_5__n_5_5",
+      "a": "n_4_5",
+      "b": "n_5_5",
+      "length_m": 417.8,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Lantern Street"
+    },
+    {
+      "id": "n_5_5__n_6_5",
+      "a": "n_5_5",
+      "b": "n_6_5",
+      "length_m": 409.6,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Lantern Street"
+    },
+    {
+      "id": "n_6_5__n_7_5",
+      "a": "n_6_5",
+      "b": "n_7_5",
+      "length_m": 400.6,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Lantern Street"
+    },
+    {
+      "id": "n_0_6__n_1_6",
+      "a": "n_0_6",
+      "b": "n_1_6",
+      "length_m": 403.4,
+      "road_class": "expressway",
+      "speed_kmh": 80.0,
+      "name": "Skyline Expressway"
+    },
+    {
+      "id": "n_1_6__n_2_6",
+      "a": "n_1_6",
+      "b": "n_2_6",
+      "length_m": 409.2,
+      "road_class": "expressway",
+      "speed_kmh": 80.0,
+      "name": "Skyline Expressway"
+    },
+    {
+      "id": "n_2_6__n_3_6",
+      "a": "n_2_6",
+      "b": "n_3_6",
+      "length_m": 413.0,
+      "road_class": "expressway",
+      "speed_kmh": 80.0,
+      "name": "Skyline Expressway"
+    },
+    {
+      "id": "n_3_6__n_4_6",
+      "a": "n_3_6",
+      "b": "n_4_6",
+      "length_m": 411.4,
+      "road_class": "expressway",
+      "speed_kmh": 80.0,
+      "name": "Skyline Expressway"
+    },
+    {
+      "id": "n_4_6__n_5_6",
+      "a": "n_4_6",
+      "b": "n_5_6",
+      "length_m": 405.6,
+      "road_class": "expressway",
+      "speed_kmh": 80.0,
+      "name": "Skyline Expressway"
+    },
+    {
+      "id": "n_5_6__n_6_6",
+      "a": "n_5_6",
+      "b": "n_6_6",
+      "length_m": 404.7,
+      "road_class": "expressway",
+      "speed_kmh": 80.0,
+      "name": "Skyline Expressway"
+    },
+    {
+      "id": "n_6_6__n_7_6",
+      "a": "n_6_6",
+      "b": "n_7_6",
+      "length_m": 412.5,
+      "road_class": "expressway",
+      "speed_kmh": 80.0,
+      "name": "Skyline Expressway"
+    },
+    {
+      "id": "n_0_7__n_1_7",
+      "a": "n_0_7",
+      "b": "n_1_7",
+      "length_m": 418.4,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Orchard Avenue"
+    },
+    {
+      "id": "n_1_7__n_2_7",
+      "a": "n_1_7",
+      "b": "n_2_7",
+      "length_m": 408.5,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Orchard Avenue"
+    },
+    {
+      "id": "n_2_7__n_3_7",
+      "a": "n_2_7",
+      "b": "n_3_7",
+      "length_m": 412.5,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Orchard Avenue"
+    },
+    {
+      "id": "n_4_7__n_5_7",
+      "a": "n_4_7",
+      "b": "n_5_7",
+      "length_m": 413.8,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Orchard Avenue"
+    },
+    {
+      "id": "n_5_7__n_6_7",
+      "a": "n_5_7",
+      "b": "n_6_7",
+      "length_m": 408.8,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Orchard Avenue"
+    },
+    {
+      "id": "n_6_7__n_7_7",
+      "a": "n_6_7",
+      "b": "n_7_7",
+      "length_m": 411.6,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Orchard Avenue"
+    },
+    {
+      "id": "n_0_8__n_1_8",
+      "a": "n_0_8",
+      "b": "n_1_8",
+      "length_m": 420.7,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Quarry Lane"
+    },
+    {
+      "id": "n_1_8__n_2_8",
+      "a": "n_1_8",
+      "b": "n_2_8",
+      "length_m": 423.1,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Quarry Lane"
+    },
+    {
+      "id": "n_2_8__n_3_8",
+      "a": "n_2_8",
+      "b": "n_3_8",
+      "length_m": 414.5,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Quarry Lane"
+    },
+    {
+      "id": "n_4_8__n_5_8",
+      "a": "n_4_8",
+      "b": "n_5_8",
+      "length_m": 412.6,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Quarry Lane"
+    },
+    {
+      "id": "n_5_8__n_6_8",
+      "a": "n_5_8",
+      "b": "n_6_8",
+      "length_m": 410.8,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Quarry Lane"
+    },
+    {
+      "id": "n_6_8__n_7_8",
+      "a": "n_6_8",
+      "b": "n_7_8",
+      "length_m": 400.2,
+      "road_class": "local",
+      "speed_kmh": 32.0,
+      "name": "Quarry Lane"
+    },
+    {
+      "id": "n_0_9__n_1_9",
+      "a": "n_0_9",
+      "b": "n_1_9",
+      "length_m": 412.3,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Summit Boulevard"
+    },
+    {
+      "id": "n_1_9__n_2_9",
+      "a": "n_1_9",
+      "b": "n_2_9",
+      "length_m": 415.4,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Summit Boulevard"
+    },
+    {
+      "id": "n_2_9__n_3_9",
+      "a": "n_2_9",
+      "b": "n_3_9",
+      "length_m": 400.5,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Summit Boulevard"
+    },
+    {
+      "id": "n_3_9__n_4_9",
+      "a": "n_3_9",
+      "b": "n_4_9",
+      "length_m": 418.6,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Summit Boulevard"
+    },
+    {
+      "id": "n_4_9__n_5_9",
+      "a": "n_4_9",
+      "b": "n_5_9",
+      "length_m": 411.9,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Summit Boulevard"
+    },
+    {
+      "id": "n_5_9__n_6_9",
+      "a": "n_5_9",
+      "b": "n_6_9",
+      "length_m": 406.9,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Summit Boulevard"
+    },
+    {
+      "id": "n_6_9__n_7_9",
+      "a": "n_6_9",
+      "b": "n_7_9",
+      "length_m": 417.7,
+      "road_class": "arterial",
+      "speed_kmh": 50.0,
+      "name": "Summit Boulevard"
+    }
+  ],
+  "hospitals": [
+    {
+      "id": "hosp_aurelia",
+      "name": "St. Aurelia General",
+      "node": "n_2_4",
+      "specialties": [
+        "general",
+        "cardiac",
+        "stroke"
+      ],
+      "beds_total": 48,
+      "icu_total": 12,
+      "district": "financial"
+    },
+    {
+      "id": "hosp_harbor",
+      "name": "Harbor Point Medical Center",
+      "node": "n_1_1",
+      "specialties": [
+        "cardiac",
+        "stroke",
+        "general"
+      ],
+      "beds_total": 64,
+      "icu_total": 18,
+      "district": "harbor"
+    },
+    {
+      "id": "hosp_northgate",
+      "name": "Northgate Trauma Center",
+      "node": "n_6_7",
+      "specialties": [
+        "trauma",
+        "burns",
+        "general"
+      ],
+      "beds_total": 40,
+      "icu_total": 14,
+      "district": "university"
+    },
+    {
+      "id": "hosp_riverside",
+      "name": "Riverside Children's Hospital",
+      "node": "n_6_2",
+      "specialties": [
+        "pediatric",
+        "general"
+      ],
+      "beds_total": 28,
+      "icu_total": 6,
+      "district": "old_town"
+    },
+    {
+      "id": "hosp_eastfield",
+      "name": "Eastfield Community Hospital",
+      "node": "n_2_8",
+      "specialties": [
+        "general"
+      ],
+      "beds_total": 22,
+      "icu_total": 4,
+      "district": "medical"
+    }
+  ],
+  "stations": [
+    {
+      "id": "stn_central",
+      "name": "Central EMS Station",
+      "node": "n_4_4"
+    },
+    {
+      "id": "stn_harbor",
+      "name": "Harbor EMS Station",
+      "node": "n_4_0"
+    },
+    {
+      "id": "stn_north",
+      "name": "North Ring EMS Station",
+      "node": "n_7_5"
+    }
+  ],
+  "blocks": [
+    {
+      "id": "b_0_0",
+      "r": 0,
+      "c": 0,
+      "x": 200.0,
+      "z": 200.0,
+      "district": "harbor",
+      "height_bias": 1.106,
+      "reserved_for": null
+    },
+    {
+      "id": "b_0_1",
+      "r": 0,
+      "c": 1,
+      "x": 600.0,
+      "z": 200.0,
+      "district": "harbor",
+      "height_bias": 1.285,
+      "reserved_for": null
+    },
+    {
+      "id": "b_0_2",
+      "r": 0,
+      "c": 2,
+      "x": 1000.0,
+      "z": 200.0,
+      "district": "residential",
+      "height_bias": 0.809,
+      "reserved_for": null
+    },
+    {
+      "id": "b_0_3",
+      "r": 0,
+      "c": 3,
+      "x": 1400.0,
+      "z": 200.0,
+      "district": "residential",
+      "height_bias": 1.009,
+      "reserved_for": null
+    },
+    {
+      "id": "b_0_4",
+      "r": 0,
+      "c": 4,
+      "x": 1800.0,
+      "z": 200.0,
+      "district": "residential",
+      "height_bias": 0.956,
+      "reserved_for": null
+    },
+    {
+      "id": "b_0_5",
+      "r": 0,
+      "c": 5,
+      "x": 2200.0,
+      "z": 200.0,
+      "district": "residential",
+      "height_bias": 0.909,
+      "reserved_for": null
+    },
+    {
+      "id": "b_0_6",
+      "r": 0,
+      "c": 6,
+      "x": 2600.0,
+      "z": 200.0,
+      "district": "industrial",
+      "height_bias": 0.809,
+      "reserved_for": null
+    },
+    {
+      "id": "b_0_7",
+      "r": 0,
+      "c": 7,
+      "x": 3000.0,
+      "z": 200.0,
+      "district": "industrial",
+      "height_bias": 0.568,
+      "reserved_for": null
+    },
+    {
+      "id": "b_0_8",
+      "r": 0,
+      "c": 8,
+      "x": 3400.0,
+      "z": 200.0,
+      "district": "industrial",
+      "height_bias": 0.733,
+      "reserved_for": null
+    },
+    {
+      "id": "b_1_0",
+      "r": 1,
+      "c": 0,
+      "x": 200.0,
+      "z": 600.0,
+      "district": "harbor",
+      "height_bias": 1.295,
+      "reserved_for": null
+    },
+    {
+      "id": "b_1_1",
+      "r": 1,
+      "c": 1,
+      "x": 600.0,
+      "z": 600.0,
+      "district": "harbor",
+      "height_bias": 1.321,
+      "reserved_for": "hosp_harbor"
+    },
+    {
+      "id": "b_1_2",
+      "r": 1,
+      "c": 2,
+      "x": 1000.0,
+      "z": 600.0,
+      "district": "residential",
+      "height_bias": 0.843,
+      "reserved_for": null
+    },
+    {
+      "id": "b_1_3",
+      "r": 1,
+      "c": 3,
+      "x": 1400.0,
+      "z": 600.0,
+      "district": "residential",
+      "height_bias": 1.032,
+      "reserved_for": null
+    },
+    {
+      "id": "b_1_4",
+      "r": 1,
+      "c": 4,
+      "x": 1800.0,
+      "z": 600.0,
+      "district": "residential",
+      "height_bias": 0.877,
+      "reserved_for": null
+    },
+    {
+      "id": "b_1_5",
+      "r": 1,
+      "c": 5,
+      "x": 2200.0,
+      "z": 600.0,
+      "district": "residential",
+      "height_bias": 1.164,
+      "reserved_for": null
+    },
+    {
+      "id": "b_1_6",
+      "r": 1,
+      "c": 6,
+      "x": 2600.0,
+      "z": 600.0,
+      "district": "industrial",
+      "height_bias": 0.818,
+      "reserved_for": null
+    },
+    {
+      "id": "b_1_7",
+      "r": 1,
+      "c": 7,
+      "x": 3000.0,
+      "z": 600.0,
+      "district": "industrial",
+      "height_bias": 0.773,
+      "reserved_for": null
+    },
+    {
+      "id": "b_1_8",
+      "r": 1,
+      "c": 8,
+      "x": 3400.0,
+      "z": 600.0,
+      "district": "industrial",
+      "height_bias": 0.708,
+      "reserved_for": null
+    },
+    {
+      "id": "b_2_0",
+      "r": 2,
+      "c": 0,
+      "x": 200.0,
+      "z": 1000.0,
+      "district": "harbor",
+      "height_bias": 0.913,
+      "reserved_for": null
+    },
+    {
+      "id": "b_2_1",
+      "r": 2,
+      "c": 1,
+      "x": 600.0,
+      "z": 1000.0,
+      "district": "harbor",
+      "height_bias": 0.97,
+      "reserved_for": null
+    },
+    {
+      "id": "b_2_2",
+      "r": 2,
+      "c": 2,
+      "x": 1000.0,
+      "z": 1000.0,
+      "district": "residential",
+      "height_bias": 0.995,
+      "reserved_for": null
+    },
+    {
+      "id": "b_2_3",
+      "r": 2,
+      "c": 3,
+      "x": 1400.0,
+      "z": 1000.0,
+      "district": "financial",
+      "height_bias": 2.448,
+      "reserved_for": null
+    },
+    {
+      "id": "b_2_4",
+      "r": 2,
+      "c": 4,
+      "x": 1800.0,
+      "z": 1000.0,
+      "district": "financial",
+      "height_bias": 2.221,
+      "reserved_for": "hosp_aurelia"
+    },
+    {
+      "id": "b_2_5",
+      "r": 2,
+      "c": 5,
+      "x": 2200.0,
+      "z": 1000.0,
+      "district": "financial",
+      "height_bias": 2.642,
+      "reserved_for": null
+    },
+    {
+      "id": "b_2_6",
+      "r": 2,
+      "c": 6,
+      "x": 2600.0,
+      "z": 1000.0,
+      "district": "residential",
+      "height_bias": 1.021,
+      "reserved_for": null
+    },
+    {
+      "id": "b_2_7",
+      "r": 2,
+      "c": 7,
+      "x": 3000.0,
+      "z": 1000.0,
+      "district": "medical",
+      "height_bias": 1.732,
+      "reserved_for": null
+    },
+    {
+      "id": "b_2_8",
+      "r": 2,
+      "c": 8,
+      "x": 3400.0,
+      "z": 1000.0,
+      "district": "medical",
+      "height_bias": 1.769,
+      "reserved_for": "hosp_eastfield"
+    },
+    {
+      "id": "b_3_0",
+      "r": 3,
+      "c": 0,
+      "x": 200.0,
+      "z": 1400.0,
+      "district": "harbor",
+      "height_bias": 1.19,
+      "reserved_for": null
+    },
+    {
+      "id": "b_3_1",
+      "r": 3,
+      "c": 1,
+      "x": 600.0,
+      "z": 1400.0,
+      "district": "harbor",
+      "height_bias": 1.197,
+      "reserved_for": null
+    },
+    {
+      "id": "b_3_2",
+      "r": 3,
+      "c": 2,
+      "x": 1000.0,
+      "z": 1400.0,
+      "district": "residential",
+      "height_bias": 0.815,
+      "reserved_for": null
+    },
+    {
+      "id": "b_3_3",
+      "r": 3,
+      "c": 3,
+      "x": 1400.0,
+      "z": 1400.0,
+      "district": "financial",
+      "height_bias": 2.688,
+      "reserved_for": null
+    },
+    {
+      "id": "b_3_4",
+      "r": 3,
+      "c": 4,
+      "x": 1800.0,
+      "z": 1400.0,
+      "district": "financial",
+      "height_bias": 2.763,
+      "reserved_for": null
+    },
+    {
+      "id": "b_3_5",
+      "r": 3,
+      "c": 5,
+      "x": 2200.0,
+      "z": 1400.0,
+      "district": "financial",
+      "height_bias": 3.16,
+      "reserved_for": null
+    },
+    {
+      "id": "b_3_6",
+      "r": 3,
+      "c": 6,
+      "x": 2600.0,
+      "z": 1400.0,
+      "district": "residential",
+      "height_bias": 0.956,
+      "reserved_for": null
+    },
+    {
+      "id": "b_3_7",
+      "r": 3,
+      "c": 7,
+      "x": 3000.0,
+      "z": 1400.0,
+      "district": "medical",
+      "height_bias": 1.35,
+      "reserved_for": null
+    },
+    {
+      "id": "b_3_8",
+      "r": 3,
+      "c": 8,
+      "x": 3400.0,
+      "z": 1400.0,
+      "district": "medical",
+      "height_bias": 1.565,
+      "reserved_for": null
+    },
+    {
+      "id": "b_4_0",
+      "r": 4,
+      "c": 0,
+      "x": 200.0,
+      "z": 1800.0,
+      "district": "harbor",
+      "height_bias": 1.27,
+      "reserved_for": "stn_harbor"
+    },
+    {
+      "id": "b_4_1",
+      "r": 4,
+      "c": 1,
+      "x": 600.0,
+      "z": 1800.0,
+      "district": "harbor",
+      "height_bias": 1.292,
+      "reserved_for": null
+    },
+    {
+      "id": "b_4_2",
+      "r": 4,
+      "c": 2,
+      "x": 1000.0,
+      "z": 1800.0,
+      "district": "residential",
+      "height_bias": 1.141,
+      "reserved_for": null
+    },
+    {
+      "id": "b_4_3",
+      "r": 4,
+      "c": 3,
+      "x": 1400.0,
+      "z": 1800.0,
+      "district": "financial",
+      "height_bias": 2.319,
+      "reserved_for": null
+    },
+    {
+      "id": "b_4_4",
+      "r": 4,
+      "c": 4,
+      "x": 1800.0,
+      "z": 1800.0,
+      "district": "financial",
+      "height_bias": 2.219,
+      "reserved_for": "stn_central"
+    },
+    {
+      "id": "b_4_5",
+      "r": 4,
+      "c": 5,
+      "x": 2200.0,
+      "z": 1800.0,
+      "district": "financial",
+      "height_bias": 2.915,
+      "reserved_for": null
+    },
+    {
+      "id": "b_4_6",
+      "r": 4,
+      "c": 6,
+      "x": 2600.0,
+      "z": 1800.0,
+      "district": "residential",
+      "height_bias": 1.192,
+      "reserved_for": null
+    },
+    {
+      "id": "b_4_7",
+      "r": 4,
+      "c": 7,
+      "x": 3000.0,
+      "z": 1800.0,
+      "district": "medical",
+      "height_bias": 1.774,
+      "reserved_for": null
+    },
+    {
+      "id": "b_4_8",
+      "r": 4,
+      "c": 8,
+      "x": 3400.0,
+      "z": 1800.0,
+      "district": "medical",
+      "height_bias": 1.47,
+      "reserved_for": null
+    },
+    {
+      "id": "b_5_0",
+      "r": 5,
+      "c": 0,
+      "x": 200.0,
+      "z": 2200.0,
+      "district": "harbor",
+      "height_bias": 0.945,
+      "reserved_for": null
+    },
+    {
+      "id": "b_5_1",
+      "r": 5,
+      "c": 1,
+      "x": 600.0,
+      "z": 2200.0,
+      "district": "harbor",
+      "height_bias": 1.281,
+      "reserved_for": null
+    },
+    {
+      "id": "b_5_2",
+      "r": 5,
+      "c": 2,
+      "x": 1000.0,
+      "z": 2200.0,
+      "district": "old_town",
+      "height_bias": 0.984,
+      "reserved_for": null
+    },
+    {
+      "id": "b_5_3",
+      "r": 5,
+      "c": 3,
+      "x": 1400.0,
+      "z": 2200.0,
+      "district": "old_town",
+      "height_bias": 0.757,
+      "reserved_for": null
+    },
+    {
+      "id": "b_5_4",
+      "r": 5,
+      "c": 4,
+      "x": 1800.0,
+      "z": 2200.0,
+      "district": "old_town",
+      "height_bias": 0.901,
+      "reserved_for": null
+    },
+    {
+      "id": "b_5_5",
+      "r": 5,
+      "c": 5,
+      "x": 2200.0,
+      "z": 2200.0,
+      "district": "residential",
+      "height_bias": 1.228,
+      "reserved_for": null
+    },
+    {
+      "id": "b_5_6",
+      "r": 5,
+      "c": 6,
+      "x": 2600.0,
+      "z": 2200.0,
+      "district": "residential",
+      "height_bias": 0.931,
+      "reserved_for": null
+    },
+    {
+      "id": "b_5_7",
+      "r": 5,
+      "c": 7,
+      "x": 3000.0,
+      "z": 2200.0,
+      "district": "residential",
+      "height_bias": 0.876,
+      "reserved_for": null
+    },
+    {
+      "id": "b_5_8",
+      "r": 5,
+      "c": 8,
+      "x": 3400.0,
+      "z": 2200.0,
+      "district": "residential",
+      "height_bias": 1.146,
+      "reserved_for": null
+    },
+    {
+      "id": "b_6_0",
+      "r": 6,
+      "c": 0,
+      "x": 200.0,
+      "z": 2600.0,
+      "district": "harbor",
+      "height_bias": 1.012,
+      "reserved_for": null
+    },
+    {
+      "id": "b_6_1",
+      "r": 6,
+      "c": 1,
+      "x": 600.0,
+      "z": 2600.0,
+      "district": "harbor",
+      "height_bias": 1.154,
+      "reserved_for": null
+    },
+    {
+      "id": "b_6_2",
+      "r": 6,
+      "c": 2,
+      "x": 1000.0,
+      "z": 2600.0,
+      "district": "old_town",
+      "height_bias": 0.663,
+      "reserved_for": "hosp_riverside"
+    },
+    {
+      "id": "b_6_3",
+      "r": 6,
+      "c": 3,
+      "x": 1400.0,
+      "z": 2600.0,
+      "district": "old_town",
+      "height_bias": 0.791,
+      "reserved_for": null
+    },
+    {
+      "id": "b_6_4",
+      "r": 6,
+      "c": 4,
+      "x": 1800.0,
+      "z": 2600.0,
+      "district": "old_town",
+      "height_bias": 0.712,
+      "reserved_for": null
+    },
+    {
+      "id": "b_6_5",
+      "r": 6,
+      "c": 5,
+      "x": 2200.0,
+      "z": 2600.0,
+      "district": "residential",
+      "height_bias": 0.894,
+      "reserved_for": null
+    },
+    {
+      "id": "b_6_6",
+      "r": 6,
+      "c": 6,
+      "x": 2600.0,
+      "z": 2600.0,
+      "district": "university",
+      "height_bias": 1.403,
+      "reserved_for": null
+    },
+    {
+      "id": "b_6_7",
+      "r": 6,
+      "c": 7,
+      "x": 3000.0,
+      "z": 2600.0,
+      "district": "university",
+      "height_bias": 1.182,
+      "reserved_for": "hosp_northgate"
+    },
+    {
+      "id": "b_6_8",
+      "r": 6,
+      "c": 8,
+      "x": 3400.0,
+      "z": 2600.0,
+      "district": "university",
+      "height_bias": 1.443,
+      "reserved_for": null
+    }
+  ]
+}

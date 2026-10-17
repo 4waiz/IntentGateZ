@@ -1,0 +1,22 @@
+{
+  "status": "ok",
+  "version": "1.0.0",
+  "uptime_s": 0.3,
+  "model": {
+    "available": false,
+    "runtime": "no model loaded",
+    "version": "none",
+    "accelerator": {
+      "device": "cpu",
+      "nnpa_device_listed": false,
+      "verified": false
+    }
+  },
+  "platform": {
+    "architecture": "AMD64",
+    "is_ibm_z": false,
+    "machine_model": null,
+    "os": "Windows 11"
+  },
+  "server_time": 1792226300.6691895
+}

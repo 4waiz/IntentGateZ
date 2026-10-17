@@ -1,0 +1,61 @@
+{
+  "uptime_s": 0.1,
+  "decisions": 5,
+  "verdicts": {
+    "ALLOW": 2,
+    "CHALLENGE": 1,
+    "BLOCK": 2
+  },
+  "http_requests": 15,
+  "latency": {
+    "decision_ms": {
+      "n": 5,
+      "p50": 0.269,
+      "p95": 0.564,
+      "p99": 0.571,
+      "mean": 0.371,
+      "max": 0.573
+    },
+    "inference_ms": {
+      "n": 5,
+      "p50": 0.0,
+      "p95": 0.0,
+      "p99": 0.0,
+      "mean": 0.0,
+      "max": 0.0
+    },
+    "policy_ms": {
+      "n": 5,
+      "p50": 0.038,
+      "p95": 0.268,
+      "p99": 0.296,
+      "mean": 0.105,
+      "max": 0.303
+    },
+    "features_ms": {
+      "n": 5,
+      "p50": 0.133,
+      "p95": 0.233,
+      "p99": 0.249,
+      "mean": 0.149,
+      "max": 0.253
+    },
+    "end_to_end_ms": {
+      "n": 5,
+      "p50": 0.338,
+      "p95": 0.64,
+      "p99": 0.646,
+      "mean": 0.445,
+      "max": 0.647
+    }
+  },
+  "inference_count": 0,
+  "sessions_active": 1,
+  "audit_records": 21,
+  "memory": {
+    "process_rss_mb": null,
+    "host_total_mb": null,
+    "host_available_mb": null
+  },
+  "load_avg": null
+}

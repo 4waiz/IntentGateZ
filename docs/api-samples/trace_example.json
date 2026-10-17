@@ -1,0 +1,207 @@
+{
+  "decision_id": "dec_a1096b6d34bd",
+  "verdict": "ALLOW",
+  "status": "executed",
+  "trace": [
+    {
+      "step": "proposal.received",
+      "t_ms": 0.064,
+      "action_id": "act_5ea4289a84d9",
+      "agent_id": "route-planner-01",
+      "origin": "scenario:reroute"
+    },
+    {
+      "step": "audit.append",
+      "t_ms": 0.106,
+      "event": "action.proposed",
+      "seq": 4,
+      "hash": "9503d62165668b84cdd1b59d692209746308f8ee8b39065d536d546c29ae4f6f"
+    },
+    {
+      "step": "intent.loaded",
+      "t_ms": 0.134,
+      "intent_id": "int_a67a3bf7233a",
+      "version": 1,
+      "signature_ok": true,
+      "latest_version": 1
+    },
+    {
+      "step": "policy.evaluated",
+      "t_ms": 0.265,
+      "checks": 12,
+      "blocks": 0,
+      "challenges": 0,
+      "hard_verdict": "ALLOW"
+    },
+    {
+      "step": "features.extracted",
+      "t_ms": 0.52,
+      "count": 43
+    },
+    {
+      "step": "ml.inference",
+      "t_ms": 0.525,
+      "runtime": "unavailable"
+    },
+    {
+      "step": "decision.fused",
+      "t_ms": 0.529,
+      "verdict": "ALLOW",
+      "hard": "ALLOW",
+      "ml": "ALLOW"
+    },
+    {
+      "step": "simulation.executed",
+      "t_ms": 0.55,
+      "state_version": 3
+    },
+    {
+      "step": "audit.append",
+      "t_ms": 0.589,
+      "event": "decision.made",
+      "seq": 5,
+      "hash": "c474f6a834b708d4efbe4fdce6f1cf05a52705da67b4f92b89be90845d691123"
+    },
+    {
+      "step": "audit.append",
+      "t_ms": 0.611,
+      "event": "action.executed",
+      "seq": 6,
+      "hash": "b802a5ed9ab988e6a56a3c55c430ed6952b8d3180e3dfa02624477799641bb83"
+    }
+  ],
+  "audit_records": [
+    {
+      "seq": 4,
+      "ts": 1792226300.683194,
+      "time": "2026-10-17T08:38:20.683Z",
+      "session_id": "ses_K96Yh6cz6FMYBQxr",
+      "event_type": "action.proposed",
+      "subject_id": "act_5ea4289a84d9",
+      "payload": {
+        "action_type": "reroute_ambulance",
+        "agent_id": "route-planner-01",
+        "fingerprint": "eae261d13810e469180620810590e2e788cafb519eb39aa6ee13d1615f908538",
+        "intent_id": "int_a67a3bf7233a",
+        "intent_version": 1,
+        "origin": "scenario:reroute",
+        "parameters": {
+          "ambulance_id": "amb_03",
+          "destination_hospital_id": "hosp_harbor",
+          "incident_id": "INC-2041",
+          "route": [
+            "n_1_6",
+            "n_2_6",
+            "n_3_6",
+            "n_3_5",
+            "n_3_4",
+            "n_3_3",
+            "n_3_2",
+            "n_2_2",
+            "n_1_2",
+            "n_1_1"
+          ]
+        },
+        "provenance": [
+          {
+            "fields": [
+              "ambulance_id",
+              "destination_hospital_id"
+            ],
+            "source_id": "op_dispatch_chen",
+            "trust": "trusted"
+          },
+          {
+            "fields": [
+              "route"
+            ],
+            "source_id": "cad_road_status",
+            "trust": "internal"
+          },
+          {
+            "fields": [
+              "destination_hospital_id"
+            ],
+            "source_id": "bed_registry",
+            "trust": "internal"
+          }
+        ],
+        "simulated_adversary": false,
+        "target": "amb_03",
+        "tool": "cad.route.set"
+      },
+      "prev_hash": "c90deb404b88f289956796b1c09892e602b5747632ce4a88de3e14709eacf72c",
+      "hash": "9503d62165668b84cdd1b59d692209746308f8ee8b39065d536d546c29ae4f6f"
+    },
+    {
+      "seq": 5,
+      "ts": 1792226300.683194,
+      "time": "2026-10-17T08:38:20.683Z",
+      "session_id": "ses_K96Yh6cz6FMYBQxr",
+      "event_type": "decision.made",
+      "subject_id": "dec_a1096b6d34bd",
+      "payload": {
+        "action_id": "act_5ea4289a84d9",
+        "decision_ms": 0.528,
+        "findings": [
+          {
+            "code": "IG-ML-000",
+            "outcome": "info"
+          }
+        ],
+        "fingerprint": "eae261d13810e469180620810590e2e788cafb519eb39aa6ee13d1615f908538",
+        "hard_verdict": "ALLOW",
+        "ml_verdict": "ALLOW",
+        "risk": null,
+        "verdict": "ALLOW"
+      },
+      "prev_hash": "9503d62165668b84cdd1b59d692209746308f8ee8b39065d536d546c29ae4f6f",
+      "hash": "c474f6a834b708d4efbe4fdce6f1cf05a52705da67b4f92b89be90845d691123"
+    },
+    {
+      "seq": 6,
+      "ts": 1792226300.683194,
+      "time": "2026-10-17T08:38:20.683Z",
+      "session_id": "ses_K96Yh6cz6FMYBQxr",
+      "event_type": "action.executed",
+      "subject_id": "act_5ea4289a84d9",
+      "payload": {
+        "challenge_id": null,
+        "decision_id": "dec_a1096b6d34bd",
+        "execution": {
+          "action_id": "act_5ea4289a84d9",
+          "ambulance_id": "amb_03",
+          "applied_at": 1792226300.683194,
+          "destination_hospital_id": "hosp_harbor",
+          "route": [
+            "n_1_6",
+            "n_2_6",
+            "n_3_6",
+            "n_3_5",
+            "n_3_4",
+            "n_3_3",
+            "n_3_2",
+            "n_2_2",
+            "n_1_2",
+            "n_1_1"
+          ],
+          "state_version": 3
+        },
+        "status": "executed"
+      },
+      "prev_hash": "c474f6a834b708d4efbe4fdce6f1cf05a52705da67b4f92b89be90845d691123",
+      "hash": "b802a5ed9ab988e6a56a3c55c430ed6952b8d3180e3dfa02624477799641bb83"
+    }
+  ],
+  "latency_ms": {
+    "decision_ms": 0.528,
+    "policy_ms": 0.126,
+    "features_ms": 0.253,
+    "inference_ms": 0.0,
+    "end_to_end_ms": 0.612
+  },
+  "chain": {
+    "seq": 21,
+    "hash": "aebe25eac01a1db75cab98d6fa3e3387f7d51ed0c820de0f62124378fb5d1201"
+  }
+}

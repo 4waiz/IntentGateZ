@@ -1,0 +1,10 @@
+{
+  "ok": true,
+  "records_checked": 21,
+  "head_hash": "aebe25eac01a1db75cab98d6fa3e3387f7d51ed0c820de0f62124378fb5d1201",
+  "first_bad_seq": null,
+  "reason": "",
+  "verified_at": "2026-10-17T08:38:20.712Z",
+  "duration_ms": 0.179,
+  "algorithm": "SHA-256 hash chain over canonical JSON"
+}

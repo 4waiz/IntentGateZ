@@ -1,0 +1,73 @@
+{
+  "architecture": "AMD64",
+  "is_ibm_z": false,
+  "system": "Windows",
+  "kernel": "11",
+  "os": "Windows 11",
+  "cpu_vendor": null,
+  "machine_type": null,
+  "machine_model": null,
+  "cpu_count": 24,
+  "hypervisor": null,
+  "virtualization": null,
+  "lscpu_model": null,
+  "cpu_features": [],
+  "nnpa_facility_detected": false,
+  "python": "3.12.10",
+  "packages": {
+    "fastapi": "0.139.2",
+    "uvicorn": "0.51.0",
+    "pydantic": "2.13.4",
+    "numpy": "2.4.6",
+    "scikit-learn": "1.9.0",
+    "xgboost": null,
+    "tensorflow": null,
+    "ibm-zdnn-plugin": null,
+    "torch": "2.11.0+cu128",
+    "llama_cpp_python": null,
+    "joblib": "1.5.3"
+  },
+  "in_container": false,
+  "uptime_s": 0.3,
+  "memory": {
+    "process_rss_mb": null,
+    "host_total_mb": null,
+    "host_available_mb": null
+  },
+  "load_avg": null,
+  "pid": 33292,
+  "model": {
+    "available": false,
+    "kind": "unavailable",
+    "runtime": "no model loaded",
+    "version": "none",
+    "accelerator": {
+      "device": "cpu",
+      "nnpa_device_listed": false,
+      "verified": false
+    },
+    "thresholds": {
+      "tau_block": 0.85,
+      "tau_review": 0.5
+    },
+    "inference_count": 0,
+    "last_error": "model_meta.json not found; run ml/train.py",
+    "meta": {}
+  },
+  "injection_detector": {
+    "runtime": "lexical heuristic (no trained text model loaded)",
+    "version": "lexical-heuristic"
+  },
+  "explainer": {
+    "available": false,
+    "backend": null,
+    "model": null,
+    "reason": "INTENTGATE_LLM_PATH not set; Granite explanations disabled",
+    "role": "explanations only; never an authority for decisions"
+  },
+  "audit": {
+    "seq": 1,
+    "hash": "5626fc80e5a4dba3a9403e2f21b0f6cec02307a11fec2629d4afa7efa5369fd0"
+  },
+  "evidence": []
+}

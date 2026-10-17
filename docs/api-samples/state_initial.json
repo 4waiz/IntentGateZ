@@ -1,0 +1,349 @@
+{
+  "version": 0,
+  "server_time": 1792226300.6811943,
+  "sim_speedup": 8.0,
+  "ambulances": [
+    {
+      "id": "amb_01",
+      "call_sign": "MEDIC 1",
+      "station_id": "stn_central",
+      "status": "available",
+      "node": "n_4_4",
+      "route": [],
+      "route_times": [],
+      "start_xz": null,
+      "departed_at": 0.0,
+      "destination_hospital_id": null,
+      "incident_id": null,
+      "patient": null,
+      "ambient": false,
+      "last_action_id": null,
+      "position": {
+        "x": 1600.0,
+        "z": 1600.0,
+        "heading": 0.0,
+        "progress": 1.0,
+        "moving": false,
+        "next_node": "n_4_4"
+      },
+      "destination_name": null
+    },
+    {
+      "id": "amb_02",
+      "call_sign": "MEDIC 2",
+      "station_id": "stn_north",
+      "status": "available",
+      "node": "n_7_5",
+      "route": [],
+      "route_times": [],
+      "start_xz": null,
+      "departed_at": 0.0,
+      "destination_hospital_id": null,
+      "incident_id": null,
+      "patient": null,
+      "ambient": false,
+      "last_action_id": null,
+      "position": {
+        "x": 2000.0,
+        "z": 2800.0,
+        "heading": 0.0,
+        "progress": 1.0,
+        "moving": false,
+        "next_node": "n_7_5"
+      },
+      "destination_name": null
+    },
+    {
+      "id": "amb_03",
+      "call_sign": "MEDIC 3",
+      "station_id": "stn_central",
+      "status": "transporting",
+      "node": "n_1_5",
+      "route": [
+        "n_1_5",
+        "n_1_4",
+        "n_1_3",
+        "n_1_2",
+        "n_1_1"
+      ],
+      "route_times": [
+        0.0,
+        23.8,
+        47.549,
+        71.868,
+        95.149
+      ],
+      "start_xz": null,
+      "departed_at": 1792226298.6791945,
+      "destination_hospital_id": "hosp_harbor",
+      "incident_id": "INC-2041",
+      "patient": "INC-2041 cardiac patient",
+      "ambient": false,
+      "last_action_id": null,
+      "position": {
+        "x": 1730.8235489019826,
+        "z": 400.0,
+        "heading": -1.5707963267948966,
+        "progress": 0.1683254562878436,
+        "moving": true,
+        "next_node": "n_1_4"
+      },
+      "destination_name": "Harbor Point Medical Center"
+    },
+    {
+      "id": "amb_04",
+      "call_sign": "MEDIC 4",
+      "station_id": "stn_harbor",
+      "status": "available",
+      "node": "n_4_0",
+      "route": [],
+      "route_times": [],
+      "start_xz": null,
+      "departed_at": 0.0,
+      "destination_hospital_id": null,
+      "incident_id": null,
+      "patient": null,
+      "ambient": false,
+      "last_action_id": null,
+      "position": {
+        "x": 0.0,
+        "z": 1600.0,
+        "heading": 0.0,
+        "progress": 1.0,
+        "moving": false,
+        "next_node": "n_4_0"
+      },
+      "destination_name": null
+    },
+    {
+      "id": "amb_05",
+      "call_sign": "MEDIC 5",
+      "station_id": "stn_north",
+      "status": "dispatched",
+      "node": "n_7_5",
+      "route": [
+        "n_6_3",
+        "n_6_4",
+        "n_5_4",
+        "n_4_4"
+      ],
+      "route_times": [
+        0.0,
+        36.279,
+        73.548,
+        109.593
+      ],
+      "start_xz": null,
+      "departed_at": 1792226300.6791945,
+      "destination_hospital_id": null,
+      "incident_id": "INC-2047",
+      "patient": null,
+      "ambient": true,
+      "last_action_id": null,
+      "position": {
+        "x": 1200.1763978095541,
+        "z": 2400.0,
+        "heading": 1.5707963267948966,
+        "progress": 0.00014598414435257041,
+        "moving": true,
+        "next_node": "n_6_4"
+      },
+      "destination_name": null
+    },
+    {
+      "id": "amb_06",
+      "call_sign": "MEDIC 6",
+      "station_id": "stn_harbor",
+      "status": "returning",
+      "node": "n_0_3",
+      "route": [
+        "n_4_0",
+        "n_3_0",
+        "n_3_1",
+        "n_3_2",
+        "n_3_3",
+        "n_3_4",
+        "n_3_5",
+        "n_3_6",
+        "n_4_6",
+        "n_5_6",
+        "n_6_6",
+        "n_6_7"
+      ],
+      "route_times": [
+        0.0,
+        24.083,
+        38.922,
+        53.75,
+        68.989,
+        84.051,
+        98.66,
+        113.337,
+        128.148,
+        142.749,
+        157.319,
+        194.057
+      ],
+      "start_xz": null,
+      "departed_at": 1792226300.6791945,
+      "destination_hospital_id": null,
+      "incident_id": null,
+      "patient": null,
+      "ambient": true,
+      "last_action_id": null,
+      "position": {
+        "x": 0.0,
+        "z": 1599.7342716383835,
+        "heading": 3.141592653589793,
+        "progress": 8.244402588946161e-05,
+        "moving": true,
+        "next_node": "n_3_0"
+      },
+      "destination_name": null
+    }
+  ],
+  "hospitals": [
+    {
+      "id": "hosp_aurelia",
+      "name": "St. Aurelia General",
+      "node": "n_2_4",
+      "specialties": [
+        "general",
+        "cardiac",
+        "stroke"
+      ],
+      "status": "diverting",
+      "status_reason": "ED saturation: diverting new arrivals",
+      "beds_total": 48,
+      "beds_available": 16,
+      "icu_total": 12,
+      "icu_available": 6
+    },
+    {
+      "id": "hosp_harbor",
+      "name": "Harbor Point Medical Center",
+      "node": "n_1_1",
+      "specialties": [
+        "cardiac",
+        "stroke",
+        "general"
+      ],
+      "status": "accepting",
+      "status_reason": "",
+      "beds_total": 64,
+      "beds_available": 22,
+      "icu_total": 18,
+      "icu_available": 9
+    },
+    {
+      "id": "hosp_northgate",
+      "name": "Northgate Trauma Center",
+      "node": "n_6_7",
+      "specialties": [
+        "trauma",
+        "burns",
+        "general"
+      ],
+      "status": "accepting",
+      "status_reason": "",
+      "beds_total": 40,
+      "beds_available": 14,
+      "icu_total": 14,
+      "icu_available": 7
+    },
+    {
+      "id": "hosp_riverside",
+      "name": "Riverside Children's Hospital",
+      "node": "n_6_2",
+      "specialties": [
+        "pediatric",
+        "general"
+      ],
+      "status": "accepting",
+      "status_reason": "",
+      "beds_total": 28,
+      "beds_available": 9,
+      "icu_total": 6,
+      "icu_available": 3
+    },
+    {
+      "id": "hosp_eastfield",
+      "name": "Eastfield Community Hospital",
+      "node": "n_2_8",
+      "specialties": [
+        "general"
+      ],
+      "status": "accepting",
+      "status_reason": "",
+      "beds_total": 22,
+      "beds_available": 7,
+      "icu_total": 4,
+      "icu_available": 1
+    }
+  ],
+  "incidents": [
+    {
+      "id": "INC-2041",
+      "kind": "cardiac_arrest",
+      "node": "n_1_5",
+      "severity": 5,
+      "description": "Cardiac arrest, patient in transport",
+      "status": "assigned",
+      "assigned_ambulance": "amb_03",
+      "required_specialty": "cardiac"
+    },
+    {
+      "id": "INC-2044",
+      "kind": "multi_vehicle_collision",
+      "node": "n_2_6",
+      "severity": 5,
+      "description": "Multi-vehicle collision on Canal Street, 3 critical",
+      "status": "open",
+      "assigned_ambulance": null,
+      "required_specialty": "trauma"
+    },
+    {
+      "id": "INC-2047",
+      "kind": "stroke",
+      "node": "n_6_3",
+      "severity": 4,
+      "description": "Suspected stroke, Old Town",
+      "status": "assigned",
+      "assigned_ambulance": "amb_05",
+      "required_specialty": "stroke"
+    },
+    {
+      "id": "INC-2049",
+      "kind": "burn_injury",
+      "node": "n_0_7",
+      "severity": 3,
+      "description": "Industrial burn injury, Foundry district",
+      "status": "open",
+      "assigned_ambulance": null,
+      "required_specialty": "burns"
+    }
+  ],
+  "closures": [],
+  "purchases": [],
+  "icu_reservations": [],
+  "record_shares": [],
+  "feeds": [
+    {
+      "id": "feed_traffic_001",
+      "source": "City Traffic Authority (external)",
+      "trust": "untrusted",
+      "ts": 1792226180.6791945,
+      "text": "Congestion on Meridian Expressway eastbound between Market Street and Kingsway. Expect delays of 4 minutes."
+    },
+    {
+      "id": "feed_hosp_001",
+      "source": "Regional Hospital Status Aggregator (external)",
+      "trust": "untrusted",
+      "ts": 1792226240.6791945,
+      "text": "St. Aurelia General reports ED saturation and is diverting new arrivals. Harbor Point and Northgate accepting."
+    }
+  ],
+  "spend_total_usd": 0,
+  "intents": [],
+  "challenges": []
+}

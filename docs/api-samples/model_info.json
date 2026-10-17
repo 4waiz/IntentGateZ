@@ -1,0 +1,31 @@
+{
+  "risk_model": {
+    "available": false,
+    "kind": "unavailable",
+    "runtime": "no model loaded",
+    "version": "none",
+    "accelerator": {
+      "device": "cpu",
+      "nnpa_device_listed": false,
+      "verified": false
+    },
+    "thresholds": {
+      "tau_block": 0.85,
+      "tau_review": 0.5
+    },
+    "inference_count": 0,
+    "last_error": "model_meta.json not found; run ml/train.py",
+    "meta": {}
+  },
+  "injection_detector": {
+    "runtime": "lexical heuristic (no trained text model loaded)",
+    "version": "lexical-heuristic"
+  },
+  "explainer": {
+    "available": false,
+    "backend": null,
+    "model": null,
+    "reason": "INTENTGATE_LLM_PATH not set; Granite explanations disabled",
+    "role": "explanations only; never an authority for decisions"
+  }
+}

@@ -1,0 +1,49 @@
+[
+  {
+    "agent_id": "route-planner-01",
+    "name": "Ambulance Routing Agent",
+    "role": "routing",
+    "capabilities": [
+      "cancel_dispatch",
+      "dispatch_ambulance",
+      "reroute_ambulance"
+    ],
+    "tools": [
+      "cad.route.set",
+      "cad.unit.cancel",
+      "cad.unit.dispatch"
+    ],
+    "description": "Plans ambulance dispatch and routes on the city road network.",
+    "active": true
+  },
+  {
+    "agent_id": "supply-agent-02",
+    "name": "Procurement Agent",
+    "role": "procurement",
+    "capabilities": [
+      "purchase_supplies"
+    ],
+    "tools": [
+      "erp.purchase_order.create"
+    ],
+    "description": "Raises purchase orders for emergency medical supplies.",
+    "active": true
+  },
+  {
+    "agent_id": "capacity-agent-03",
+    "name": "Hospital Coordination Agent",
+    "role": "coordination",
+    "capabilities": [
+      "reserve_icu_beds",
+      "share_patient_record",
+      "update_hospital_status"
+    ],
+    "tools": [
+      "bedreg.icu.reserve",
+      "bedreg.status.set",
+      "ehr.record.share"
+    ],
+    "description": "Coordinates ICU capacity, hospital status and record transfers.",
+    "active": true
+  }
+]

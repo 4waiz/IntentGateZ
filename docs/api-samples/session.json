@@ -1,0 +1,29 @@
+{
+  "session_id": "ses_K96Yh6cz6FMYBQxr",
+  "supervisor": {
+    "id": "sup_okafor",
+    "name": "R. Okafor",
+    "role": "supervisor",
+    "title": "Duty Operations Supervisor",
+    "credential": "ojqv4Yo8OWwI4YnHG-_Gpb6fRvtPwxLS"
+  },
+  "operators": {
+    "dispatcher": {
+      "id": "op_dispatch_chen",
+      "name": "M. Chen",
+      "role": "dispatcher"
+    },
+    "logistics_officer": {
+      "id": "lo_amira",
+      "name": "A. Haddad",
+      "role": "logistics_officer"
+    },
+    "hospital_coordinator": {
+      "id": "hc_lena",
+      "name": "L. Varga",
+      "role": "hospital_coordinator"
+    }
+  },
+  "server_time": 1792226300.6791945,
+  "note": "Each viewer gets an isolated sandbox. The demo supervisor credential is separate from operator and agent identities."
+}
