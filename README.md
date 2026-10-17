@@ -8,7 +8,7 @@ The last checkpoint before autonomous AI takes action, running on IBM LinuxONE.<
 
 <p align="center">
   <a href="https://intentgatez.148-100-79-208.sslip.io"><b>Live demo</b></a> ·
-  <a href="#"><b>Demo video</b></a> ·
+  <a href="https://youtu.be/KCUrgeCiYT0"><b>Demo video</b></a> ·
   <a href="submission/Team%20Kanban_IBM%20Z%20Datathon%202026%20Project%20-%20IntentGate%20Z.pdf"><b>Pitch deck</b></a> ·
   <a href="notebooks/IntentGateZ_IBM_LinuxONE_Evaluation.ipynb"><b>Evaluation notebook</b></a> ·
   <a href="docs/security-model.md"><b>Security model</b></a>
