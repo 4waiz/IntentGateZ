@@ -164,10 +164,11 @@ class CpuSampler(threading.Thread):
             t0, i0 = t1, i1
 
 
-def run_http(url: str, n: int, levels: list[int]) -> dict:
+def run_http(url: str, n: int, levels: list[int], operator_token: str = "") -> dict:
     import httpx
 
-    client = httpx.Client(base_url=url, timeout=30)
+    OPH = {"X-IG-Operator": operator_token} if operator_token else {}
+    client = httpx.Client(base_url=url, timeout=30, headers=OPH)
     sess = client.post("/api/session").json()
     H = {"X-IG-Session": sess["session_id"]}
     for sid in ("reroute", "supply", "injection", "drift"):
@@ -187,7 +188,7 @@ def run_http(url: str, n: int, levels: list[int]) -> dict:
 
         def worker(k: int) -> None:
             nonlocal errors
-            cl = httpx.Client(base_url=url, timeout=30)
+            cl = httpx.Client(base_url=url, timeout=30, headers=OPH)
             s2 = cl.post("/api/session").json()
             h2 = {"X-IG-Session": s2["session_id"]}
             # Re-register intents in this worker's sandbox by running scenarios once.
@@ -234,13 +235,14 @@ def main() -> None:
     ap.add_argument("--url", default="http://127.0.0.1:8000")
     ap.add_argument("--concurrency", default="1,4,8,16")
     ap.add_argument("--out", default=str(ROOT / "ml" / "results"))
+    ap.add_argument("--operator-token", default=os.environ.get("IG_OPERATOR_TOKEN", ""), help="exempts the load generator from the public rate limit")
     args = ap.parse_args()
     started = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     if args.mode == "inprocess":
         res = run_inprocess(args.n, args.reps)
         name = "benchmark_inprocess"
     else:
-        res = run_http(args.url, args.n, [int(x) for x in args.concurrency.split(",")])
+        res = run_http(args.url, args.n, [int(x) for x in args.concurrency.split(",")], args.operator_token)
         name = "benchmark_http"
     res.update({"host": host_facts(), "started_at": started})
     Path(args.out).mkdir(parents=True, exist_ok=True)

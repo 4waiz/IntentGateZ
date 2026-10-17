@@ -84,14 +84,17 @@ async def guard(request: Request, call_next):
         length = int(request.headers.get("content-length") or 0)
         if length > settings.max_body_bytes:
             return JSONResponse({"error": "payload_too_large", "limit_bytes": settings.max_body_bytes}, status_code=413)
+        op = request.headers.get("x-ig-operator")
+        exempt = bool(settings.operator_token and op and hmac.compare_digest(op, settings.operator_token))
         ip = _client_ip(request)
         q = _buckets[ip]
         now = time.time()
         while q and now - q[0] > 60:
             q.popleft()
-        if len(q) >= settings.rate_limit_per_min:
-            return JSONResponse({"error": "rate_limited", "retry_after_s": 60}, status_code=429)
-        q.append(now)
+        if not exempt:
+            if len(q) >= settings.rate_limit_per_min:
+                return JSONResponse({"error": "rate_limited", "retry_after_s": 60}, status_code=429)
+            q.append(now)
     response: Response = await call_next(request)
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["Referrer-Policy"] = "no-referrer"
