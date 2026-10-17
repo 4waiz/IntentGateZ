@@ -1,10 +1,6 @@
 # Public HTTPS front door on the LinuxONE VM.
 # IG_DOMAIN is <public-ip-with-dashes>.sslip.io (wildcard DNS that resolves to the IP), so
 # Caddy can obtain a Let's Encrypt certificate without registering a domain.
-{
-	email {$IG_ACME_EMAIL}
-}
-
 {$IG_DOMAIN} {
 	encode zstd gzip
 
