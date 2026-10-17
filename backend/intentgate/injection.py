@@ -63,37 +63,55 @@ def lexical_score(text: str) -> float:
 
 
 class InjectionDetector:
+    """Two text classifiers, each used only on the channel it was trained for.
+
+    * feed model: scores untrusted feed / tool text for agent-directed instructions;
+    * rationale model: scores the agent's own rationale for deference to outside notices.
+    """
+
     def __init__(self, artifacts_dir: Path | None = None) -> None:
-        self.model = None
-        self.version = "lexical-heuristic"
-        self.runtime = "lexical heuristic (no trained text model loaded)"
+        self.models: dict[str, object] = {}
+        self.versions: dict[str, str] = {}
         self._cache: OrderedDict[str, float] = OrderedDict()
+        problems = []
         if artifacts_dir is not None:
-            path = Path(artifacts_dir) / "injection_text_model.joblib"
-            if path.is_file():
+            for kind, fname in (("feed", "injection_text_model.joblib"), ("rationale", "rationale_text_model.joblib")):
+                path = Path(artifacts_dir) / fname
+                if not path.is_file():
+                    continue
                 try:
                     import joblib
 
                     bundle = joblib.load(path)
-                    self.model = bundle["pipeline"]
-                    self.version = bundle.get("version", "unknown")
-                    self.runtime = f"scikit-learn TF-IDF + LogisticRegression ({self.version})"
+                    self.models[kind] = bundle["pipeline"]
+                    self.versions[kind] = bundle.get("version", "unknown")
                 except Exception as exc:  # pragma: no cover - surfaced through /api/model/info
-                    self.runtime = f"lexical heuristic (text model failed to load: {exc.__class__.__name__})"
+                    problems.append(f"{kind}: {exc.__class__.__name__}")
+        self.version = ", ".join(f"{k}={v}" for k, v in self.versions.items()) or "lexical-heuristic"
+        if self.models:
+            self.runtime = "scikit-learn TF-IDF + LogisticRegression (" + ", ".join(sorted(self.models)) + " channels)"
+        else:
+            self.runtime = "lexical heuristic (no trained text model loaded)" + (f"; load errors: {problems}" if problems else "")
 
-    def score(self, text: str) -> float:
+    def _score(self, kind: str, text: str) -> float:
         if not text:
             return 0.0
-        key = hashlib.blake2b(text.encode("utf-8"), digest_size=12).hexdigest()
+        key = kind + hashlib.blake2b(text.encode("utf-8"), digest_size=12).hexdigest()
         hit = self._cache.get(key)
         if hit is not None:
             self._cache.move_to_end(key)
             return hit
-        if self.model is not None:
-            val = float(self.model.predict_proba([text])[0][1])
-        else:
-            val = lexical_score(text)
+        model = self.models.get(kind)
+        val = float(model.predict_proba([text])[0][1]) if model is not None else lexical_score(text)
         self._cache[key] = val
         if len(self._cache) > 4096:
             self._cache.popitem(last=False)
         return val
+
+    def score(self, text: str) -> float:
+        """Untrusted feed / tool text."""
+        return self._score("feed", text)
+
+    def score_rationale(self, text: str) -> float:
+        """The proposing agent's own rationale."""
+        return self._score("rationale", text)

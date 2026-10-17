@@ -1,66 +1,92 @@
 {
-  "model": "TF-IDF (word 1-2 + char_wb 3-5) + LogisticRegression",
-  "version": "igz-injection-tfidf-lr-20261017-s7",
-  "decision_threshold_from_val": 0.512,
-  "train_examples": 3600,
-  "train_seconds": 0.31,
-  "single_text_inference_ms": 0.775,
-  "validation": {
-    "n": 1200,
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1": 1.0,
-    "roc_auc": 1.0,
-    "pr_auc": 1.0
+  "feed_injection_model": {
+    "purpose": "Is untrusted feed/tool text trying to instruct the agent?",
+    "version": "igz-injection-tfidf-lr-20261017-s7",
+    "decision_threshold_from_val": 0.6,
+    "train_examples": 3600,
+    "train_seconds": 0.3,
+    "single_text_inference_ms": 0.763,
+    "validation": {
+      "n": 1200,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0
+    },
+    "test_unseen_templates": {
+      "n": 1200,
+      "precision": 0.7737,
+      "recall": 1.0,
+      "f1": 0.8724,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0
+    },
+    "external_public_sets": {
+      "injecagent_attacker_plain": {
+        "n": 62,
+        "flagged_rate": 0.8548,
+        "mean_score": 0.8276,
+        "median_score": 0.8878
+      },
+      "injecagent_attacker_enhanced": {
+        "n": 62,
+        "flagged_rate": 1.0,
+        "mean_score": 0.9525,
+        "median_score": 0.9632
+      },
+      "agentdojo_goals_plain": {
+        "n": 35,
+        "flagged_rate": 0.9143,
+        "mean_score": 0.8294,
+        "median_score": 0.8728
+      },
+      "agentdojo_important_instructions": {
+        "n": 35,
+        "flagged_rate": 1.0,
+        "mean_score": 0.8631,
+        "median_score": 0.8647
+      },
+      "injecagent_user_instructions_benign": {
+        "n": 17,
+        "flagged_rate": 0.5294,
+        "mean_score": 0.5897,
+        "median_score": 0.6505
+      }
+    }
   },
-  "test_unseen_templates": {
-    "n": 1200,
-    "precision": 0.7691,
-    "recall": 1.0,
-    "f1": 0.8695,
-    "roc_auc": 1.0,
-    "pr_auc": 1.0
-  },
-  "external_public_sets": {
-    "injecagent_attacker_plain": {
-      "n": 62,
-      "flagged_rate": 0.6774,
-      "mean_score": 0.6173,
-      "median_score": 0.6833
+  "rationale_model": {
+    "purpose": "Does the agent's own rationale defer to an outside notice instead of the operator's instruction?",
+    "version": "igz-rationale-tfidf-lr-20261017-s7",
+    "decision_threshold_from_val": 0.6,
+    "train_examples": 3600,
+    "train_seconds": 0.27,
+    "single_text_inference_ms": 0.87,
+    "validation": {
+      "n": 1200,
+      "precision": 1.0,
+      "recall": 0.486,
+      "f1": 0.6541,
+      "roc_auc": 0.9023,
+      "pr_auc": 0.9023
     },
-    "injecagent_attacker_enhanced": {
-      "n": 62,
-      "flagged_rate": 1.0,
-      "mean_score": 0.9225,
-      "median_score": 0.9399
-    },
-    "agentdojo_goals_plain": {
-      "n": 35,
-      "flagged_rate": 0.8286,
-      "mean_score": 0.6497,
-      "median_score": 0.677
-    },
-    "agentdojo_important_instructions": {
-      "n": 35,
-      "flagged_rate": 1.0,
-      "mean_score": 0.7239,
-      "median_score": 0.7281
-    },
-    "injecagent_user_instructions_benign": {
-      "n": 17,
-      "flagged_rate": 0.3529,
-      "mean_score": 0.4315,
-      "median_score": 0.3957
+    "test_unseen_templates": {
+      "n": 1200,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0
     }
   },
   "notes": [
     "External sets are out-of-distribution: they target consumer tools (email, banking, smart locks), not emergency operations.",
-    "injecagent_user_instructions_benign are legitimate user requests; a high flag rate there shows that instruction-like text is only dangerous because of WHERE it comes from, which is why IntentGate Z combines this score with provenance and intent checks instead of deciding on text alone."
+    "injecagent_user_instructions_benign are legitimate user requests. On the untrusted feed channel any instruction to the agent is suspicious, so flagging them is expected; IntentGate Z never applies this score to the operator's own channel."
   ],
   "platform": {
     "architecture": "AMD64",
     "python": "3.12.10",
     "system": "Windows"
   },
-  "generated_at": "2026-10-17T08:45:31Z"
+  "generated_at": "2026-10-17T08:54:24Z"
 }

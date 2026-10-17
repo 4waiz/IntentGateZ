@@ -79,6 +79,34 @@ AGENTS: dict[str, AgentIdentity] = {
 }
 
 
+# ------------------------------------------------------------------ rationale formats
+# The live planners and ml/generate_dataset.py share these, so the model is trained on the
+# same text distribution it sees in production.
+
+
+def reroute_rationale(call_sign: str, hospital: str, specialty: str, eta_min: float) -> str:
+    return (
+        f"Reroute {call_sign} around active closures to {hospital}, the fastest permitted "
+        f"{specialty}-capable hospital that is accepting patients. Computed ETA {eta_min:.1f} min."
+    )
+
+
+def dispatch_rationale(call_sign: str, incident: str, hospital: str) -> str:
+    return f"Dispatch {call_sign} to {incident} and transport to {hospital}."
+
+
+def purchase_rationale(quantity: int, item: str, total: float, hospital_id: str, note: str) -> str:
+    return f"Order {quantity} x {item} (${total:,.0f}) for {hospital_id}. {note}"
+
+
+def icu_rationale(beds: int, hospital_id: str, hours: float) -> str:
+    return f"Reserve {beds} ICU beds at {hospital_id} for {hours:g} h as instructed."
+
+
+def injected_dispatch_rationale(call_sign: str, hospital: str) -> str:
+    return f"Per updated regional notice, redirecting {call_sign} to {hospital} instead of the original destination."
+
+
 # ------------------------------------------------------------------ routing planner
 
 
@@ -122,10 +150,7 @@ def plan_reroute(world: SimulationWorld, intent: HumanIntent, ambulance_id: str,
             Provenance(source_id="cad_road_status", source_type=SourceType.INTERNAL_SYSTEM, trust=TrustLevel.INTERNAL, influenced_fields=["route"], excerpt=f"Active closures: {closures}"),
             Provenance(source_id="bed_registry", source_type=SourceType.INTERNAL_SYSTEM, trust=TrustLevel.INTERNAL, influenced_fields=["destination_hospital_id"], excerpt="Accepting hospitals with free beds and matching specialty"),
         ],
-        rationale=(
-            f"Reroute {amb.call_sign} around active closures to {world.city.hospitals[hid].name}, the fastest permitted "
-            f"{specialty or 'general'}-capable hospital that is accepting patients. Computed ETA {t / 60:.1f} min."
-        ),
+        rationale=reroute_rationale(amb.call_sign, world.city.hospitals[hid].name, specialty or "general", t / 60),
         required_permissions=["cad.route.write"],
     )
 
@@ -152,7 +177,7 @@ def plan_dispatch(world: SimulationWorld, intent: HumanIntent, ambulance_id: str
         target=ambulance_id,
         parameters={"ambulance_id": ambulance_id, "incident_id": incident_id, "destination_hospital_id": hospital_id, "route": route},
         provenance=prov,
-        rationale=rationale or f"Dispatch {amb.call_sign} to {inc.id} and transport to {world.city.hospitals[hospital_id].name}.",
+        rationale=rationale or dispatch_rationale(amb.call_sign, inc.id, world.city.hospitals[hospital_id].name),
         required_permissions=["cad.dispatch.write"],
     )
 
@@ -206,10 +231,7 @@ def compromised_planner_dispatch(world: SimulationWorld, intent: HumanIntent, am
         incident_id,
         hospital_id=target,
         provenance_extra=extra,
-        rationale=(
-            f"Per updated regional notice, redirecting {world.ambulances[ambulance_id].call_sign} to "
-            f"{world.city.hospitals[target].name} instead of the original destination."
-        ),
+        rationale=injected_dispatch_rationale(world.ambulances[ambulance_id].call_sign, world.city.hospitals[target].name),
     )
 
 
@@ -238,7 +260,7 @@ def plan_purchase(intent: HumanIntent, supplier_id: str, sku: str, quantity: int
             Provenance(source_id=intent.operator_id, source_type=SourceType.OPERATOR, trust=TrustLevel.TRUSTED, influenced_fields=["supplier_id", "item_sku", "delivery_hospital_id"], excerpt=intent.instruction[:300]),
             Provenance(source_id="inventory_forecast", source_type=SourceType.INTERNAL_SYSTEM, trust=TrustLevel.INTERNAL, influenced_fields=["quantity", "total_usd"], excerpt=forecast_note[:300]),
         ],
-        rationale=f"Order {quantity} x {SUPPLY_CATALOG[sku]['name']} (${total:,.0f}) for {delivery_hospital_id}. {forecast_note}",
+        rationale=purchase_rationale(quantity, SUPPLY_CATALOG[sku]["name"], total, delivery_hospital_id, forecast_note),
         required_permissions=["erp.po.create"],
     )
 
@@ -256,7 +278,7 @@ def plan_icu_reservation(intent: HumanIntent, hospital_id: str, beds: int, hours
             Provenance(source_id=intent.operator_id, source_type=SourceType.OPERATOR, trust=TrustLevel.TRUSTED, influenced_fields=["hospital_id", "beds"], excerpt=intent.instruction[:300]),
             Provenance(source_id="bed_registry", source_type=SourceType.INTERNAL_SYSTEM, trust=TrustLevel.INTERNAL, influenced_fields=["beds"], excerpt="Live ICU availability"),
         ],
-        rationale=f"Reserve {beds} ICU beds at {hospital_id} for {hours:g} h as instructed.",
+        rationale=icu_rationale(beds, hospital_id, hours),
         required_permissions=["bedreg.icu.write"],
     )
 

@@ -167,7 +167,7 @@ def extract(
     f["n_untrusted_sources"] = float(len(untrusted))
     f["untrusted_security_fields"] = float(len({x for pv in untrusted for x in pv.influenced_fields if x in SECURITY_RELEVANT_FIELDS}))
     f["injection_score"] = max((injection.score(pv.excerpt) for pv in untrusted), default=0.0)
-    f["rationale_injection_score"] = injection.score(action.rationale)
+    f["rationale_injection_score"] = injection.score_rationale(action.rationale)
     all_text = " ".join([pv.excerpt for pv in action.provenance if pv.trust != TrustLevel.TRUSTED] + [action.rationale])
     f["lexical_hits"] = float(lexical_hits(all_text))
     f["imperative_density"] = imperative_density(" ".join(pv.excerpt for pv in untrusted))
