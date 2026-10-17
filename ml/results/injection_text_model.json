@@ -4,8 +4,8 @@
     "version": "igz-injection-tfidf-lr-20261017-s7",
     "decision_threshold_from_val": 0.6,
     "train_examples": 3600,
-    "train_seconds": 0.3,
-    "single_text_inference_ms": 0.763,
+    "train_seconds": 0.5,
+    "single_text_inference_ms": 1.037,
     "validation": {
       "n": 1200,
       "precision": 1.0,
@@ -60,8 +60,8 @@
     "version": "igz-rationale-tfidf-lr-20261017-s7",
     "decision_threshold_from_val": 0.6,
     "train_examples": 3600,
-    "train_seconds": 0.27,
-    "single_text_inference_ms": 0.87,
+    "train_seconds": 0.43,
+    "single_text_inference_ms": 0.938,
     "validation": {
       "n": 1200,
       "precision": 1.0,
@@ -84,9 +84,9 @@
     "injecagent_user_instructions_benign are legitimate user requests. On the untrusted feed channel any instruction to the agent is suspicious, so flagging them is expected; IntentGate Z never applies this score to the operator's own channel."
   ],
   "platform": {
-    "architecture": "AMD64",
-    "python": "3.12.10",
-    "system": "Windows"
+    "architecture": "s390x",
+    "python": "3.12.15",
+    "system": "Linux"
   },
-  "generated_at": "2026-10-17T08:54:24Z"
+  "generated_at": "2026-10-17T09:16:09Z"
 }

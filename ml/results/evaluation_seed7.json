@@ -1,8 +1,8 @@
 {
-  "version": "igz-risk-mlp-202610171315-716ab639",
+  "version": "igz-risk-torch-mlp-202610170919-5efd2225",
   "dataset": {
     "file": "intentgate_synthetic_seed7.csv",
-    "sha256": "716ab639441be8371e22b5f7a2f047ff0f7444942882df934e59d965118fbea6",
+    "sha256": "5efd2225bdcc94fdd7046dcd1354f0725dd622e91417c27b8d92f9dc0554a97a",
     "rows": 12000,
     "train": 7200,
     "val": 2400,
@@ -15,15 +15,19 @@
   },
   "protocol": "fit on train; thresholds and model selection on validation; single evaluation on held-out test with unseen text templates",
   "max_false_block_constraint": 0.02,
-  "selected_model": "mlp",
+  "selected_model": "torch_mlp",
   "best_cpu_model": "mlp",
-  "selection_rule": "best validation macro-F1 of the hybrid gateway among CPU models (ties broken by single-request latency)",
+  "selection_rule": "PyTorch MLP served on the IBM Telum NNPA because its validation hybrid macro-F1 is within 0.01 of the best CPU model (mlp); otherwise the best CPU model is served",
   "nnpa_status": {
-    "available": false
+    "torch_nnpa_installed": true,
+    "available": true,
+    "device_count": 1,
+    "smoke_test": true,
+    "torch_nnpa_version": "1.5.0+gite861108"
   },
   "thresholds": {
-    "tau_block": 0.65,
-    "tau_review": 0.775
+    "tau_block": 0.525,
+    "tau_review": 0.625
   },
   "validation": {
     "models": {
@@ -39,12 +43,12 @@
           "tau_block": 0.5,
           "tau_review": 0.725
         },
-        "train_seconds": 0.09,
+        "train_seconds": 0.08,
         "latency": {
-          "single_p50_ms": 0.1511,
-          "single_p95_ms": 0.1584,
+          "single_p50_ms": 0.1981,
+          "single_p95_ms": 0.2075,
           "batch_rows": 1000,
-          "batch_rows_per_s": 2530364.4
+          "batch_rows_per_s": 1909461.0
         }
       },
       "random_forest": {
@@ -59,12 +63,12 @@
           "tau_block": 0.8,
           "tau_review": 0.85
         },
-        "train_seconds": 0.37,
+        "train_seconds": 0.8,
         "latency": {
-          "single_p50_ms": 27.4766,
-          "single_p95_ms": 29.0016,
+          "single_p50_ms": 21.5948,
+          "single_p95_ms": 24.8521,
           "batch_rows": 1000,
-          "batch_rows_per_s": 26538.7
+          "batch_rows_per_s": 31461.7
         }
       },
       "hist_gradient_boosting": {
@@ -73,12 +77,12 @@
         "feasible_under_false_block_constraint": false,
         "thresholds_hybrid": null,
         "thresholds_ml_only": null,
-        "train_seconds": 4.26,
+        "train_seconds": 3.37,
         "latency": {
-          "single_p50_ms": 11.7287,
-          "single_p95_ms": 15.754,
+          "single_p50_ms": 6.4681,
+          "single_p95_ms": 11.8722,
           "batch_rows": 1000,
-          "batch_rows_per_s": 48283.1
+          "batch_rows_per_s": 24476.9
         }
       },
       "mlp": {
@@ -93,12 +97,60 @@
           "tau_block": 0.55,
           "tau_review": 0.6
         },
-        "train_seconds": 0.44,
+        "train_seconds": 0.47,
         "latency": {
-          "single_p50_ms": 0.1545,
-          "single_p95_ms": 0.1629,
+          "single_p50_ms": 0.2019,
+          "single_p95_ms": 0.2302,
           "batch_rows": 1000,
-          "batch_rows_per_s": 944554.6
+          "batch_rows_per_s": 997935.3
+        }
+      },
+      "xgboost": {
+        "hybrid_macro_f1": 0.8861,
+        "ml_only_macro_f1": 0.7804,
+        "feasible_under_false_block_constraint": true,
+        "thresholds_hybrid": {
+          "tau_block": 0.975,
+          "tau_review": 0.925
+        },
+        "thresholds_ml_only": {
+          "tau_block": 0.975,
+          "tau_review": 0.925
+        },
+        "train_seconds": 0.87,
+        "latency": {
+          "single_p50_ms": 0.1634,
+          "single_p95_ms": 0.5572,
+          "batch_rows": 1000,
+          "batch_rows_per_s": 116020.6
+        }
+      },
+      "torch_mlp": {
+        "hybrid_macro_f1": 0.9616,
+        "ml_only_macro_f1": 0.9451,
+        "feasible_under_false_block_constraint": true,
+        "thresholds_hybrid": {
+          "tau_block": 0.525,
+          "tau_review": 0.625
+        },
+        "thresholds_ml_only": {
+          "tau_block": 0.4,
+          "tau_review": 0.675
+        },
+        "train_seconds": 0.58,
+        "latency": {
+          "cpu": {
+            "single_p50_ms": 0.0429,
+            "single_p95_ms": 0.0517,
+            "batch_rows": 1000,
+            "batch_rows_per_s": 1286964.8
+          },
+          "nnpa": {
+            "single_p50_ms": 0.0514,
+            "single_p95_ms": 0.0563,
+            "batch_rows": 1000,
+            "batch_rows_per_s": 1962643.1
+          }
         }
       }
     }
@@ -584,57 +636,57 @@
     },
     "ml_only": {
       "n": 2400,
-      "accuracy": 0.9313,
-      "macro_f1": 0.9222,
+      "accuracy": 0.9246,
+      "macro_f1": 0.9151,
       "per_class": {
         "ALLOW": {
-          "precision": 0.9325,
-          "recall": 0.9153,
-          "f1": 0.9238,
+          "precision": 0.9387,
+          "recall": 0.8979,
+          "f1": 0.9179,
           "support": 921
         },
         "CHALLENGE": {
-          "precision": 0.906,
-          "recall": 0.8865,
-          "f1": 0.8961,
+          "precision": 0.8818,
+          "recall": 0.8926,
+          "f1": 0.8872,
           "support": 326
         },
         "BLOCK": {
-          "precision": 0.9371,
-          "recall": 0.9566,
-          "f1": 0.9468,
+          "precision": 0.926,
+          "recall": 0.9549,
+          "f1": 0.9402,
           "support": 1153
         }
       },
       "confusion_matrix": [
         [
-          843,
-          21,
-          57
+          827,
+          23,
+          71
         ],
         [
-          20,
-          289,
+          18,
+          291,
           17
         ],
         [
-          41,
-          9,
-          1103
+          36,
+          16,
+          1101
         ]
       ],
-      "false_block_rate_allow": 0.0619,
-      "false_block_rate_legit": 0.0593,
-      "unsafe_miss_rate": 0.0356,
-      "unsafe_block_rate": 0.9566,
-      "legit_acceptance_rate": 0.9153,
-      "challenge_rate": 0.1329,
+      "false_block_rate_allow": 0.0771,
+      "false_block_rate_legit": 0.0706,
+      "unsafe_miss_rate": 0.0312,
+      "unsafe_block_rate": 0.9549,
+      "legit_acceptance_rate": 0.8979,
+      "challenge_rate": 0.1375,
       "families": {
         "icu:big_share": {
           "n": 14,
           "true_label": "CHALLENGE",
-          "pred_allow": 0.5714,
-          "pred_challenge": 0.3571,
+          "pred_allow": 0.4286,
+          "pred_challenge": 0.5,
           "pred_block": 0.0714
         },
         "icu:drift_other_hospital": {
@@ -661,9 +713,9 @@
         "icu:ok": {
           "n": 259,
           "true_label": "ALLOW",
-          "pred_allow": 0.9884,
-          "pred_challenge": 0.0077,
-          "pred_block": 0.0039
+          "pred_allow": 0.9807,
+          "pred_challenge": 0.0193,
+          "pred_block": 0.0
         },
         "icu:over_capacity": {
           "n": 38,
@@ -675,9 +727,9 @@
         "icu:over_limit": {
           "n": 43,
           "true_label": "BLOCK",
-          "pred_allow": 0.7907,
-          "pred_challenge": 0.093,
-          "pred_block": 0.1163
+          "pred_allow": 0.6279,
+          "pred_challenge": 0.2791,
+          "pred_block": 0.093
         },
         "misc:capability_mismatch": {
           "n": 56,
@@ -689,9 +741,9 @@
         "misc:expired_intent": {
           "n": 17,
           "true_label": "BLOCK",
-          "pred_allow": 0.0,
+          "pred_allow": 0.0588,
           "pred_challenge": 0.0,
-          "pred_block": 1.0
+          "pred_block": 0.9412
         },
         "misc:rate_burst": {
           "n": 77,
@@ -731,9 +783,9 @@
         "purchase:ok": {
           "n": 263,
           "true_label": "ALLOW",
-          "pred_allow": 0.9734,
+          "pred_allow": 0.9202,
           "pred_challenge": 0.0,
-          "pred_block": 0.0266
+          "pred_block": 0.0798
         },
         "purchase:over_budget": {
           "n": 116,
@@ -808,9 +860,9 @@
         "reroute:ok": {
           "n": 391,
           "true_label": "ALLOW",
-          "pred_allow": 0.8696,
-          "pred_challenge": 0.0051,
-          "pred_block": 0.1253
+          "pred_allow": 0.8721,
+          "pred_challenge": 0.0,
+          "pred_block": 0.1279
         },
         "reroute:out_of_scope_dest": {
           "n": 65,
@@ -823,51 +875,51 @@
     },
     "hybrid": {
       "n": 2400,
-      "accuracy": 0.9508,
-      "macro_f1": 0.9414,
+      "accuracy": 0.9446,
+      "macro_f1": 0.9357,
       "per_class": {
         "ALLOW": {
-          "precision": 0.9769,
-          "recall": 0.9186,
-          "f1": 0.9468,
+          "precision": 0.9764,
+          "recall": 0.9001,
+          "f1": 0.9367,
           "support": 921
         },
         "CHALLENGE": {
-          "precision": 0.9088,
-          "recall": 0.9172,
-          "f1": 0.913,
+          "precision": 0.9009,
+          "recall": 0.9202,
+          "f1": 0.9105,
           "support": 326
         },
         "BLOCK": {
-          "precision": 0.9436,
-          "recall": 0.9861,
-          "f1": 0.9644,
+          "precision": 0.9343,
+          "recall": 0.987,
+          "f1": 0.9599,
           "support": 1153
         }
       },
       "confusion_matrix": [
         [
-          846,
-          24,
-          51
+          829,
+          28,
+          64
         ],
         [
           10,
-          299,
-          17
+          300,
+          16
         ],
         [
           10,
-          6,
-          1137
+          5,
+          1138
         ]
       ],
-      "false_block_rate_allow": 0.0554,
-      "false_block_rate_legit": 0.0545,
+      "false_block_rate_allow": 0.0695,
+      "false_block_rate_legit": 0.0642,
       "unsafe_miss_rate": 0.0087,
-      "unsafe_block_rate": 0.9861,
-      "legit_acceptance_rate": 0.9186,
-      "challenge_rate": 0.1371,
+      "unsafe_block_rate": 0.987,
+      "legit_acceptance_rate": 0.9001,
+      "challenge_rate": 0.1388,
       "families": {
         "icu:big_share": {
           "n": 14,
@@ -901,8 +953,8 @@
           "n": 259,
           "true_label": "ALLOW",
           "pred_allow": 0.973,
-          "pred_challenge": 0.0232,
-          "pred_block": 0.0039
+          "pred_challenge": 0.027,
+          "pred_block": 0.0
         },
         "icu:over_capacity": {
           "n": 38,
@@ -970,9 +1022,9 @@
         "purchase:ok": {
           "n": 263,
           "true_label": "ALLOW",
-          "pred_allow": 0.9848,
-          "pred_challenge": 0.0,
-          "pred_block": 0.0152
+          "pred_allow": 0.924,
+          "pred_challenge": 0.0114,
+          "pred_block": 0.0646
         },
         "purchase:over_budget": {
           "n": 116,
@@ -1047,9 +1099,9 @@
         "reroute:ok": {
           "n": 391,
           "true_label": "ALLOW",
-          "pred_allow": 0.8824,
+          "pred_allow": 0.8798,
           "pred_challenge": 0.0,
-          "pred_block": 0.1176
+          "pred_block": 0.1202
         },
         "reroute:out_of_scope_dest": {
           "n": 65,
@@ -1078,71 +1130,45 @@
     "mlp": {
       "hybrid_macro_f1": 0.9414,
       "ml_only_macro_f1": 0.9222
+    },
+    "xgboost": {
+      "hybrid_macro_f1": 0.8891,
+      "ml_only_macro_f1": 0.806
+    },
+    "torch_mlp": {
+      "hybrid_macro_f1": 0.9357,
+      "ml_only_macro_f1": 0.9151
     }
   },
   "calibration": {
-    "p_block_ece_10bin": 0.0268,
-    "multiclass_brier": 0.1177,
+    "p_block_ece_10bin": 0.032,
+    "multiclass_brier": 0.1155,
     "note": "risk scores are reported as model scores; calibration measured here, not assumed"
   },
   "ablation": {
     "all features": {
-      "hybrid_macro_f1_test": 0.9414
-    },
-    "no text / injection signals": {
-      "hybrid_macro_f1_test": 0.9345,
-      "removed": [
-        "injection_score",
-        "rationale_injection_score",
-        "lexical_hits",
-        "imperative_density",
-        "text_similarity"
-      ]
-    },
-    "no provenance signals": {
-      "hybrid_macro_f1_test": 0.9324,
-      "removed": [
-        "n_untrusted_sources",
-        "untrusted_security_fields"
-      ]
-    },
-    "no behaviour history": {
-      "hybrid_macro_f1_test": 0.9301,
-      "removed": [
-        "param_change_count",
-        "recent_actions_10m",
-        "recent_high_value_10m",
-        "agent_prior_blocks"
-      ]
-    },
-    "no intent-alignment signals": {
-      "hybrid_macro_f1_test": 0.9361,
-      "removed": [
-        "entity_alignment",
-        "scope_violations",
-        "op_in_intent"
-      ]
+      "hybrid_macro_f1_test": 0.9357
     }
   },
   "platform": {
-    "architecture": "AMD64",
-    "system": "Windows",
-    "release": "11",
-    "python": "3.12.10",
-    "cpu_count": 24,
+    "architecture": "s390x",
+    "system": "Linux",
+    "release": "6.8.0-147-generic",
+    "python": "3.12.15",
+    "cpu_count": 2,
     "packages": {
-      "numpy": "2.4.6",
-      "pandas": "3.0.5",
+      "numpy": "2.0.2",
+      "pandas": "3.0.6",
       "scikit-learn": "1.9.0",
-      "xgboost": null,
-      "torch": "2.11.0+cu128",
-      "torch_nnpa": null,
-      "tensorflow": null,
-      "ibm-zdnn-plugin": null
+      "xgboost": "3.4.1",
+      "torch": "2.11.0+cpu",
+      "torch_nnpa": "1.5.0+gite861108",
+      "tensorflow": "2.18.1",
+      "ibm-zdnn-plugin": "2.3.0"
     }
   },
   "seed": 7,
-  "generated_at": "2026-10-17T09:15:36Z",
+  "generated_at": "2026-10-17T09:19:27Z",
   "charts": [
     "confusion_matrices",
     "method_comparison",
