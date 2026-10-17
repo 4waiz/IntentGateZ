@@ -1,5 +1,5 @@
 {
-  "version": "igz-risk-torch-mlp-202610170920-7954228c",
+  "version": "igz-risk-torch-mlp-202610170927-7954228c",
   "dataset": {
     "file": "intentgate_synthetic_seed23.csv",
     "sha256": "7954228c345451360c1384ae39384ccf5e921bd7e50f6dff4a0d8f9a00546855",
@@ -14,6 +14,7 @@
     }
   },
   "protocol": "fit on train; thresholds and model selection on validation; single evaluation on held-out test with unseen text templates",
+  "fusion": "v2: hard policy first; ML may escalate to CHALLENGE on its own, but an ML-driven BLOCK requires structural corroboration (see intentgate.features.CORROBORATION_RULES). v1 (ML could block alone) results are archived in ml/results/v1_ml_can_block_alone; v2 was introduced after error analysis of v1 test errors.",
   "max_false_block_constraint": 0.02,
   "selected_model": "torch_mlp",
   "best_cpu_model": "mlp",
@@ -26,18 +27,18 @@
     "torch_nnpa_version": "1.5.0+gite861108"
   },
   "thresholds": {
-    "tau_block": 0.525,
-    "tau_review": 0.675
+    "tau_block": 0.7,
+    "tau_review": 0.8
   },
   "validation": {
     "models": {
       "logistic_regression": {
-        "hybrid_macro_f1": 0.9455,
+        "hybrid_macro_f1": 0.9296,
         "ml_only_macro_f1": 0.9287,
         "feasible_under_false_block_constraint": true,
         "thresholds_hybrid": {
-          "tau_block": 0.6,
-          "tau_review": 0.8
+          "tau_block": 0.575,
+          "tau_review": 0.775
         },
         "thresholds_ml_only": {
           "tau_block": 0.6,
@@ -45,72 +46,75 @@
         },
         "train_seconds": 0.09,
         "latency": {
-          "single_p50_ms": 0.1977,
-          "single_p95_ms": 0.2267,
+          "single_p50_ms": 0.1944,
+          "single_p95_ms": 0.1998,
           "batch_rows": 1000,
-          "batch_rows_per_s": 1790731.5
+          "batch_rows_per_s": 1834391.2
         }
       },
       "random_forest": {
-        "hybrid_macro_f1": 0.9554,
+        "hybrid_macro_f1": 0.9402,
         "ml_only_macro_f1": 0.9351,
         "feasible_under_false_block_constraint": true,
         "thresholds_hybrid": {
-          "tau_block": 0.8,
+          "tau_block": 0.825,
           "tau_review": 0.875
         },
         "thresholds_ml_only": {
           "tau_block": 0.775,
           "tau_review": 0.875
         },
-        "train_seconds": 0.86,
+        "train_seconds": 0.77,
         "latency": {
-          "single_p50_ms": 21.6004,
-          "single_p95_ms": 25.1309,
+          "single_p50_ms": 21.415,
+          "single_p95_ms": 23.6023,
           "batch_rows": 1000,
-          "batch_rows_per_s": 31860.3
+          "batch_rows_per_s": 31544.7
         }
       },
       "hist_gradient_boosting": {
-        "hybrid_macro_f1": null,
+        "hybrid_macro_f1": 0.8224,
         "ml_only_macro_f1": null,
-        "feasible_under_false_block_constraint": false,
-        "thresholds_hybrid": null,
+        "feasible_under_false_block_constraint": true,
+        "thresholds_hybrid": {
+          "tau_block": 0.95,
+          "tau_review": 0.925
+        },
         "thresholds_ml_only": null,
-        "train_seconds": 3.13,
+        "train_seconds": 3.69,
         "latency": {
-          "single_p50_ms": 5.9746,
-          "single_p95_ms": 6.86,
+          "single_p50_ms": 7.1964,
+          "single_p95_ms": 15.9205,
           "batch_rows": 1000,
-          "batch_rows_per_s": 25664.1
+          "batch_rows_per_s": 23171.0
         }
       },
       "mlp": {
-        "hybrid_macro_f1": 0.9602,
+        "hybrid_macro_f1": 0.9415,
         "ml_only_macro_f1": 0.9496,
         "feasible_under_false_block_constraint": true,
         "thresholds_hybrid": {
-          "tau_block": 0.65,
-          "tau_review": 0.7
+          "tau_block": 0.75,
+          "tau_review": 0.8
         },
         "thresholds_ml_only": {
           "tau_block": 0.55,
           "tau_review": 0.625
         },
-        "train_seconds": 0.38,
+        "train_seconds": 0.4,
         "latency": {
-          "single_p50_ms": 0.2024,
-          "single_p95_ms": 0.2207,
+          "single_p50_ms": 0.1986,
+          "single_p95_ms": 0.2818,
           "batch_rows": 1000,
-          "batch_rows_per_s": 1170531.2
+          "batch_rows_per_s": 1087878.9
         }
       },
       "xgboost": {
-        "hybrid_macro_f1": 0.8551,
+        "hybrid_macro_f1": 0.8613,
         "ml_only_macro_f1": 0.762,
         "feasible_under_false_block_constraint": true,
         "thresholds_hybrid": {
-          "tau_block": 0.975,
+          "tau_block": 0.925,
           "tau_review": 0.925
         },
         "thresholds_ml_only": {
@@ -119,19 +123,19 @@
         },
         "train_seconds": 0.81,
         "latency": {
-          "single_p50_ms": 0.161,
-          "single_p95_ms": 0.5567,
+          "single_p50_ms": 0.1732,
+          "single_p95_ms": 0.5392,
           "batch_rows": 1000,
-          "batch_rows_per_s": 106367.6
+          "batch_rows_per_s": 50169.2
         }
       },
       "torch_mlp": {
-        "hybrid_macro_f1": 0.9571,
+        "hybrid_macro_f1": 0.9404,
         "ml_only_macro_f1": 0.9473,
         "feasible_under_false_block_constraint": true,
         "thresholds_hybrid": {
-          "tau_block": 0.525,
-          "tau_review": 0.675
+          "tau_block": 0.7,
+          "tau_review": 0.8
         },
         "thresholds_ml_only": {
           "tau_block": 0.525,
@@ -140,16 +144,16 @@
         "train_seconds": 0.74,
         "latency": {
           "cpu": {
-            "single_p50_ms": 0.0419,
-            "single_p95_ms": 0.0438,
+            "single_p50_ms": 0.0429,
+            "single_p95_ms": 0.0448,
             "batch_rows": 1000,
-            "batch_rows_per_s": 877316.1
+            "batch_rows_per_s": 850421.1
           },
           "nnpa": {
-            "single_p50_ms": 0.0509,
-            "single_p95_ms": 0.0526,
+            "single_p50_ms": 0.052,
+            "single_p95_ms": 0.0542,
             "batch_rows": 1000,
-            "batch_rows_per_s": 1004398.3
+            "batch_rows_per_s": 2207919.8
           }
         }
       }
@@ -875,51 +879,51 @@
     },
     "hybrid": {
       "n": 2400,
-      "accuracy": 0.945,
-      "macro_f1": 0.9398,
+      "accuracy": 0.9413,
+      "macro_f1": 0.919,
       "per_class": {
         "ALLOW": {
-          "precision": 0.9807,
-          "recall": 0.9066,
-          "f1": 0.9422,
+          "precision": 0.9808,
+          "recall": 0.9088,
+          "f1": 0.9434,
           "support": 899
         },
         "CHALLENGE": {
-          "precision": 0.9413,
-          "recall": 0.9059,
-          "f1": 0.9233,
+          "precision": 0.768,
+          "recall": 0.9167,
+          "f1": 0.8358,
           "support": 372
         },
         "BLOCK": {
-          "precision": 0.9216,
-          "recall": 0.9885,
-          "f1": 0.9538,
+          "precision": 0.9804,
+          "recall": 0.9752,
+          "f1": 0.9778,
           "support": 1129
         }
       },
       "confusion_matrix": [
         [
-          815,
-          15,
-          69
+          817,
+          82,
+          0
         ],
         [
           9,
-          337,
-          26
+          341,
+          22
         ],
         [
           7,
-          6,
-          1116
+          21,
+          1101
         ]
       ],
-      "false_block_rate_allow": 0.0768,
-      "false_block_rate_legit": 0.0747,
+      "false_block_rate_allow": 0.0,
+      "false_block_rate_legit": 0.0173,
       "unsafe_miss_rate": 0.0062,
-      "unsafe_block_rate": 0.9885,
-      "legit_acceptance_rate": 0.9066,
-      "challenge_rate": 0.1492,
+      "unsafe_block_rate": 0.9752,
+      "legit_acceptance_rate": 0.9088,
+      "challenge_rate": 0.185,
       "families": {
         "icu:big_share": {
           "n": 21,
@@ -1023,15 +1027,15 @@
           "n": 259,
           "true_label": "ALLOW",
           "pred_allow": 0.9112,
-          "pred_challenge": 0.0,
-          "pred_block": 0.0888
+          "pred_challenge": 0.0888,
+          "pred_block": 0.0
         },
         "purchase:over_budget": {
           "n": 147,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
-          "pred_challenge": 0.898,
-          "pred_block": 0.102
+          "pred_challenge": 0.9252,
+          "pred_block": 0.0748
         },
         "purchase:over_ceiling": {
           "n": 64,
@@ -1051,8 +1055,8 @@
           "n": 77,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
+          "pred_challenge": 0.0519,
+          "pred_block": 0.9481
         },
         "reroute:closed_route": {
           "n": 54,
@@ -1086,8 +1090,8 @@
           "n": 104,
           "true_label": "BLOCK",
           "pred_allow": 0.0481,
-          "pred_challenge": 0.0,
-          "pred_block": 0.9519
+          "pred_challenge": 0.1154,
+          "pred_block": 0.8365
         },
         "reroute:injected_partial": {
           "n": 107,
@@ -1099,9 +1103,9 @@
         "reroute:ok": {
           "n": 343,
           "true_label": "ALLOW",
-          "pred_allow": 0.863,
-          "pred_challenge": 0.0058,
-          "pred_block": 0.1312
+          "pred_allow": 0.8688,
+          "pred_challenge": 0.1312,
+          "pred_block": 0.0
         },
         "reroute:out_of_scope_dest": {
           "n": 60,
@@ -1115,28 +1119,27 @@
   },
   "test_all_models": {
     "logistic_regression": {
-      "hybrid_macro_f1": 0.9428,
+      "hybrid_macro_f1": 0.9181,
       "ml_only_macro_f1": 0.9114
     },
     "random_forest": {
-      "hybrid_macro_f1": 0.9571,
+      "hybrid_macro_f1": 0.9538,
       "ml_only_macro_f1": 0.9223
     },
     "hist_gradient_boosting": {
-      "hybrid_macro_f1": null,
-      "ml_only_macro_f1": null,
-      "note": "no threshold met the false-block constraint on validation"
+      "hybrid_macro_f1": 0.8588,
+      "ml_only_macro_f1": 0.8115
     },
     "mlp": {
-      "hybrid_macro_f1": 0.9429,
+      "hybrid_macro_f1": 0.9297,
       "ml_only_macro_f1": 0.9232
     },
     "xgboost": {
-      "hybrid_macro_f1": 0.9003,
+      "hybrid_macro_f1": 0.9034,
       "ml_only_macro_f1": 0.7983
     },
     "torch_mlp": {
-      "hybrid_macro_f1": 0.9398,
+      "hybrid_macro_f1": 0.919,
       "ml_only_macro_f1": 0.9191
     }
   },
@@ -1147,7 +1150,7 @@
   },
   "ablation": {
     "all features": {
-      "hybrid_macro_f1_test": 0.9398
+      "hybrid_macro_f1_test": 0.919
     }
   },
   "platform": {
@@ -1168,5 +1171,5 @@
     }
   },
   "seed": 23,
-  "generated_at": "2026-10-17T09:20:13Z"
+  "generated_at": "2026-10-17T09:27:42Z"
 }

@@ -436,7 +436,7 @@ function logCui(id: string, entry: Omit<ServerLogEntry, "at">): void {
 
 function errorEntry(action: string, err: unknown, expectedRefusal = false): Omit<ServerLogEntry, "at"> {
   if (err instanceof ApiError) {
-    const detail = err.detail === undefined || typeof err.detail === "string" ? undefined : JSON.stringify(err.detail).slice(0, 400);
+    const detail = err.detail === undefined || err.detail === null || typeof err.detail === "string" ? undefined : JSON.stringify(err.detail).slice(0, 400);
     return { action, ok: false, http: err.status, code: err.code, message: err.message, detail, expectedRefusal };
   }
   return { action, ok: false, http: 0, code: "client_error", message: errorText(err) };

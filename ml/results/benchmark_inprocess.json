@@ -1,7 +1,7 @@
 {
   "mode": "in-process gateway (single thread, includes SQLite audit writes and simulation execution)",
   "model_runtime": "PyTorch MLP on IBM Telum NNPA (torch_nnpa)",
-  "model_version": "igz-risk-torch-mlp-202610170919-5efd2225",
+  "model_version": "igz-risk-torch-mlp-202610170926-5efd2225",
   "accelerator": {
     "device": "nnpa",
     "requested_device": "nnpa",
@@ -23,36 +23,36 @@
       "decision_ms": {
         "n": 3000,
         "p50": 0.422,
-        "p95": 0.647,
-        "p99": 0.985,
-        "mean": 0.496,
-        "max": 89.085
+        "p95": 0.655,
+        "p99": 0.909,
+        "mean": 0.523,
+        "max": 91.033
       },
       "inference_ms": {
         "n": 3000,
-        "p50": 0.07,
+        "p50": 0.072,
         "p95": 0.107,
-        "p99": 0.149,
-        "mean": 0.077,
-        "max": 1.121
+        "p99": 0.148,
+        "mean": 0.078,
+        "max": 1.072
       },
       "policy_ms": {
         "n": 3000,
-        "p50": 0.052,
-        "p95": 0.209,
-        "p99": 0.258,
-        "mean": 0.11,
-        "max": 0.956
+        "p50": 0.053,
+        "p95": 0.211,
+        "p99": 0.272,
+        "mean": 0.163,
+        "max": 90.253
       },
       "end_to_end_ms": {
         "n": 3000,
-        "p50": 0.496,
-        "p95": 0.733,
-        "p99": 1.07,
-        "mean": 0.573,
-        "max": 89.198
+        "p50": 0.498,
+        "p95": 0.739,
+        "p99": 1.019,
+        "mean": 0.601,
+        "max": 91.232
       },
-      "throughput_decisions_per_s": 1493.6,
+      "throughput_decisions_per_s": 1473.8,
       "verdicts": {
         "CHALLENGE": 176,
         "ALLOW": 8,
@@ -62,37 +62,37 @@
     {
       "decision_ms": {
         "n": 3000,
-        "p50": 0.408,
-        "p95": 0.639,
-        "p99": 0.981,
-        "mean": 0.504,
-        "max": 129.71
+        "p50": 0.407,
+        "p95": 0.64,
+        "p99": 0.825,
+        "mean": 0.558,
+        "max": 168.996
       },
       "inference_ms": {
         "n": 3000,
-        "p50": 0.07,
-        "p95": 0.104,
-        "p99": 0.149,
-        "mean": 0.119,
-        "max": 129.306
+        "p50": 0.071,
+        "p95": 0.105,
+        "p99": 0.142,
+        "mean": 0.117,
+        "max": 121.956
       },
       "policy_ms": {
         "n": 3000,
-        "p50": 0.051,
-        "p95": 0.208,
-        "p99": 0.431,
-        "mean": 0.108,
-        "max": 1.072
+        "p50": 0.05,
+        "p95": 0.21,
+        "p99": 0.245,
+        "mean": 0.162,
+        "max": 168.147
       },
       "end_to_end_ms": {
         "n": 3000,
-        "p50": 0.483,
-        "p95": 0.723,
-        "p99": 1.068,
-        "mean": 0.581,
-        "max": 129.934
+        "p50": 0.485,
+        "p95": 0.728,
+        "p99": 0.925,
+        "mean": 0.637,
+        "max": 169.219
       },
-      "throughput_decisions_per_s": 1352.4,
+      "throughput_decisions_per_s": 1399.8,
       "verdicts": {
         "BLOCK": 2876,
         "CHALLENGE": 115,
@@ -102,37 +102,37 @@
     {
       "decision_ms": {
         "n": 3000,
-        "p50": 0.404,
-        "p95": 0.629,
-        "p99": 0.928,
+        "p50": 0.414,
+        "p95": 0.644,
+        "p99": 0.891,
         "mean": 0.567,
-        "max": 324.216
+        "max": 297.54
       },
       "inference_ms": {
         "n": 3000,
-        "p50": 0.069,
-        "p95": 0.105,
+        "p50": 0.071,
+        "p95": 0.106,
         "p99": 0.146,
-        "mean": 0.075,
-        "max": 1.085
+        "mean": 0.078,
+        "max": 0.664
       },
       "policy_ms": {
         "n": 3000,
-        "p50": 0.05,
-        "p95": 0.205,
-        "p99": 0.262,
-        "mean": 0.215,
-        "max": 323.315
+        "p50": 0.051,
+        "p95": 0.212,
+        "p99": 0.242,
+        "mean": 0.11,
+        "max": 0.712
       },
       "end_to_end_ms": {
         "n": 3000,
-        "p50": 0.477,
-        "p95": 0.714,
-        "p99": 1.04,
-        "mean": 0.643,
-        "max": 324.452
+        "p50": 0.492,
+        "p95": 0.73,
+        "p99": 0.973,
+        "mean": 0.646,
+        "max": 297.65
       },
-      "throughput_decisions_per_s": 1389.5,
+      "throughput_decisions_per_s": 1382.3,
       "verdicts": {
         "BLOCK": 2864,
         "CHALLENGE": 127,
@@ -141,9 +141,9 @@
     }
   ],
   "summary": {
-    "decision_p50_ms_median_of_reps": 0.408,
-    "decision_p95_ms_median_of_reps": 0.639,
-    "throughput_median_of_reps": 1389.5
+    "decision_p50_ms_median_of_reps": 0.414,
+    "decision_p95_ms_median_of_reps": 0.644,
+    "throughput_median_of_reps": 1399.8
   },
   "host": {
     "architecture": "s390x",
@@ -153,5 +153,5 @@
     "python": "3.12.15",
     "system": "Linux 6.8.0-147-generic"
   },
-  "started_at": "2026-10-17T09:21:00Z"
+  "started_at": "2026-10-17T09:28:35Z"
 }

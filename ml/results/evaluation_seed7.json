@@ -1,5 +1,5 @@
 {
-  "version": "igz-risk-torch-mlp-202610170919-5efd2225",
+  "version": "igz-risk-torch-mlp-202610170926-5efd2225",
   "dataset": {
     "file": "intentgate_synthetic_seed7.csv",
     "sha256": "5efd2225bdcc94fdd7046dcd1354f0725dd622e91417c27b8d92f9dc0554a97a",
@@ -14,6 +14,7 @@
     }
   },
   "protocol": "fit on train; thresholds and model selection on validation; single evaluation on held-out test with unseen text templates",
+  "fusion": "v2: hard policy first; ML may escalate to CHALLENGE on its own, but an ML-driven BLOCK requires structural corroboration (see intentgate.features.CORROBORATION_RULES). v1 (ML could block alone) results are archived in ml/results/v1_ml_can_block_alone; v2 was introduced after error analysis of v1 test errors.",
   "max_false_block_constraint": 0.02,
   "selected_model": "torch_mlp",
   "best_cpu_model": "mlp",
@@ -32,11 +33,11 @@
   "validation": {
     "models": {
       "logistic_regression": {
-        "hybrid_macro_f1": 0.9511,
+        "hybrid_macro_f1": 0.9411,
         "ml_only_macro_f1": 0.9329,
         "feasible_under_false_block_constraint": true,
         "thresholds_hybrid": {
-          "tau_block": 0.5,
+          "tau_block": 0.525,
           "tau_review": 0.8
         },
         "thresholds_ml_only": {
@@ -45,14 +46,14 @@
         },
         "train_seconds": 0.08,
         "latency": {
-          "single_p50_ms": 0.1981,
-          "single_p95_ms": 0.2075,
+          "single_p50_ms": 0.2174,
+          "single_p95_ms": 0.2309,
           "batch_rows": 1000,
-          "batch_rows_per_s": 1909461.0
+          "batch_rows_per_s": 1823792.5
         }
       },
       "random_forest": {
-        "hybrid_macro_f1": 0.9521,
+        "hybrid_macro_f1": 0.9438,
         "ml_only_macro_f1": 0.917,
         "feasible_under_false_block_constraint": true,
         "thresholds_hybrid": {
@@ -63,70 +64,73 @@
           "tau_block": 0.8,
           "tau_review": 0.85
         },
-        "train_seconds": 0.8,
+        "train_seconds": 0.82,
         "latency": {
-          "single_p50_ms": 21.5948,
-          "single_p95_ms": 24.8521,
+          "single_p50_ms": 24.2149,
+          "single_p95_ms": 46.5587,
           "batch_rows": 1000,
-          "batch_rows_per_s": 31461.7
+          "batch_rows_per_s": 28693.7
         }
       },
       "hist_gradient_boosting": {
-        "hybrid_macro_f1": null,
+        "hybrid_macro_f1": 0.8165,
         "ml_only_macro_f1": null,
-        "feasible_under_false_block_constraint": false,
-        "thresholds_hybrid": null,
+        "feasible_under_false_block_constraint": true,
+        "thresholds_hybrid": {
+          "tau_block": 0.925,
+          "tau_review": 0.925
+        },
         "thresholds_ml_only": null,
-        "train_seconds": 3.37,
+        "train_seconds": 3.74,
         "latency": {
-          "single_p50_ms": 6.4681,
-          "single_p95_ms": 11.8722,
+          "single_p50_ms": 6.3305,
+          "single_p95_ms": 8.0504,
           "batch_rows": 1000,
-          "batch_rows_per_s": 24476.9
+          "batch_rows_per_s": 24585.0
         }
       },
       "mlp": {
-        "hybrid_macro_f1": 0.9616,
+        "hybrid_macro_f1": 0.9535,
         "ml_only_macro_f1": 0.9492,
         "feasible_under_false_block_constraint": true,
         "thresholds_hybrid": {
-          "tau_block": 0.65,
+          "tau_block": 0.6,
           "tau_review": 0.775
         },
         "thresholds_ml_only": {
           "tau_block": 0.55,
           "tau_review": 0.6
         },
-        "train_seconds": 0.47,
+        "train_seconds": 0.49,
         "latency": {
-          "single_p50_ms": 0.2019,
-          "single_p95_ms": 0.2302,
+          "single_p50_ms": 0.2193,
+          "single_p95_ms": 0.2422,
           "batch_rows": 1000,
-          "batch_rows_per_s": 997935.3
+          "batch_rows_per_s": 1121129.0
         }
       },
       "xgboost": {
-        "hybrid_macro_f1": 0.8861,
+        "hybrid_macro_f1": 0.8866,
         "ml_only_macro_f1": 0.7804,
         "feasible_under_false_block_constraint": true,
         "thresholds_hybrid": {
-          "tau_block": 0.975,
+          "tau_block": 0.925,
           "tau_review": 0.925
         },
         "thresholds_ml_only": {
           "tau_block": 0.975,
           "tau_review": 0.925
         },
-        "train_seconds": 0.87,
+        "train_seconds": 0.91,
         "latency": {
-          "single_p50_ms": 0.1634,
-          "single_p95_ms": 0.5572,
+          "single_p50_ms": 0.17,
+          "single_p95_ms": 0.2898,
           "batch_rows": 1000,
-          "batch_rows_per_s": 116020.6
+          "batch_rows_per_s": 116813.3
         }
       },
       "torch_mlp": {
-        "hybrid_macro_f1": 0.9616,
+        "hybrid_macro_f1": 0.9535,
         "ml_only_macro_f1": 0.9451,
         "feasible_under_false_block_constraint": true,
         "thresholds_hybrid": {
@@ -137,19 +141,19 @@
           "tau_block": 0.4,
           "tau_review": 0.675
         },
-        "train_seconds": 0.58,
+        "train_seconds": 0.82,
         "latency": {
           "cpu": {
-            "single_p50_ms": 0.0429,
-            "single_p95_ms": 0.0517,
+            "single_p50_ms": 0.0417,
+            "single_p95_ms": 0.0429,
             "batch_rows": 1000,
-            "batch_rows_per_s": 1286964.8
+            "batch_rows_per_s": 1269673.6
           },
           "nnpa": {
-            "single_p50_ms": 0.0514,
-            "single_p95_ms": 0.0563,
+            "single_p50_ms": 0.0493,
+            "single_p95_ms": 0.0506,
             "batch_rows": 1000,
-            "batch_rows_per_s": 1962643.1
+            "batch_rows_per_s": 2136683.7
           }
         }
       }
@@ -875,8 +879,8 @@
     },
     "hybrid": {
       "n": 2400,
-      "accuracy": 0.9446,
-      "macro_f1": 0.9357,
+      "accuracy": 0.94,
+      "macro_f1": 0.912,
       "per_class": {
         "ALLOW": {
           "precision": 0.9764,
@@ -885,23 +889,23 @@
           "support": 921
         },
         "CHALLENGE": {
-          "precision": 0.9009,
+          "precision": 0.7353,
           "recall": 0.9202,
-          "f1": 0.9105,
+          "f1": 0.8174,
           "support": 326
         },
         "BLOCK": {
-          "precision": 0.9343,
-          "recall": 0.987,
-          "f1": 0.9599,
+          "precision": 0.986,
+          "recall": 0.9775,
+          "f1": 0.9817,
           "support": 1153
         }
       },
       "confusion_matrix": [
         [
           829,
-          28,
-          64
+          92,
+          0
         ],
         [
           10,
@@ -910,16 +914,16 @@
         ],
         [
           10,
-          5,
-          1138
+          16,
+          1127
         ]
       ],
-      "false_block_rate_allow": 0.0695,
-      "false_block_rate_legit": 0.0642,
+      "false_block_rate_allow": 0.0,
+      "false_block_rate_legit": 0.0128,
       "unsafe_miss_rate": 0.0087,
-      "unsafe_block_rate": 0.987,
+      "unsafe_block_rate": 0.9775,
       "legit_acceptance_rate": 0.9001,
-      "challenge_rate": 0.1388,
+      "challenge_rate": 0.17,
       "families": {
         "icu:big_share": {
           "n": 14,
@@ -1023,8 +1027,8 @@
           "n": 263,
           "true_label": "ALLOW",
           "pred_allow": 0.924,
-          "pred_challenge": 0.0114,
-          "pred_block": 0.0646
+          "pred_challenge": 0.076,
+          "pred_block": 0.0
         },
         "purchase:over_budget": {
           "n": 116,
@@ -1086,8 +1090,8 @@
           "n": 111,
           "true_label": "BLOCK",
           "pred_allow": 0.0631,
-          "pred_challenge": 0.0,
-          "pred_block": 0.9369
+          "pred_challenge": 0.0991,
+          "pred_block": 0.8378
         },
         "reroute:injected_partial": {
           "n": 119,
@@ -1100,8 +1104,8 @@
           "n": 391,
           "true_label": "ALLOW",
           "pred_allow": 0.8798,
-          "pred_challenge": 0.0,
-          "pred_block": 0.1202
+          "pred_challenge": 0.1202,
+          "pred_block": 0.0
         },
         "reroute:out_of_scope_dest": {
           "n": 65,
@@ -1115,28 +1119,27 @@
   },
   "test_all_models": {
     "logistic_regression": {
-      "hybrid_macro_f1": 0.9254,
+      "hybrid_macro_f1": 0.8983,
       "ml_only_macro_f1": 0.9039
     },
     "random_forest": {
-      "hybrid_macro_f1": 0.9423,
+      "hybrid_macro_f1": 0.9233,
       "ml_only_macro_f1": 0.9183
     },
     "hist_gradient_boosting": {
-      "hybrid_macro_f1": null,
-      "ml_only_macro_f1": null,
-      "note": "no threshold met the false-block constraint on validation"
+      "hybrid_macro_f1": 0.8138,
+      "ml_only_macro_f1": 0.7745
     },
     "mlp": {
-      "hybrid_macro_f1": 0.9414,
+      "hybrid_macro_f1": 0.9199,
       "ml_only_macro_f1": 0.9222
     },
     "xgboost": {
-      "hybrid_macro_f1": 0.8891,
+      "hybrid_macro_f1": 0.8951,
       "ml_only_macro_f1": 0.806
     },
     "torch_mlp": {
-      "hybrid_macro_f1": 0.9357,
+      "hybrid_macro_f1": 0.912,
       "ml_only_macro_f1": 0.9151
     }
   },
@@ -1147,7 +1150,7 @@
   },
   "ablation": {
     "all features": {
-      "hybrid_macro_f1_test": 0.9357
+      "hybrid_macro_f1_test": 0.912
     }
   },
   "platform": {
@@ -1168,7 +1171,7 @@
     }
   },
   "seed": 7,
-  "generated_at": "2026-10-17T09:19:27Z",
+  "generated_at": "2026-10-17T09:26:47Z",
   "charts": [
     "confusion_matrices",
     "method_comparison",

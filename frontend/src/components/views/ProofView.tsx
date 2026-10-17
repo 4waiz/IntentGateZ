@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
-import { AlertTriangle, CheckCircle2, Cpu, FileText, Package, RefreshCw, ShieldCheck, XCircle } from "lucide-react";
+import { AlertTriangle, CheckCircle2, ChevronRight, Cpu, FileText, Package, RefreshCw, ShieldCheck, XCircle } from "lucide-react";
 import { api, ApiError } from "../../api/client";
-import type { AuditVerify, BenchmarkResults, LatencyKey, Metrics, ModelInfoResponse } from "../../api/types";
+import type { AuditVerify, BenchmarkResults, JsonValue, LatencyKey, Metrics, ModelInfoResponse } from "../../api/types";
 import { bytes, duration, ms, num, shortHash } from "../../lib/format";
 import { refreshPlatform } from "../../store/actions";
 import { useStore } from "../../store/store";
@@ -409,16 +409,17 @@ export default function ProofView() {
             </div>
           )}
           {bench && benchKeys.length > 0 && (
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-4">
+              <p className="text-[11.5px] leading-snug text-muted">
+                These are result files recorded by the ML pipeline, possibly on another host; each file states where it was produced. They are evidence of offline runs,
+                separate from the live facts above.
+              </p>
               <ChartGallery names={charts} />
-              {benchKeys.map((k) => (
-                <div key={k}>
-                  <div className="mb-2 flex items-center gap-2">
-                    <span className="ig-mono text-[12px] font-medium text-fg">{k}.json</span>
-                  </div>
-                  <JsonView value={bench[k]} />
-                </div>
-              ))}
+              <div className="flex flex-col gap-2">
+                {benchKeys.map((k) => (
+                  <ResultFile key={k} name={k} value={bench[k]} defaultOpen={/benchmark|summary/.test(k)} />
+                ))}
+              </div>
             </div>
           )}
         </Card>
@@ -459,6 +460,45 @@ export default function ProofView() {
           </Card>
         </div>
       </div>
+    </div>
+  );
+}
+
+function recordedOn(v: JsonValue): string | null {
+  if (typeof v !== "object" || v === null || Array.isArray(v)) return null;
+  for (const key of ["host", "platform"]) {
+    const h = v[key];
+    if (typeof h === "object" && h !== null && !Array.isArray(h) && typeof h.architecture === "string") {
+      return `${h.architecture}${typeof h.machine_type === "string" ? ` · machine ${h.machine_type}` : ""}`;
+    }
+  }
+  if (Array.isArray(v.architecture) && typeof v.architecture[0] === "string") return v.architecture.join(", ");
+  return null;
+}
+
+function ResultFile({ name, value, defaultOpen }: { name: string; value: JsonValue; defaultOpen: boolean }) {
+  const [open, setOpen] = useState(defaultOpen);
+  const host = recordedOn(value);
+  const keys = typeof value === "object" && value !== null && !Array.isArray(value) ? Object.keys(value).length : 0;
+  return (
+    <div className="rounded-[5px] border border-line">
+      <button type="button" className="flex w-full items-center justify-between gap-3 px-3 py-2 text-left hover:bg-white/[0.02]" onClick={() => setOpen((o) => !o)}>
+        <span className="flex items-center gap-2">
+          <ChevronRight size={13} className={cx("text-dim transition-transform", open && "rotate-90")} />
+          <span className="ig-mono text-[12px] font-medium text-fg">{name}.json</span>
+          <span className="text-[10.5px] text-dim">{keys} fields</span>
+        </span>
+        {host && (
+          <span className={cx("ig-mono rounded-[2px] border px-1.5 text-[10px] leading-[17px]", host.startsWith("s390x") ? "border-allow/40 text-allow" : "border-line text-muted")}>
+            recorded on {host}
+          </span>
+        )}
+      </button>
+      {open && (
+        <div className="border-t border-line px-3 py-3">
+          <JsonView value={value} />
+        </div>
+      )}
     </div>
   );
 }

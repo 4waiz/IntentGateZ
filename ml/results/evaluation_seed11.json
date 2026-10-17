@@ -1,5 +1,5 @@
 {
-  "version": "igz-risk-torch-mlp-202610170919-94696407",
+  "version": "igz-risk-torch-mlp-202610170927-94696407",
   "dataset": {
     "file": "intentgate_synthetic_seed11.csv",
     "sha256": "9469640744312df371a82dc3d4f120f503dd44deef785b60fa019548a724a98b",
@@ -14,6 +14,7 @@
     }
   },
   "protocol": "fit on train; thresholds and model selection on validation; single evaluation on held-out test with unseen text templates",
+  "fusion": "v2: hard policy first; ML may escalate to CHALLENGE on its own, but an ML-driven BLOCK requires structural corroboration (see intentgate.features.CORROBORATION_RULES). v1 (ML could block alone) results are archived in ml/results/v1_ml_can_block_alone; v2 was introduced after error analysis of v1 test errors.",
   "max_false_block_constraint": 0.02,
   "selected_model": "torch_mlp",
   "best_cpu_model": "random_forest",
@@ -26,17 +27,17 @@
     "torch_nnpa_version": "1.5.0+gite861108"
   },
   "thresholds": {
-    "tau_block": 0.425,
+    "tau_block": 0.4,
     "tau_review": 0.55
   },
   "validation": {
     "models": {
       "logistic_regression": {
-        "hybrid_macro_f1": 0.9505,
+        "hybrid_macro_f1": 0.936,
         "ml_only_macro_f1": 0.9324,
         "feasible_under_false_block_constraint": true,
         "thresholds_hybrid": {
-          "tau_block": 0.55,
+          "tau_block": 0.65,
           "tau_review": 0.75
         },
         "thresholds_ml_only": {
@@ -45,14 +46,14 @@
         },
         "train_seconds": 0.09,
         "latency": {
-          "single_p50_ms": 0.1989,
-          "single_p95_ms": 0.2215,
+          "single_p50_ms": 0.1968,
+          "single_p95_ms": 0.2074,
           "batch_rows": 1000,
-          "batch_rows_per_s": 1928964.0
+          "batch_rows_per_s": 1890820.3
         }
       },
       "random_forest": {
-        "hybrid_macro_f1": 0.9617,
+        "hybrid_macro_f1": 0.9485,
         "ml_only_macro_f1": 0.9391,
         "feasible_under_false_block_constraint": true,
         "thresholds_hybrid": {
@@ -63,34 +64,37 @@
           "tau_block": 0.725,
           "tau_review": 0.8
         },
-        "train_seconds": 0.75,
+        "train_seconds": 0.78,
         "latency": {
-          "single_p50_ms": 21.6287,
-          "single_p95_ms": 28.1687,
+          "single_p50_ms": 21.7987,
+          "single_p95_ms": 32.284,
           "batch_rows": 1000,
-          "batch_rows_per_s": 31740.3
+          "batch_rows_per_s": 30151.2
         }
       },
       "hist_gradient_boosting": {
-        "hybrid_macro_f1": null,
+        "hybrid_macro_f1": 0.8243,
         "ml_only_macro_f1": null,
-        "feasible_under_false_block_constraint": false,
-        "thresholds_hybrid": null,
+        "feasible_under_false_block_constraint": true,
+        "thresholds_hybrid": {
+          "tau_block": 0.95,
+          "tau_review": 0.925
+        },
         "thresholds_ml_only": null,
-        "train_seconds": 3.47,
+        "train_seconds": 3.33,
         "latency": {
-          "single_p50_ms": 6.1074,
-          "single_p95_ms": 7.6113,
+          "single_p50_ms": 6.2999,
+          "single_p95_ms": 7.4135,
           "batch_rows": 1000,
-          "batch_rows_per_s": 24559.1
+          "batch_rows_per_s": 24563.4
         }
       },
       "mlp": {
-        "hybrid_macro_f1": 0.9589,
+        "hybrid_macro_f1": 0.9478,
         "ml_only_macro_f1": 0.9424,
         "feasible_under_false_block_constraint": true,
         "thresholds_hybrid": {
-          "tau_block": 0.65,
+          "tau_block": 0.625,
           "tau_review": 0.675
         },
         "thresholds_ml_only": {
@@ -99,51 +103,54 @@
         },
         "train_seconds": 0.27,
         "latency": {
-          "single_p50_ms": 0.2003,
-          "single_p95_ms": 0.2229,
+          "single_p50_ms": 0.2008,
+          "single_p95_ms": 0.2277,
           "batch_rows": 1000,
-          "batch_rows_per_s": 1146351.2
+          "batch_rows_per_s": 1136507.0
         }
       },
       "xgboost": {
-        "hybrid_macro_f1": null,
+        "hybrid_macro_f1": 0.833,
         "ml_only_macro_f1": null,
-        "feasible_under_false_block_constraint": false,
-        "thresholds_hybrid": null,
+        "feasible_under_false_block_constraint": true,
+        "thresholds_hybrid": {
+          "tau_block": 0.925,
+          "tau_review": 0.925
+        },
         "thresholds_ml_only": null,
-        "train_seconds": 0.85,
+        "train_seconds": 0.83,
         "latency": {
-          "single_p50_ms": 0.1611,
-          "single_p95_ms": 0.2347,
+          "single_p50_ms": 0.1631,
+          "single_p95_ms": 0.2887,
           "batch_rows": 1000,
-          "batch_rows_per_s": 114313.1
+          "batch_rows_per_s": 114674.9
         }
       },
       "torch_mlp": {
-        "hybrid_macro_f1": 0.959,
+        "hybrid_macro_f1": 0.9477,
         "ml_only_macro_f1": 0.9462,
         "feasible_under_false_block_constraint": true,
         "thresholds_hybrid": {
-          "tau_block": 0.425,
+          "tau_block": 0.4,
           "tau_review": 0.55
         },
         "thresholds_ml_only": {
           "tau_block": 0.4,
           "tau_review": 0.7
         },
-        "train_seconds": 0.52,
+        "train_seconds": 0.45,
         "latency": {
           "cpu": {
-            "single_p50_ms": 0.0423,
-            "single_p95_ms": 0.0469,
+            "single_p50_ms": 0.0421,
+            "single_p95_ms": 0.0509,
             "batch_rows": 1000,
-            "batch_rows_per_s": 685812.3
+            "batch_rows_per_s": 890105.8
           },
           "nnpa": {
-            "single_p50_ms": 0.0499,
-            "single_p95_ms": 0.0538,
+            "single_p50_ms": 0.0517,
+            "single_p95_ms": 0.0627,
             "batch_rows": 1000,
-            "batch_rows_per_s": 2053890.0
+            "batch_rows_per_s": 2039679.9
           }
         }
       }
@@ -869,8 +876,8 @@
     },
     "hybrid": {
       "n": 2400,
-      "accuracy": 0.9487,
-      "macro_f1": 0.9375,
+      "accuracy": 0.9417,
+      "macro_f1": 0.9153,
       "per_class": {
         "ALLOW": {
           "precision": 0.9783,
@@ -879,48 +886,48 @@
           "support": 897
         },
         "CHALLENGE": {
-          "precision": 0.8778,
-          "recall": 0.9335,
-          "f1": 0.9048,
+          "precision": 0.7381,
+          "recall": 0.9366,
+          "f1": 0.8256,
           "support": 331
         },
         "BLOCK": {
-          "precision": 0.9491,
-          "recall": 0.9872,
-          "f1": 0.9678,
+          "precision": 0.9896,
+          "recall": 0.9718,
+          "f1": 0.9806,
           "support": 1172
         }
       },
       "confusion_matrix": [
         [
           811,
-          37,
-          49
+          86,
+          0
         ],
         [
           9,
-          309,
-          13
+          310,
+          12
         ],
         [
           9,
-          6,
-          1157
+          24,
+          1139
         ]
       ],
-      "false_block_rate_allow": 0.0546,
-      "false_block_rate_legit": 0.0505,
+      "false_block_rate_allow": 0.0,
+      "false_block_rate_legit": 0.0098,
       "unsafe_miss_rate": 0.0077,
-      "unsafe_block_rate": 0.9872,
+      "unsafe_block_rate": 0.9718,
       "legit_acceptance_rate": 0.9041,
-      "challenge_rate": 0.1467,
+      "challenge_rate": 0.175,
       "families": {
         "icu:big_share": {
           "n": 14,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
-          "pred_challenge": 0.9286,
-          "pred_block": 0.0714
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
         },
         "icu:drift_other_hospital": {
           "n": 74,
@@ -947,8 +954,8 @@
           "n": 264,
           "true_label": "ALLOW",
           "pred_allow": 0.947,
-          "pred_challenge": 0.0417,
-          "pred_block": 0.0114
+          "pred_challenge": 0.053,
+          "pred_block": 0.0
         },
         "icu:over_capacity": {
           "n": 28,
@@ -1010,15 +1017,15 @@
           "n": 63,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
-          "pred_challenge": 0.0159,
-          "pred_block": 0.9841
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
         },
         "purchase:ok": {
           "n": 263,
           "true_label": "ALLOW",
           "pred_allow": 0.9392,
-          "pred_challenge": 0.0456,
-          "pred_block": 0.0152
+          "pred_challenge": 0.0608,
+          "pred_block": 0.0
         },
         "purchase:over_budget": {
           "n": 144,
@@ -1080,8 +1087,8 @@
           "n": 117,
           "true_label": "BLOCK",
           "pred_allow": 0.0256,
-          "pred_challenge": 0.0,
-          "pred_block": 0.9744
+          "pred_challenge": 0.1624,
+          "pred_block": 0.812
         },
         "reroute:injected_partial": {
           "n": 129,
@@ -1094,8 +1101,8 @@
           "n": 369,
           "true_label": "ALLOW",
           "pred_allow": 0.8753,
-          "pred_challenge": 0.0108,
-          "pred_block": 0.1138
+          "pred_challenge": 0.1247,
+          "pred_block": 0.0
         },
         "reroute:out_of_scope_dest": {
           "n": 69,
@@ -1109,29 +1116,27 @@
   },
   "test_all_models": {
     "logistic_regression": {
-      "hybrid_macro_f1": 0.9355,
+      "hybrid_macro_f1": 0.9104,
       "ml_only_macro_f1": 0.9126
     },
     "random_forest": {
-      "hybrid_macro_f1": 0.9446,
+      "hybrid_macro_f1": 0.9236,
       "ml_only_macro_f1": 0.9213
     },
     "hist_gradient_boosting": {
-      "hybrid_macro_f1": null,
-      "ml_only_macro_f1": null,
-      "note": "no threshold met the false-block constraint on validation"
+      "hybrid_macro_f1": 0.8347,
+      "ml_only_macro_f1": 0.7921
     },
     "mlp": {
-      "hybrid_macro_f1": 0.9561,
+      "hybrid_macro_f1": 0.9446,
       "ml_only_macro_f1": 0.9417
     },
     "xgboost": {
-      "hybrid_macro_f1": null,
-      "ml_only_macro_f1": null,
-      "note": "no threshold met the false-block constraint on validation"
+      "hybrid_macro_f1": 0.88,
+      "ml_only_macro_f1": 0.7691
     },
     "torch_mlp": {
-      "hybrid_macro_f1": 0.9375,
+      "hybrid_macro_f1": 0.9153,
       "ml_only_macro_f1": 0.9275
     }
   },
@@ -1142,7 +1147,7 @@
   },
   "ablation": {
     "all features": {
-      "hybrid_macro_f1_test": 0.9375
+      "hybrid_macro_f1_test": 0.9153
     }
   },
   "platform": {
@@ -1163,5 +1168,5 @@
     }
   },
   "seed": 11,
-  "generated_at": "2026-10-17T09:19:51Z"
+  "generated_at": "2026-10-17T09:27:15Z"
 }

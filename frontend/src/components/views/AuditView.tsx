@@ -138,7 +138,7 @@ export default function AuditView() {
 
       <div className="min-h-0 flex-1 overflow-auto px-6 py-3">
         <div className="mx-auto max-w-[1480px]">
-          {err && <div className="py-6 text-[12px] text-block">{err}</div>}
+          {err && <div className={cx("text-[11.5px]", rows ? "pb-2 text-challenge" : "py-6 text-block")}>{rows ? `Last refresh failed (${err}); showing the previous listing.` : err}</div>}
           {!rows && !err && (
             <div className="flex items-center gap-2 py-6 text-[12px] text-muted">
               <Spinner size={12} /> Loading audit records…

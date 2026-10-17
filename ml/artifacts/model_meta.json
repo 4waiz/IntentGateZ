@@ -1,5 +1,5 @@
 {
-  "version": "igz-risk-torch-mlp-202610170919-5efd2225",
+  "version": "igz-risk-torch-mlp-202610170926-5efd2225",
   "serving_runtime": "torch",
   "torch_device": "nnpa",
   "selected_model": "torch_mlp",
@@ -71,21 +71,26 @@
     "tau_block": 0.525,
     "tau_review": 0.625
   },
+  "fusion": "v2-corroborated-block",
   "thresholds_by_model": {
     "logistic_regression": {
-      "tau_block": 0.5,
+      "tau_block": 0.525,
       "tau_review": 0.8
     },
     "random_forest": {
       "tau_block": 0.825,
       "tau_review": 0.85
     },
+    "hist_gradient_boosting": {
+      "tau_block": 0.925,
+      "tau_review": 0.925
+    },
     "mlp": {
-      "tau_block": 0.65,
+      "tau_block": 0.6,
       "tau_review": 0.775
     },
     "xgboost": {
-      "tau_block": 0.975,
+      "tau_block": 0.925,
       "tau_review": 0.925
     },
     "torch_mlp": {
@@ -199,7 +204,7 @@
       "tensorflow": "2.18.1",
       "ibm-zdnn-plugin": "2.3.0"
     },
-    "trained_at": "2026-10-17T09:19:27Z",
+    "trained_at": "2026-10-17T09:26:47Z",
     "dataset": "intentgate_synthetic_seed7.csv",
     "dataset_sha256": "5efd2225bdcc94fdd7046dcd1354f0725dd622e91417c27b8d92f9dc0554a97a",
     "seed": 7
@@ -213,11 +218,11 @@
   },
   "metrics": {
     "test_hybrid": {
-      "macro_f1": 0.9357,
-      "accuracy": 0.9446,
-      "false_block_rate_allow": 0.0695,
+      "macro_f1": 0.912,
+      "accuracy": 0.94,
+      "false_block_rate_allow": 0.0,
       "unsafe_miss_rate": 0.0087,
-      "challenge_rate": 0.1388
+      "challenge_rate": 0.17
     }
   }
 }
