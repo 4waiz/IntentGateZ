@@ -194,6 +194,8 @@ export async function refreshPlatform(): Promise<void> {
 }
 
 export async function refreshAudit(): Promise<void> {
+  // The Audit view runs its own poll; the bottom strip is hidden while it is open.
+  if (getState().view === "audit") return;
   try {
     const recentAudit = await api.audit(16, "session");
     setState({ recentAudit });

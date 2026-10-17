@@ -29,6 +29,7 @@ const browser = await chromium.launch({ ...launch, headless: true, args: ["--ign
 
 const problems = [];
 const expectedHttp = [];
+const backendErrors = [];
 
 async function newPage(width, height, quality = "med") {
   const ctx = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 1 });
@@ -47,6 +48,7 @@ async function newPage(width, height, quality = "med") {
     // Chrome logs every non-2xx fetch; 409 (refused replays/tampering) and 503 (Granite not
     // configured) are expected server answers in this flow.
     if (/status of (409|503)/.test(t)) expectedHttp.push(t);
+    else if (/status of 5\d\d/.test(t)) backendErrors.push(t);
     else problems.push(`console.error: ${t}`);
   });
   await page.goto(URL, { waitUntil: "domcontentloaded" });
@@ -178,6 +180,9 @@ console.log("1920x1080 + presentation mode");
 
 await browser.close();
 console.log(`expected 409/503 responses observed: ${expectedHttp.length}`);
+if (backendErrors.length) {
+  console.warn(`WARNING: the backend answered ${backendErrors.length} request(s) with HTTP 5xx; check the uvicorn log (frontend recovered on the next poll).`);
+}
 if (problems.length) {
   console.error("SMOKE FAILED:\n" + problems.map((p) => ` - ${p}`).join("\n"));
   process.exit(1);

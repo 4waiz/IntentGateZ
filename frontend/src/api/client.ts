@@ -154,6 +154,18 @@ export async function request<T>(path: string, opts: RequestOptions = {}): Promi
 
 const S = { session: true } as const;
 
+/**
+ * Audit reads are issued one at a time. The backend's audit log shares one SQLite connection
+ * across threads, so overlapping reads from this console could collide; queueing them keeps
+ * the console from ever being the cause.
+ */
+let auditQueue: Promise<unknown> = Promise.resolve();
+function serialAudit<T>(fn: () => Promise<T>): Promise<T> {
+  const next = auditQueue.then(fn, fn);
+  auditQueue = next.catch(() => undefined);
+  return next;
+}
+
 export const api = {
   health: () => request<Health>("/health", { timeoutMs: 6000 }),
   platform: () => request<PlatformInfo>("/platform"),
@@ -183,7 +195,7 @@ export const api = {
 
   decisions: (limit = 50) => request<DecisionSummary[]>(`/decisions?limit=${limit}`, S),
   decision: (id: string) => request<Decision>(`/decisions/${encodeURIComponent(id)}`, S),
-  trace: (id: string) => request<TraceResponse>(`/decisions/${encodeURIComponent(id)}/trace`, S),
+  trace: (id: string) => serialAudit(() => request<TraceResponse>(`/decisions/${encodeURIComponent(id)}/trace`, S)),
   explain: (id: string) => request<ExplainResponse>(`/decisions/${encodeURIComponent(id)}/explain`, { ...S, method: "POST", timeoutMs: 60000 }),
 
   challenges: () => request<Challenge[]>("/challenges", S),
@@ -203,8 +215,8 @@ export const api = {
     }),
 
   audit: (limit: number, scope: "session" | "all") =>
-    request<AuditRecord[]>(`/audit?limit=${limit}&scope=${scope}`, { session: scope === "session" }),
-  auditVerify: () => request<AuditVerify>("/audit/verify"),
+    serialAudit(() => request<AuditRecord[]>(`/audit?limit=${limit}&scope=${scope}`, { session: scope === "session" })),
+  auditVerify: () => serialAudit(() => request<AuditVerify>("/audit/verify")),
   auditExportUrl: (sessionId?: string | null) => apiUrl(`/audit/export${sessionId ? `?session=${encodeURIComponent(sessionId)}` : ""}`),
   eventsUrl: (sessionId: string) => apiUrl(`/events/stream?session=${encodeURIComponent(sessionId)}`),
 };

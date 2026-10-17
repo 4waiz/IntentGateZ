@@ -317,14 +317,23 @@ def charts(res: dict, test_df: pd.DataFrame, P_sel: np.ndarray, out_dir: Path) -
     made.append("per_class_metrics")
 
     if res.get("ablation"):
-        fig, ax = plt.subplots(figsize=(8, 3.6))
+        fig, axes = plt.subplots(1, 2, figsize=(12, 3.8))
         names = list(res["ablation"].keys())
-        v = [res["ablation"][n]["hybrid_macro_f1_test"] for n in names]
-        ax.barh(names, v, color=[teal if n == "all features" else blue for n in names])
-        for i, val in enumerate(v):
-            ax.text(val + 0.002, i, f"{val:.3f}", va="center", fontsize=9)
-        ax.set_xlim(min(v) - 0.05, 1.0)
-        ax.set_title("Ablation: hybrid macro-F1 on test when feature groups are removed")
+        f1v = [res["ablation"][n]["hybrid_macro_f1_test"] for n in names]
+        miss = [res["ablation"][n]["unsafe_miss_rate"] for n in names]
+        cols = [teal if n == "all features" else blue for n in names]
+        axes[0].barh(names, f1v, color=cols)
+        for i, val in enumerate(f1v):
+            axes[0].text(val + 0.002, i, f"{val:.3f}", va="center", fontsize=9)
+        axes[0].set_xlim(min(f1v) - 0.05, 1.0)
+        axes[0].set_title("Macro-F1 (exact verdict)")
+        axes[1].barh(names, miss, color=[teal if n == "all features" else red for n in names])
+        for i, val in enumerate(miss):
+            axes[1].text(val + 0.001, i, f"{val * 100:.1f}%", va="center", fontsize=9)
+        axes[1].set_xlim(0, max(miss) * 1.35 + 0.005)
+        axes[1].set_yticks([])
+        axes[1].set_title("Unsafe actions that would execute (lower is better)")
+        fig.suptitle(f"Ablation on the test set ({res['ablation']['all features']['model']} retrained per row)", fontsize=11)
         fig.tight_layout()
         fig.savefig(out_dir / "ablation.png", dpi=150)
         plt.close(fig)
@@ -441,19 +450,19 @@ def main() -> None:
             "ml_only_macro_f1": evaluate(yte, ml_decide(P, **tuned[name]["ml_only"]))["macro_f1"],
         }
 
-    ablation = {"all features": {"hybrid_macro_f1_test": results_test["hybrid"]["macro_f1"]}}
-    # Ablation retrains the best CPU model family with feature groups removed (same protocol).
+    # Ablation: retrain the best CPU model family with feature groups removed (same protocol, same family for every row).
+    ablation = {}
     base = candidates(args.seed).get(best_cpu)
-    ablation["all features"]["note"] = f"selected model ({selected}); ablation rows retrain {best_cpu}"
     if base is not None:
         from sklearn.base import clone
 
-        for gname, cols in GROUPS.items():
+        for gname, cols in [("all features", [])] + list(GROUPS.items()):
             keep = [i for i, f in enumerate(FEATURE_NAMES) if f not in cols]
             m = clone(base).fit(Xtr[:, keep], ytr)
             th, _ = tune(m.predict_proba(Xva[:, keep]), yva, hva, cva)
             pred = np.maximum(ml_decide(m.predict_proba(Xte[:, keep]), **th, corr=cte), hte)
-            ablation[gname] = {"hybrid_macro_f1_test": evaluate(yte, pred)["macro_f1"], "removed": cols}
+            e = evaluate(yte, pred)
+            ablation[gname] = {"model": best_cpu, "hybrid_macro_f1_test": e["macro_f1"], "unsafe_miss_rate": e["unsafe_miss_rate"], "false_block_rate_allow": e["false_block_rate_allow"], "removed": cols}
 
     # expected calibration error for P(BLOCK)
     pb = Pte[:, 2]
