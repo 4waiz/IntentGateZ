@@ -9,6 +9,7 @@ import argparse
 import json
 import re
 from pathlib import Path
+from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[1]
 RES = ROOT / "ml" / "results"
@@ -45,7 +46,7 @@ def main() -> None:
 
     lscpu = ev_text("lscpu")
     sysinfo = ev_text("sysinfo")
-    get = lambda pat, s: (re.search(pat, s).group(1).strip() if re.search(pat, s) else "n/a")  # noqa: E731
+    get = lambda pat, s: (" ".join(re.search(pat, s, re.M).group(1).split()) if re.search(pat, s, re.M) else "n/a")  # noqa: E731
     facts = [
         "| Fact (captured over SSH, see `evidence/ibmz/`) | Value |",
         "|---|---|",
@@ -109,6 +110,7 @@ def main() -> None:
         tpl.replace("{{LIVE_URL}}", args.live_url)
         .replace("{{VIDEO_URL}}", args.video_url)
         .replace("{{TEAM}}", args.team)
+        .replace("{{DECK_PATH}}", "submission/" + quote(f"{args.team}_IBM Z Datathon 2026 Project - IntentGate Z.pdf"))
         .replace("{{SCREENSHOTS}}", shots_md)
         .replace("{{IBMZ_FACTS}}", "\n".join(facts))
         .replace("{{NNPA_SENTENCE}}", nnpa_sentence)

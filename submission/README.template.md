@@ -9,7 +9,7 @@ The last checkpoint before autonomous AI takes action, running on IBM LinuxONE.<
 <p align="center">
   <a href="{{LIVE_URL}}"><b>Live demo</b></a> ·
   <a href="{{VIDEO_URL}}"><b>Demo video</b></a> ·
-  <a href="submission/IntentGateZ_Pitch_Deck.pdf"><b>Pitch deck</b></a> ·
+  <a href="{{DECK_PATH}}"><b>Pitch deck</b></a> ·
   <a href="notebooks/IntentGateZ_IBM_LinuxONE_Evaluation.ipynb"><b>Evaluation notebook</b></a> ·
   <a href="docs/security-model.md"><b>Security model</b></a>
 </p>
@@ -65,7 +65,10 @@ What runs on LinuxONE:
 * **The gateway itself**: FastAPI + Pydantic in a Docker container built `FROM registry.linuxone.cloud.marist.edu/l1cc/jupyterlab-image-s390x` (IBM's s390x AI/ML image), behind Caddy (HTTPS, Let's Encrypt) on the same VM. Port 8000 is bound to localhost; Jupyter is reachable only through an SSH tunnel.
 * **Model training and evaluation**: the dataset generation, both text models, every risk-model candidate, the repeated-seed runs and the benchmarks were executed on the VM inside IBM's container ([deploy/run_ml_on_linuxone.sh](deploy/run_ml_on_linuxone.sh)).
 * **Inference**: every decision calls the risk model in-process; `/api/platform` and the IBM Z Proof screen report the live runtime, inference count and latency.
-* **Telum NNPA**: the Keras MLP is benchmarked with TensorFlow + `ibm-zdnn-plugin` in two processes (`NNPA_DEVICES=0` vs default). {{NNPA_SENTENCE}}
+* **Telum NNPA**: {{NNPA_SENTENCE}} Benchmark: [ml/benchmark_nnpa.py](ml/benchmark_nnpa.py), same weights and inputs on both devices.
+
+<p align="center"><img src="ml/results/charts/nnpa_vs_cpu.png" width="80%" alt="CPU vs Telum NNPA inference time by batch size, measured on the LinuxONE VM"/></p>
+
 * **IBM reference labs**: both mandatory labs (predictive multi-model churn; predictive + generative loan approval with Granite) were executed on the VM; executed notebooks are in [evidence/labs](evidence/labs).
 
 Evidence (sanitised terminal captures, screenshots): [evidence/ibmz](evidence/ibmz).
@@ -101,7 +104,7 @@ OpenAPI docs: `/api/docs` on the live server. Main endpoints: `POST /api/intents
 ```bash
 # backend (Python 3.12)
 cd backend
-pip install fastapi uvicorn pydantic numpy scikit-learn joblib pandas
+pip install fastapi uvicorn pydantic numpy scikit-learn joblib pandas   # + torch for the served MLP (torch_nnpa on LinuxONE)
 python -m uvicorn intentgate.api:app --port 8000
 python -m pytest -q tests
 
@@ -125,12 +128,14 @@ Deploying on a LinuxONE Community Cloud VM: [deploy/README.md](deploy/README.md)
 * The injection attacker is a deterministic harness; a live LLM agent would produce more varied proposals.
 * The public demo gives each viewer a sandbox with a demo supervisor credential so the challenge flow can be tried; production would use an identity provider with step-up authentication.
 * The audit hash chain detects tampering but is not an immutable ledger; external anchoring of the head hash is future work.
-* The LinuxONE Community Cloud VM is temporary event infrastructure (30-day lifetime); the hosted demo depends on it.
+* The LinuxONE Community Cloud VM is temporary event infrastructure; the hosted demo depends on it.
 * {{FLAVOR_NOTE}}
 
 ## Credits and open-source
 
-Built during IBM Z Datathon 2026 (17–18 Oct 2026). Open-source software used: FastAPI, Pydantic, Uvicorn, NumPy, pandas, scikit-learn, XGBoost, TensorFlow, IBM zDNN plugin (in IBM's LinuxONE image), joblib, matplotlib, React, Vite, TypeScript, three.js, React Three Fiber, drei, Tailwind CSS, Motion, Lucide, Zustand, IBM Plex fonts, Caddy, Docker, Playwright. Public datasets: [InjecAgent](https://github.com/uiuc-kang-lab/InjecAgent) (MIT), [AgentDojo](https://github.com/ethz-spylab/agentdojo) (MIT). IBM reference labs: [linuxone-community-cloud/jupyter-lab-ml](https://github.com/linuxone-community-cloud/jupyter-lab-ml).
+Built during IBM Z Datathon 2026 (17–18 Oct 2026). Open-source software used: FastAPI, Pydantic, Uvicorn, NumPy, pandas, scikit-learn, XGBoost, PyTorch, IBM `torch_nnpa` and the TensorFlow `ibm-zdnn-plugin` (both in IBM's LinuxONE image; the latter checked, not used for serving), joblib, matplotlib, llama-cpp-python with [IBM Granite 4.0 350M](https://huggingface.co/ibm-granite) (optional plain-language explanations only), React, Vite, TypeScript, three.js, React Three Fiber, drei, postprocessing, Tailwind CSS, Motion, Lucide, Zustand, IBM Plex fonts, Caddy, Docker, Playwright, python-pptx, FFmpeg. Public datasets: [InjecAgent](https://github.com/uiuc-kang-lab/InjecAgent) (MIT), [AgentDojo](https://github.com/ethz-spylab/agentdojo) (MIT). IBM reference labs: [linuxone-community-cloud/jupyter-lab-ml](https://github.com/linuxone-community-cloud/jupyter-lab-ml).
+
+3D city models: the building kit from [Encirra](https://encirra.kanbanstudios.ae), an earlier MIT-licensed project by Team Kanban built from an original procedural Blender kit (see [frontend/public/models/README.txt](frontend/public/models/README.txt)). Demo video: recorded from the live LinuxONE deployment by [submission/video/record.mjs](submission/video/record.mjs) and edited by [compose.py](submission/video/compose.py); the narration is synthetic speech generated locally with the open Kokoro-82M TTS model.
 
 This project is an independent student entry. It is not sponsored or endorsed by IBM beyond the event relationship.
 
