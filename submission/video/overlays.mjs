@@ -41,7 +41,7 @@ const CSS = `
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:1920px;height:1080px;background:transparent;font-family:Plex,sans-serif;color:#E8F0F7;-webkit-font-smoothing:antialiased}
 .abs{position:absolute}
-.panel{background:linear-gradient(180deg,rgba(12,26,40,.94),rgba(6,14,23,.94));border:1px solid #1f3a52;border-radius:12px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+.panel{background:linear-gradient(180deg,rgba(12,26,40,.97),rgba(6,14,23,.97));border:1px solid #1f3a52;border-radius:12px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
 .mono{font-family:PlexMono,monospace}
 .kicker{font-family:PlexMono,monospace;font-size:20px;letter-spacing:.24em;color:#78A9FF;text-transform:uppercase}
 .teal{color:#00D5B5}.amber{color:#FFBC5C}.red{color:#FF5D70}.blue{color:#78A9FF}.muted{color:#8496A8}
@@ -110,8 +110,8 @@ const OVERLAYS = {
   results_card: `
     <div class="abs panel" style="left:50%;transform:translateX(-50%);bottom:56px;padding:26px 40px;width:1560px">
       <div style="display:flex;justify-content:space-between;align-items:baseline">
-        <div class="kicker" style="font-size:17px">Unsafe actions let through · mean of 5 independently generated datasets</div>
-        <div class="mono muted" style="font-size:17px">held-out test sets, trained and scored on IBM LinuxONE</div>
+        <div class="kicker" style="font-size:17px;white-space:nowrap">Unsafe actions let through · mean of 5 datasets</div>
+        <div class="mono muted" style="font-size:17px;white-space:nowrap">held-out test sets · scored on IBM LinuxONE</div>
       </div>
       <div style="display:flex;gap:28px;margin-top:16px">
         <div style="flex:1"><div class="muted" style="font-size:22px">Hard rules only</div><div style="font-size:58px;font-weight:600" class="red">${pct(m("hard_policy", "unsafe_miss_rate"))}</div><div class="muted" style="font-size:19px">legit blocked ${pct(m("hard_policy", "false_block_rate_allow"))}</div></div>
