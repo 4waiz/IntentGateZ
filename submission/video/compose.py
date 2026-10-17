@@ -102,7 +102,7 @@ def timeline() -> list[dict]:
          "ovl": [("title_hook", 0.7, dur["s01_hook"] - 0.5, 0.6)]},
         {"id": "s02_problem", "dur": dur["s02_problem"],
          "parts": [("clip", "city", 9.89, None, 1.0, None)],
-         "dim": 0.58,
+         "dim": 0.68,
          "ovl": [("problem_1", 0.25, 6.75, 0.45), ("problem_2", 6.95, dur["s02_problem"] - 0.25, 0.45)]},
         {"id": "s03_solution", "dur": dur["s03_solution"],
          "parts": [("clip", "console", 1.0, 4.09, 1.0, None),

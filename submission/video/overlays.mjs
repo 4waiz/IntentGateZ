@@ -39,7 +39,7 @@ const CSS = `
 @font-face{font-family:PlexMono;src:url(${font("ibm-plex-mono", "ibm-plex-mono-latin-400-normal.woff2")});font-weight:400}
 @font-face{font-family:PlexMono;src:url(${font("ibm-plex-mono", "ibm-plex-mono-latin-500-normal.woff2")});font-weight:500}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{width:1920px;height:1080px;background:transparent;font-family:Plex,sans-serif;color:#E8F0F7;-webkit-font-smoothing:antialiased}
+html,body{width:1920px;height:1080px;background:transparent;font-family:Plex,sans-serif;color:#E8F0F7;-webkit-font-smoothing:antialiased;text-shadow:0 2px 18px rgba(0,0,0,.85)}
 .abs{position:absolute}
 .panel{background:linear-gradient(180deg,rgba(12,26,40,.97),rgba(6,14,23,.97));border:1px solid #1f3a52;border-radius:12px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
 .mono{font-family:PlexMono,monospace}
@@ -54,6 +54,7 @@ const chapter = (label, color = "#00D5B5") => `<div class="abs" style="left:48px
 
 const OVERLAYS = {
   title_hook: `
+    <div class="abs" style="left:0;right:0;bottom:0;height:440px;background:linear-gradient(0deg,rgba(3,7,13,.94) 0%,rgba(3,7,13,.75) 45%,rgba(3,7,13,0) 100%)"></div>
     <div class="abs" style="left:72px;bottom:86px;display:flex;align-items:center;gap:26px">
       ${MARK.replace('width="56" height="56"', 'width="92" height="92"')}
       <div>
