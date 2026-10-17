@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
 import * as THREE from "three";
+import { exposeForCapture } from "../lib/capture";
 import { serverNow } from "../lib/clock";
 import { type CityIndex, routeWorld } from "../lib/geo";
 import { buildRoutePath, sampleRoute, type RouteSample } from "../lib/sim";
@@ -146,6 +147,7 @@ export function CameraRig({ idx }: { idx: CityIndex }) {
   // First frame: establishing shot.
   useEffect(() => {
     overview(false);
+    exposeForCapture("__igzCam", ref.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -10,9 +10,12 @@ import { Toasts } from "./components/Toasts";
 import { TopBar } from "./components/TopBar";
 import { Mark } from "./components/ui/Mark";
 import { cx, Spinner } from "./components/ui/ui";
-import { bootstrap } from "./store/actions";
+import { CINEMA, exposeForCapture } from "./lib/capture";
+import { bootstrap, focusEntity, resetSandbox, runScenario } from "./store/actions";
 import "./store/live";
-import { useStore } from "./store/store";
+import { commandCamera, getState, setState, useStore } from "./store/store";
+
+exposeForCapture("__igz", { getState, setState, commandCamera, runScenario, resetSandbox, focusEntity });
 
 const CityScene = lazy(() => import("./scene/CityScene"));
 const ProofView = lazy(() => import("./components/views/ProofView"));
@@ -45,6 +48,15 @@ function Shell() {
   const cityView = presentation || view === "command" || view === "studio";
   const sidePanels = !presentation && (view === "command" || view === "studio");
   usePresenterKeys();
+
+  if (CINEMA)
+    return (
+      <div className="relative h-full">
+        <Suspense fallback={<SceneFallback />}>
+          <CityScene active chrome={false} />
+        </Suspense>
+      </div>
+    );
 
   return (
     <div className="flex h-full flex-col">
