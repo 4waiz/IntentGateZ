@@ -310,3 +310,4 @@ class Decision(BaseModel):
     audit: dict[str, Any] = Field(default_factory=dict)
     timestamp: float
     simulated_adversary: bool = False
+    trace: list[dict[str, Any]] = Field(default_factory=list)

@@ -94,6 +94,7 @@ class SimulationWorld:
         self.record_shares: list[dict[str, Any]] = []
         self.feeds: list[dict[str, Any]] = []
         self.executed_actions: set[str] = set()
+        self.executed_fingerprints: set[str] = set()
         self.history: list[dict[str, Any]] = []  # per-agent action history used by features
         self._init_state()
 
@@ -429,5 +430,6 @@ class SimulationWorld:
             for attr in ("purchases", "icu_reservations", "record_shares", "feeds", "history"):
                 setattr(other, attr, copy.deepcopy(getattr(self, attr)))
             other.executed_actions = set(self.executed_actions)
+            other.executed_fingerprints = set(self.executed_fingerprints)
             other.rng = random.Random(self.rng.random())
             return other
