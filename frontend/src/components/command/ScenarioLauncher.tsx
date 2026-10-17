@@ -35,16 +35,18 @@ function ScenarioCard({ sc }: { sc: Scenario }) {
         </div>
       </div>
       <div className="mt-2 flex items-center justify-between gap-2">
-        <div className="flex min-w-0 items-center gap-1">
-          <span className="ig-label-sm mr-0.5">{results.length ? "Server" : "Expect"}</span>
+        <div className="flex min-w-0 flex-wrap items-center gap-1">
+          <span className="ig-label-sm mr-0.5" title={results.length ? "Verdicts returned by the gateway for the last run" : "Expected outcome"}>
+            {results.length ? "Server" : "Expect"}
+          </span>
           {(results.length ? results.map((d) => d.verdict) : exp).map((v, i) => (
             <span key={`${v}-${i}`} className="flex items-center gap-1">
-              {i > 0 && <span className="text-[10px] text-dim">then</span>}
+              {i > 0 && <span className="text-[10px] text-dim">→</span>}
               <VerdictChip verdict={v} size="xs" />
             </span>
           ))}
         </div>
-        <button type="button" className="ig-btn h-6 px-2 text-[11px]" disabled={anyBusy} onClick={() => void runScenario(sc.id)}>
+        <button type="button" className="ig-btn h-6 shrink-0 px-2 text-[11px]" disabled={anyBusy} onClick={() => void runScenario(sc.id)}>
           {busy ? <Spinner size={11} /> : <Play size={11} />} {results.length ? "Re-run" : "Run"}
         </button>
       </div>

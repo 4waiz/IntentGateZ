@@ -149,7 +149,7 @@ class Gateway:
             inference_ms = 0.0
             if self.risk.available:
                 probs, inference_ms = self.risk.predict(vector(feats))
-                ml_v = self.risk.ml_verdict(probs)
+                ml_v, corroboration = self.risk.ml_verdict(probs, feats)
                 risk = RiskEstimate(
                     p_allow=round(probs["ALLOW"], 5),
                     p_challenge=round(probs["CHALLENGE"], 5),
@@ -158,6 +158,7 @@ class Gateway:
                     ml_verdict=ml_v,
                     thresholds=self.risk.thresholds,
                     top_factors=self.risk.top_factors(feats),
+                    corroboration=corroboration,
                     runtime=self.risk.runtime,
                     model_version=self.risk.version,
                 )

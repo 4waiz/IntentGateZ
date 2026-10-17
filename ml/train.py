@@ -38,7 +38,7 @@ from sklearn.preprocessing import StandardScaler
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "backend"))
-from intentgate.features import FEATURE_NAMES  # noqa: E402
+from intentgate.features import FEATURE_NAMES, corroborated_matrix  # noqa: E402
 
 CLASSES = ["ALLOW", "CHALLENGE", "BLOCK"]
 CI = {c: i for i, c in enumerate(CLASSES)}
@@ -90,18 +90,26 @@ def evaluate(y: np.ndarray, yhat: np.ndarray, families: pd.Series | None = None)
     return out
 
 
-def ml_decide(P: np.ndarray, tau_block: float, tau_review: float) -> np.ndarray:
+CORR: dict[int, np.ndarray] = {}
+
+
+def ml_decide(P: np.ndarray, tau_block: float, tau_review: float, corr: np.ndarray | None = None) -> np.ndarray:
+    """Model verdicts. With `corr`, a BLOCK needs structural corroboration, else it becomes CHALLENGE."""
     out = np.zeros(len(P), dtype=int)
     out[(P[:, 1] + P[:, 2]) >= tau_review] = 1
-    out[P[:, 2] >= tau_block] = 2
+    blk = P[:, 2] >= tau_block
+    if corr is not None:
+        out[blk & ~corr] = np.maximum(out[blk & ~corr], 1)
+        blk = blk & corr
+    out[blk] = 2
     return out
 
 
-def tune(P: np.ndarray, y: np.ndarray, hard: np.ndarray | None) -> tuple[dict, float]:
+def tune(P: np.ndarray, y: np.ndarray, hard: np.ndarray | None, corr: np.ndarray | None = None) -> tuple[dict, float]:
     best, best_f1 = {"tau_block": 0.9, "tau_review": 0.5}, -1.0
     for tb in np.round(np.arange(0.40, 0.995, 0.025), 3):
         for tr in np.round(np.arange(0.10, 0.95, 0.025), 3):
-            pred = ml_decide(P, tb, tr)
+            pred = ml_decide(P, tb, tr, corr)
             if hard is not None:
                 pred = np.maximum(pred, hard)
             allow = y == 0
@@ -355,6 +363,7 @@ def main() -> None:
     Xtr, Xva, Xte = (d[FEATURE_NAMES].to_numpy(dtype=np.float32) for d in (tr, va, te))
     ytr, yva, yte = (d["label"].map(CI).to_numpy() for d in (tr, va, te))
     hva, hte = va["hard_verdict"].map(CI).to_numpy(), te["hard_verdict"].map(CI).to_numpy()
+    cva, cte = corroborated_matrix(Xva, FEATURE_NAMES), corroborated_matrix(Xte, FEATURE_NAMES)
 
     models = candidates(args.seed)
     fitted, val_report, timing = {}, {}, {}
@@ -376,8 +385,8 @@ def main() -> None:
     tuned = {}
     for name, model in fitted.items():
         Pva = model.predict_proba(Xva)
-        thr_h, f1_h = tune(Pva, yva, hva)
-        thr_m, f1_m = tune(Pva, yva, None)
+        thr_h, f1_h = tune(Pva, yva, hva, cva)
+        thr_m, f1_m = tune(Pva, yva, None, None)  # ML-only = the pure model, no corroboration rule
         lat = latency(model, Xte, n=200)
         if name == "torch_mlp" and nnpa.get("available"):
             model.to("nnpa")
@@ -419,7 +428,7 @@ def main() -> None:
         "hard_policy": evaluate(yte, hte, te["family"]),
         "rules_heuristic": evaluate(yte, rules_heuristic(te), te["family"]),
         "ml_only": evaluate(yte, ml_decide(Pte, **tuned[selected]["ml_only"]), te["family"]),
-        "hybrid": evaluate(yte, np.maximum(ml_decide(Pte, **thr), hte), te["family"]),
+        "hybrid": evaluate(yte, np.maximum(ml_decide(Pte, **thr, corr=cte), hte), te["family"]),
     }
     all_models_test = {}
     for name, model in fitted.items():
@@ -428,7 +437,7 @@ def main() -> None:
             continue
         P = model.predict_proba(Xte)
         all_models_test[name] = {
-            "hybrid_macro_f1": evaluate(yte, np.maximum(ml_decide(P, **tuned[name]["hybrid"]), hte))["macro_f1"],
+            "hybrid_macro_f1": evaluate(yte, np.maximum(ml_decide(P, **tuned[name]["hybrid"], corr=cte), hte))["macro_f1"],
             "ml_only_macro_f1": evaluate(yte, ml_decide(P, **tuned[name]["ml_only"]))["macro_f1"],
         }
 
@@ -440,8 +449,8 @@ def main() -> None:
         for gname, cols in GROUPS.items():
             keep = [i for i, f in enumerate(FEATURE_NAMES) if f not in cols]
             m = clone(base).fit(Xtr[:, keep], ytr)
-            th, _ = tune(m.predict_proba(Xva[:, keep]), yva, hva)
-            pred = np.maximum(ml_decide(m.predict_proba(Xte[:, keep]), **th), hte)
+            th, _ = tune(m.predict_proba(Xva[:, keep]), yva, hva, cva)
+            pred = np.maximum(ml_decide(m.predict_proba(Xte[:, keep]), **th, corr=cte), hte)
             ablation[gname] = {"hybrid_macro_f1_test": evaluate(yte, pred)["macro_f1"], "removed": cols}
 
     # expected calibration error for P(BLOCK)
@@ -470,6 +479,7 @@ def main() -> None:
         "version": version,
         "dataset": {"file": data_path.name, "sha256": sha, "rows": len(df), "train": len(tr), "val": len(va), "test": len(te), "test_label_counts": te["label"].value_counts().to_dict()},
         "protocol": "fit on train; thresholds and model selection on validation; single evaluation on held-out test with unseen text templates",
+        "fusion": "v2: hard policy first; ML may escalate to CHALLENGE on its own, but an ML-driven BLOCK requires structural corroboration (see intentgate.features.CORROBORATION_RULES). v1 (ML could block alone) results are archived in ml/results/v1_ml_can_block_alone; v2 was introduced after error analysis of v1 test errors.",
         "max_false_block_constraint": MAX_FALSE_BLOCK,
         "selected_model": selected,
         "best_cpu_model": best_cpu,
@@ -511,6 +521,7 @@ def main() -> None:
             "feature_names": FEATURE_NAMES,
             "classes": CLASSES,
             "thresholds": thr,
+            "fusion": "v2-corroborated-block",
             "thresholds_by_model": {n: tuned[n]["hybrid"] for n in tuned if val_report[n]["feasible_under_false_block_constraint"]},
             "feature_importance": imp,
             "benign_means": {k: round(float(v), 6) for k, v in allow_means.items()},

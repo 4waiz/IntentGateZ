@@ -180,12 +180,16 @@ class RiskModel:
             self.inference_count += 1
         return {c: float(p) for c, p in zip(CLASSES, probs)}, dt
 
-    def ml_verdict(self, probs: dict[str, float]) -> Verdict:
+    def ml_verdict(self, probs: dict[str, float], features: dict[str, float] | None = None) -> tuple[Verdict, list[str]]:
+        """Model verdict plus the structural evidence that allowed (or would allow) a BLOCK."""
+        from .features import corroboration
+
+        evidence = corroboration(features or {})
         if probs["BLOCK"] >= self.thresholds["tau_block"]:
-            return Verdict.BLOCK
+            return (Verdict.BLOCK if evidence else Verdict.CHALLENGE), evidence
         if probs["BLOCK"] + probs["CHALLENGE"] >= self.thresholds["tau_review"]:
-            return Verdict.CHALLENGE
-        return Verdict.ALLOW
+            return Verdict.CHALLENGE, evidence
+        return Verdict.ALLOW, evidence
 
     def top_factors(self, features: dict[str, float], k: int = 5) -> list[dict[str, Any]]:
         """Global importance x deviation from the benign mean: a cheap, honest attribution hint."""

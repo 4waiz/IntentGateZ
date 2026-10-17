@@ -56,12 +56,22 @@ export interface SessionCheck {
   server_time: number;
 }
 
+/**
+ * Accelerator facts reported by the serving runtime. Field sets differ per runtime (e.g. torch:
+ * requested_device/parameter_device/torch_nnpa/max_abs_prob_diff_vs_cpu; keras: tf_physical_devices),
+ * so everything beyond `device` and `verified` is optional and rendered generically.
+ */
 export interface Accelerator {
   device: string;
-  nnpa_device_listed: boolean;
   verified: boolean;
+  nnpa_device_listed?: boolean;
   nnpa_disabled_by_env?: boolean;
   tf_physical_devices?: string[];
+  requested_device?: string;
+  parameter_device?: string;
+  torch_nnpa?: JsonObject;
+  max_abs_prob_diff_vs_cpu?: number | null;
+  [key: string]: JsonValue | undefined;
 }
 
 export interface Health {

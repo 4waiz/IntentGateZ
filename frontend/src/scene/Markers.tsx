@@ -172,12 +172,12 @@ const ChallengeMarker = memo(function ChallengeMarker({ pos, title, sub, color }
     beam.uniforms.uTime.value = t;
     if (gem.current) {
       gem.current.rotation.y = t * 0.9;
-      gem.current.position.y = 31 + Math.sin(t * 1.6) * 0.6;
+      gem.current.position.y = 41 + Math.sin(t * 1.6) * 0.6;
     }
   });
   return (
     <group position={[pos[0], 0, pos[1]]}>
-      <group ref={gem} position={[0, 31, 0]}>
+      <group ref={gem} position={[0, 41, 0]}>
         <mesh>
           <octahedronGeometry args={[2.4, 0]} />
           <meshBasicMaterial color={color} wireframe transparent opacity={0.95} />
@@ -187,10 +187,10 @@ const ChallengeMarker = memo(function ChallengeMarker({ pos, title, sub, color }
           <meshBasicMaterial color={color} transparent opacity={0.35} depthWrite={false} blending={THREE.AdditiveBlending} />
         </mesh>
       </group>
-      <mesh position={[0, 23.5, 0]} material={beam}>
-        <cylinderGeometry args={[0.2, 0.6, 11, 10, 1, true]} />
+      <mesh position={[0, 31.5, 0]} material={beam}>
+        <cylinderGeometry args={[0.2, 0.6, 15, 10, 1, true]} />
       </mesh>
-      <Html position={[0, 36.5, 0]} center zIndexRange={[32, 10]} style={{ pointerEvents: "none" }}>
+      <Html position={[0, 48, 0]} center zIndexRange={[32, 10]} style={{ pointerEvents: "none" }}>
         <div className="ig-scene-label rounded-[4px] border bg-[#1a1206]/90 px-2 py-1 text-center shadow-[0_0_22px_rgba(255,188,92,0.25)]" style={{ borderColor: `${color}99` }}>
           <div className="font-mono text-[12px] font-semibold" style={{ color }}>
             {title}

@@ -277,6 +277,7 @@ class RiskEstimate(BaseModel):
     ml_verdict: Verdict
     thresholds: dict[str, float]
     top_factors: list[dict[str, Any]] = Field(default_factory=list)
+    corroboration: list[str] = Field(default_factory=list)
     runtime: str
     model_version: str
 

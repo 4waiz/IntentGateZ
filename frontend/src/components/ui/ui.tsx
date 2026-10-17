@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { Check, Copy, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import type { DecisionStatus, FindingOutcome, TrustLevel, Verdict } from "../../api/types";
@@ -209,7 +210,7 @@ export function Modal({
     window.addEventListener("keydown", onKey, true);
     return () => window.removeEventListener("keydown", onKey, true);
   }, [open, onClose]);
-  return (
+  return createPortal(
     <AnimatePresence>
       {open && (
         <motion.div
@@ -245,7 +246,8 @@ export function Modal({
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 }
 

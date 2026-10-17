@@ -144,13 +144,14 @@ export function Inspector() {
                   {d.intent ? (
                     <>
                       <blockquote className="border-l-2 border-allow/60 pl-2.5 text-[12.5px] leading-relaxed text-fg">“{d.intent.instruction}”</blockquote>
-                      <div className="mt-2 flex items-center justify-between gap-2 text-[11px]">
+                      <div className="mt-2 flex flex-col gap-0.5 text-[11px]">
                         <span className="flex items-center gap-1.5 text-fg-2">
-                          <UserRound size={12} className="text-muted" />
-                          {names.operator(d.intent.operator_id)} <span className="text-muted">· {names.role(d.intent.operator_role)}</span>
+                          <UserRound size={12} className="shrink-0 text-muted" />
+                          <span className="whitespace-nowrap">{names.operator(d.intent.operator_id)}</span>
+                          <span className="truncate text-muted">· {names.role(d.intent.operator_role)}</span>
                         </span>
-                        <span className="ig-mono text-[10px] text-dim" title={`signature ${d.intent.signature}`}>
-                          {d.intent.intent_id} v{d.intent.version} · sig {shortHash(d.intent.signature, 8)}
+                        <span className="ig-mono pl-[18px] text-[10px] text-dim" title={`HMAC signature ${d.intent.signature}`}>
+                          {d.intent.intent_id} v{d.intent.version} · signed {shortHash(d.intent.signature, 10)}
                         </span>
                       </div>
                     </>

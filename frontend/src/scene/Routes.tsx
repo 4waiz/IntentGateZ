@@ -97,7 +97,7 @@ function GhostRoute({ d, idx, emphasized }: { d: Decision; idx: CityIndex; empha
           <meshBasicMaterial color="#ff5d70" transparent opacity={emphasized ? 0.95 : 0.5} />
         </mesh>
         {emphasized && (
-          <Html position={[0, 9.2, 0]} center zIndexRange={[34, 10]} style={{ pointerEvents: "none" }}>
+          <Html position={[0, 13, 0]} center zIndexRange={[34, 10]} style={{ pointerEvents: "none" }}>
             <div className="ig-scene-label rounded-[4px] border border-[#ff5d70]/70 bg-[#1a0910]/90 px-2 py-1 shadow-[0_0_24px_rgba(255,93,112,0.35)]">
               <div className="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.14em] text-[#ff5d70]">
                 <svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true">

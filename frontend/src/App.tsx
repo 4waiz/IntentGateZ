@@ -61,7 +61,7 @@ function Shell() {
             <CityScene active={cityView} />
           </Suspense>
           {!cityView && (
-            <div className="absolute inset-0 z-30 overflow-hidden bg-ink">
+            <div className="absolute inset-0 z-[45] overflow-hidden bg-ink">
               <Suspense fallback={<ViewFallback />}>{view === "proof" ? <ProofView /> : <AuditView />}</Suspense>
             </div>
           )}

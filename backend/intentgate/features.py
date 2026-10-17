@@ -207,3 +207,36 @@ def extract(
 
 def vector(features: dict[str, float]) -> list[float]:
     return [float(features.get(k, 0.0)) for k in FEATURE_NAMES]
+
+
+# Structural evidence that an action deviates from the registered intent. The ML model may only
+# turn a proposal into a hard BLOCK when at least one of these holds; otherwise a high model score
+# routes the action to human review (CHALLENGE). This keeps text-only signals, which can misread
+# unfamiliar but benign wording, from denying legitimate operations on their own.
+CORROBORATION_RULES = {
+    "untrusted_security_fields": lambda v: v > 0,
+    "entity_alignment": lambda v: v < 1.0,
+    "eta_ratio": lambda v: v > 1.25,
+    "param_change_count": lambda v: v > 0,
+    "scope_violations": lambda v: v > 0,
+    "recent_high_value_10m": lambda v: v >= 2,
+    "cum_spend_ratio": lambda v: v > 1.0,
+    "price_ratio": lambda v: v > 1.2,
+    "rationale_injection_score": lambda v: v >= 0.5,
+    "phi_egress": lambda v: v > 0,
+}
+
+
+def corroboration(features: dict[str, float]) -> list[str]:
+    return [k for k, rule in CORROBORATION_RULES.items() if rule(float(features.get(k, 0.0)))]
+
+
+def corroborated_matrix(X, names: list[str]):
+    import numpy as np
+
+    idx = {n: i for i, n in enumerate(names)}
+    out = np.zeros(len(X), dtype=bool)
+    for k, rule in CORROBORATION_RULES.items():
+        col = X[:, idx[k]]
+        out |= np.vectorize(rule)(col)
+    return out

@@ -50,7 +50,7 @@ export default function CityScene({ active, chrome = true }: { active: boolean; 
   useEffect(() => () => setState({ hovered: null }), []);
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-ink">
+    <div className="relative h-full w-full overflow-hidden bg-ink" style={{ visibility: active ? "visible" : "hidden" }}>
       <Canvas
         key={antialias ? "aa" : "noaa"}
         flat

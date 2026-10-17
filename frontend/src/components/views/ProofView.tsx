@@ -356,14 +356,16 @@ export default function ProofView() {
                   <StatusChip ok={acc?.verified ?? false} yes="VERIFIED" no="NOT VERIFIED" />
                 </div>
                 <div className="mt-1.5 grid grid-cols-1 gap-x-4">
-                  <Fact k="model.accelerator.device" v={acc?.device ?? none} />
-                  <Fact k="NNPA device listed" v={acc ? String(acc.nnpa_device_listed) : none} />
-                  {acc?.nnpa_disabled_by_env !== undefined && <Fact k="Disabled by NNPA_DEVICES" v={String(acc.nnpa_disabled_by_env)} />}
-                  {acc?.tf_physical_devices && <Fact k="TF physical devices" v={acc.tf_physical_devices.join(", ") || "none"} />}
+                  <Fact k="model.accelerator.device" v={acc?.device ?? none} tone={acc?.device === "nnpa" ? "ok" : undefined} />
+                  <Fact k="model.accelerator.verified" v={acc ? String(acc.verified) : none} tone={acc?.verified ? "ok" : "muted"} />
+                  {acc &&
+                    Object.entries(acc)
+                      .filter(([k, v]) => k !== "device" && k !== "verified" && v !== undefined)
+                      .map(([k, v]) => <Fact key={k} k={k} v={typeof v === "object" && v !== null ? JSON.stringify(v) : String(v)} />)}
                 </div>
                 <p className="mt-1.5 text-[11.5px] leading-snug text-muted">
-                  Only true when TensorFlow lists an NNPA physical device in this process (ibm-zdnn-plugin) and it is not disabled. Otherwise inference runs on CPU and the
-                  runtime string says so.
+                  Reported by the serving runtime in this process (for example torch_nnpa with the model's parameters on the nnpa device and outputs cross-checked against
+                  CPU). If it is not verified, inference runs on CPU and the runtime string says so.
                 </p>
               </div>
             </div>
