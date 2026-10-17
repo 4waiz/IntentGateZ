@@ -15,17 +15,21 @@ from typing import Any
 
 from .config import Settings
 
-PROMPT = """You are an assistant in an emergency operations security console. Explain the security decision below to a human dispatcher in 2-3 short sentences. Use only the facts given. Do not change the verdict, do not invent facts, and do not recommend bypassing controls.
+PROMPT = """Rewrite each security decision as two short sentences for an emergency dispatcher. Keep the verdict. Use only the facts given.
+
+Verdict: CHALLENGE
+Instruction: Restock trauma kits for Northgate Trauma Center from Vitalis, authorised spend up to $50,000.
+Proposed action by the procurement agent: purchase 4000 trauma kits for $200,000 from Vitalis.
+Findings: [CHALLENGE] Spending authority: $200,000 exceeds the operator's authorised $50,000; a supervisor may approve up to $250,000.
+Explanation: The procurement agent tried to spend $200,000, four times what the operator authorised. A supervisor must approve this exception before it can run.
 
 Verdict: {verdict}
-Agent: {agent}
-Operator's original instruction: {instruction}
-Proposed action: {action}
-Policy findings:
-{findings}
-Model risk score: {risk}
-
+Instruction: {instruction}
+Proposed action by the {agent_role}: {action}
+Findings: {findings}
 Explanation:"""
+
+AGENT_ROLES = {"route-planner-01": "routing agent", "supply-agent-02": "procurement agent", "capacity-agent-03": "hospital coordination agent"}
 
 
 class Explainer:
@@ -73,19 +77,20 @@ class Explainer:
         if decision.decision_id in self._cache:
             return {**self._cache[decision.decision_id], "cached": True}
         a = decision.action
-        findings = "\n".join(f"- [{f.outcome.upper()}] {f.code} {f.check}: {f.message}" for f in decision.findings if f.outcome != "pass") or "- all checks passed"
+        flagged = [f for f in decision.findings if f.outcome in ("block", "challenge")]
+        findings = " ".join(f"[{f.outcome.upper()}] {f.check}: {f.message}" for f in flagged[:3]) or "All policy checks passed."
+        p = {k: v for k, v in a.parameters.items() if k != "route"}
         prompt = PROMPT.format(
             verdict=decision.verdict.value,
-            agent=a.agent_id,
+            agent_role=AGENT_ROLES.get(a.agent_id, "agent"),
             instruction=decision.intent.instruction if decision.intent else "(none registered)",
-            action=f"{a.action_type.value} on {a.target} with {a.parameters}",
+            action=f"{a.action_type.value.replace('_', ' ')} {p}",
             findings=findings,
-            risk=f"{decision.risk.risk_score:.2f}" if decision.risk else "n/a",
         )
         with self._lock:
             llm = self._load()
             t0 = time.perf_counter()
-            out = llm(prompt, max_tokens=110, temperature=0.2, stop=["\n\n", "Verdict:"])
+            out = llm(prompt, max_tokens=70, temperature=0.0, stop=["\n\n", "Verdict:", "\nInstruction"])
             dt = (time.perf_counter() - t0) * 1000
         text = out["choices"][0]["text"].strip()
         res = {

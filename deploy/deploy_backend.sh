@@ -19,10 +19,11 @@ sudo docker rm -f intentgate >/dev/null 2>&1 || true
 sudo docker run -d --name intentgate \
   --restart unless-stopped \
   --network host \
-  --memory 2g --cpus 1.6 \
+  --memory 2600m --cpus 1.8 \
   --security-opt seccomp=unconfined \
   --env-file "$HOME/intentgate.env" \
-  ${IG_LLM_ENV:-} \
+  -e INTENTGATE_LLM_PATH="${IG_LLM_PATH:-/home/ibm-user/granite-4.0-h-350m-base-be.f16.gguf}" \
+  -e INTENTGATE_LLM_THREADS=2 \
   -v "$HOME/intentgate-data:/app/backend/data" \
   -v "$HOME/IntentGateZ/evidence:/app/evidence:ro" \
   -v "$HOME/IntentGateZ/ml/artifacts:/app/ml/artifacts:ro" \
