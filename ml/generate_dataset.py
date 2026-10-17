@@ -357,8 +357,8 @@ def fam_misc(rng, w, reg, split, now, kind):
         if kind == "stale_intent":
             reg.amend(intent.intent_id, IntentCreate(operator_id=intent.operator_id, operator_role=intent.operator_role, instruction=intent.instruction + " Updated: hold position.", authorized_operations=list(intent.authorized_operations), permitted_targets=intent.permitted_targets, routing=intent.routing, ttl_minutes=30))
         else:
-            object.__setattr__(intent, "expires_at", now - rng.uniform(10, 600))
-            reg._versions[intent.intent_id][-1] = reg._sign(intent)
+            expired = intent.model_copy(update={"expires_at": now - rng.uniform(10, 600)})
+            reg._versions[intent.intent_id][-1] = reg._sign(expired)
         return reg.get(intent.intent_id, 1), a
     if kind == "rate_burst":
         res = fam_reroute(rng, w, reg, split, now, "ok")
