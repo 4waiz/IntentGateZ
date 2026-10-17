@@ -8,19 +8,19 @@
   },
   "labels": {
     "test": {
-      "ALLOW": 913,
-      "BLOCK": 1163,
-      "CHALLENGE": 324
+      "ALLOW": 917,
+      "BLOCK": 1175,
+      "CHALLENGE": 308
     },
     "train": {
-      "ALLOW": 2817,
-      "BLOCK": 3501,
-      "CHALLENGE": 882
+      "ALLOW": 2717,
+      "BLOCK": 3487,
+      "CHALLENGE": 996
     },
     "val": {
-      "ALLOW": 949,
-      "BLOCK": 1131,
-      "CHALLENGE": 320
+      "ALLOW": 920,
+      "BLOCK": 1151,
+      "CHALLENGE": 329
     }
   },
   "families": [
@@ -47,6 +47,7 @@
     "reroute:diverting_dest",
     "reroute:eta_challenge",
     "reroute:injected",
+    "reroute:injected_in_scope",
     "reroute:injected_partial",
     "reroute:ok",
     "reroute:out_of_scope_dest"
@@ -97,6 +98,6 @@
     "op_cancel_dispatch"
   ],
   "injection_scorer": "scikit-learn TF-IDF + LogisticRegression (igz-injection-tfidf-lr-20261017-s7)",
-  "generated_in_s": 5.9,
+  "generated_in_s": 6.0,
   "generator": "ml/generate_dataset.py"
 }

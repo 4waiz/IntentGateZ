@@ -1,101 +1,101 @@
 {
-  "version": "igz-risk-mlp-202610171246-cc959e7b",
+  "version": "igz-risk-logistic-regression-202610171247-7b788cc6",
   "dataset": {
     "file": "intentgate_synthetic_seed7.csv",
-    "sha256": "cc959e7bf24e2638e00238574b5d276e3834c29f3f48e0ad040840a490f0d15c",
+    "sha256": "7b788cc61ebb54c664a54c21910f7510c5766296d2e7d07fceba6816dcd28d5e",
     "rows": 12000,
     "train": 7200,
     "val": 2400,
     "test": 2400,
     "test_label_counts": {
-      "BLOCK": 1163,
-      "ALLOW": 913,
-      "CHALLENGE": 324
+      "BLOCK": 1175,
+      "ALLOW": 917,
+      "CHALLENGE": 308
     }
   },
   "protocol": "fit on train; thresholds and model selection on validation; single evaluation on held-out test with unseen text templates",
   "max_false_block_constraint": 0.02,
-  "selected_model": "mlp",
+  "selected_model": "logistic_regression",
   "thresholds": {
-    "tau_block": 0.65,
-    "tau_review": 0.525
+    "tau_block": 0.475,
+    "tau_review": 0.55
   },
   "validation": {
     "models": {
       "logistic_regression": {
-        "hybrid_macro_f1": 0.9572,
-        "ml_only_macro_f1": 0.9427,
+        "hybrid_macro_f1": 0.9645,
+        "ml_only_macro_f1": 0.9529,
         "thresholds_hybrid": {
-          "tau_block": 0.425,
-          "tau_review": 0.65
-        },
-        "thresholds_ml_only": {
-          "tau_block": 0.4,
-          "tau_review": 0.8
-        },
-        "train_seconds": 0.06,
-        "latency": {
-          "single_p50_ms": 0.1122,
-          "single_p95_ms": 0.1227,
-          "batch_rows": 1000,
-          "batch_rows_per_s": 3486750.3
-        }
-      },
-      "random_forest": {
-        "hybrid_macro_f1": 0.9584,
-        "ml_only_macro_f1": 0.9459,
-        "thresholds_hybrid": {
-          "tau_block": 0.475,
-          "tau_review": 0.5
-        },
-        "thresholds_ml_only": {
-          "tau_block": 0.475,
-          "tau_review": 0.5
-        },
-        "train_seconds": 0.3,
-        "latency": {
-          "single_p50_ms": 15.0023,
-          "single_p95_ms": 24.7751,
-          "batch_rows": 1000,
-          "batch_rows_per_s": 39806.9
-        }
-      },
-      "hist_gradient_boosting": {
-        "hybrid_macro_f1": 0.9411,
-        "ml_only_macro_f1": 0.9115,
-        "thresholds_hybrid": {
-          "tau_block": 0.625,
-          "tau_review": 0.8
-        },
-        "thresholds_ml_only": {
           "tau_block": 0.475,
           "tau_review": 0.55
         },
-        "train_seconds": 3.5,
+        "thresholds_ml_only": {
+          "tau_block": 0.425,
+          "tau_review": 0.625
+        },
+        "train_seconds": 0.07,
         "latency": {
-          "single_p50_ms": 7.5017,
-          "single_p95_ms": 9.2187,
+          "single_p50_ms": 0.1319,
+          "single_p95_ms": 0.1428,
           "batch_rows": 1000,
-          "batch_rows_per_s": 68390.6
+          "batch_rows_per_s": 2946376.0
         }
       },
-      "mlp": {
-        "hybrid_macro_f1": 0.9619,
-        "ml_only_macro_f1": 0.9502,
+      "random_forest": {
+        "hybrid_macro_f1": 0.9631,
+        "ml_only_macro_f1": 0.9527,
         "thresholds_hybrid": {
-          "tau_block": 0.65,
-          "tau_review": 0.525
+          "tau_block": 0.575,
+          "tau_review": 0.6
         },
         "thresholds_ml_only": {
-          "tau_block": 0.575,
-          "tau_review": 0.75
+          "tau_block": 0.55,
+          "tau_review": 0.8
         },
         "train_seconds": 0.3,
         "latency": {
-          "single_p50_ms": 0.117,
-          "single_p95_ms": 0.1477,
+          "single_p50_ms": 14.5424,
+          "single_p95_ms": 15.2062,
           "batch_rows": 1000,
-          "batch_rows_per_s": 1201345.5
+          "batch_rows_per_s": 40486.5
+        }
+      },
+      "hist_gradient_boosting": {
+        "hybrid_macro_f1": 0.943,
+        "ml_only_macro_f1": 0.8904,
+        "thresholds_hybrid": {
+          "tau_block": 0.9,
+          "tau_review": 0.925
+        },
+        "thresholds_ml_only": {
+          "tau_block": 0.45,
+          "tau_review": 0.55
+        },
+        "train_seconds": 3.28,
+        "latency": {
+          "single_p50_ms": 7.3511,
+          "single_p95_ms": 9.3703,
+          "batch_rows": 1000,
+          "batch_rows_per_s": 66051.5
+        }
+      },
+      "mlp": {
+        "hybrid_macro_f1": 0.9654,
+        "ml_only_macro_f1": 0.9558,
+        "thresholds_hybrid": {
+          "tau_block": 0.725,
+          "tau_review": 0.65
+        },
+        "thresholds_ml_only": {
+          "tau_block": 0.625,
+          "tau_review": 0.7
+        },
+        "train_seconds": 0.24,
+        "latency": {
+          "single_p50_ms": 0.1393,
+          "single_p95_ms": 0.1572,
+          "batch_rows": 1000,
+          "batch_rows_per_s": 1395089.3
         }
       }
     }
@@ -103,149 +103,149 @@
   "test": {
     "hard_policy": {
       "n": 2400,
-      "accuracy": 0.9483,
-      "macro_f1": 0.9247,
+      "accuracy": 0.9392,
+      "macro_f1": 0.9212,
       "per_class": {
         "ALLOW": {
-          "precision": 0.9888,
-          "recall": 0.9704,
-          "f1": 0.9795,
-          "support": 913
+          "precision": 0.9406,
+          "recall": 0.9836,
+          "f1": 0.9616,
+          "support": 917
         },
         "CHALLENGE": {
-          "precision": 0.7422,
-          "recall": 0.9506,
-          "f1": 0.8336,
-          "support": 324
+          "precision": 0.7807,
+          "recall": 0.9481,
+          "f1": 0.8563,
+          "support": 308
         },
         "BLOCK": {
-          "precision": 0.9936,
-          "recall": 0.9304,
-          "f1": 0.9609,
-          "support": 1163
+          "precision": 0.9934,
+          "recall": 0.9021,
+          "f1": 0.9456,
+          "support": 1175
         }
       },
       "confusion_matrix": [
         [
-          886,
-          27,
+          902,
+          15,
           0
         ],
         [
           9,
-          308,
+          292,
           7
         ],
         [
-          1,
-          80,
-          1082
+          48,
+          67,
+          1060
         ]
       ],
       "false_block_rate_allow": 0.0,
       "false_block_rate_legit": 0.0057,
-      "unsafe_miss_rate": 0.0009,
-      "unsafe_block_rate": 0.9304,
-      "legit_acceptance_rate": 0.9704,
-      "challenge_rate": 0.1729,
+      "unsafe_miss_rate": 0.0409,
+      "unsafe_block_rate": 0.9021,
+      "legit_acceptance_rate": 0.9836,
+      "challenge_rate": 0.1558,
       "families": {
         "icu:big_share": {
-          "n": 18,
+          "n": 5,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
           "pred_challenge": 1.0,
           "pred_block": 0.0
         },
         "icu:drift_other_hospital": {
-          "n": 76,
+          "n": 75,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "icu:drift_status": {
-          "n": 85,
+          "n": 59,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "icu:exfil": {
-          "n": 66,
+          "n": 54,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "icu:ok": {
-          "n": 277,
+          "n": 283,
           "true_label": "ALLOW",
-          "pred_allow": 0.9134,
-          "pred_challenge": 0.0866,
+          "pred_allow": 0.9682,
+          "pred_challenge": 0.0318,
           "pred_block": 0.0
         },
         "icu:over_capacity": {
-          "n": 38,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "icu:over_limit": {
-          "n": 39,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "misc:capability_mismatch": {
-          "n": 51,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "misc:expired_intent": {
-          "n": 21,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "misc:rate_burst": {
-          "n": 77,
-          "true_label": "CHALLENGE",
-          "pred_allow": 0.0,
-          "pred_challenge": 1.0,
-          "pred_block": 0.0
-        },
-        "misc:stale_intent": {
-          "n": 49,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "purchase:bad_supplier": {
-          "n": 30,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "purchase:inconsistent": {
           "n": 42,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
-        "purchase:injected_amount": {
-          "n": 77,
+        "icu:over_limit": {
+          "n": 42,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
-          "pred_challenge": 0.4416,
-          "pred_block": 0.5584
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:capability_mismatch": {
+          "n": 52,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:expired_intent": {
+          "n": 18,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:rate_burst": {
+          "n": 65,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "misc:stale_intent": {
+          "n": 51,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:bad_supplier": {
+          "n": 19,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:inconsistent": {
+          "n": 47,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:injected_amount": {
+          "n": 73,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.4247,
+          "pred_block": 0.5753
         },
         "purchase:ok": {
           "n": 269,
@@ -255,77 +255,84 @@
           "pred_block": 0.0
         },
         "purchase:over_budget": {
-          "n": 147,
+          "n": 122,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
           "pred_challenge": 1.0,
           "pred_block": 0.0
         },
         "purchase:over_ceiling": {
-          "n": 68,
+          "n": 55,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "purchase:price_anomaly": {
-          "n": 73,
+          "n": 65,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
           "pred_challenge": 1.0,
           "pred_block": 0.0
         },
         "purchase:salami": {
-          "n": 73,
+          "n": 64,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
-          "pred_challenge": 0.5616,
-          "pred_block": 0.4384
+          "pred_challenge": 0.5312,
+          "pred_block": 0.4688
         },
         "reroute:closed_route": {
-          "n": 37,
+          "n": 45,
           "true_label": "BLOCK",
-          "pred_allow": 0.027,
+          "pred_allow": 0.0222,
           "pred_challenge": 0.0,
-          "pred_block": 0.973
+          "pred_block": 0.9778
         },
         "reroute:diverting_dest": {
-          "n": 45,
+          "n": 50,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "reroute:eta_challenge": {
-          "n": 1,
+          "n": 43,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
           "pred_challenge": 1.0,
           "pred_block": 0.0
         },
         "reroute:injected": {
-          "n": 121,
+          "n": 135,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
+        "reroute:injected_in_scope": {
+          "n": 93,
+          "true_label": "BLOCK",
+          "pred_allow": 0.5161,
+          "pred_challenge": 0.0,
+          "pred_block": 0.4839
+        },
         "reroute:injected_partial": {
-          "n": 183,
+          "n": 127,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "reroute:ok": {
-          "n": 373,
+          "n": 367,
           "true_label": "ALLOW",
           "pred_allow": 1.0,
           "pred_challenge": 0.0,
           "pred_block": 0.0
         },
         "reroute:out_of_scope_dest": {
-          "n": 64,
+          "n": 80,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
@@ -335,149 +342,149 @@
     },
     "rules_heuristic": {
       "n": 2400,
-      "accuracy": 0.9542,
-      "macro_f1": 0.9322,
+      "accuracy": 0.9442,
+      "macro_f1": 0.9227,
       "per_class": {
         "ALLOW": {
-          "precision": 0.9888,
-          "recall": 0.9704,
-          "f1": 0.9795,
-          "support": 913
+          "precision": 0.9626,
+          "recall": 0.9836,
+          "f1": 0.973,
+          "support": 917
         },
         "CHALLENGE": {
-          "precision": 0.7681,
-          "recall": 0.9506,
-          "f1": 0.8497,
-          "support": 324
+          "precision": 0.7604,
+          "recall": 0.9481,
+          "f1": 0.8439,
+          "support": 308
         },
         "BLOCK": {
-          "precision": 0.9937,
-          "recall": 0.9424,
-          "f1": 0.9673,
-          "support": 1163
+          "precision": 0.9935,
+          "recall": 0.9123,
+          "f1": 0.9512,
+          "support": 1175
         }
       },
       "confusion_matrix": [
         [
-          886,
-          27,
+          902,
+          15,
           0
         ],
         [
           9,
-          308,
+          292,
           7
         ],
         [
-          1,
-          66,
-          1096
+          26,
+          77,
+          1072
         ]
       ],
       "false_block_rate_allow": 0.0,
       "false_block_rate_legit": 0.0057,
-      "unsafe_miss_rate": 0.0009,
-      "unsafe_block_rate": 0.9424,
-      "legit_acceptance_rate": 0.9704,
-      "challenge_rate": 0.1671,
+      "unsafe_miss_rate": 0.0221,
+      "unsafe_block_rate": 0.9123,
+      "legit_acceptance_rate": 0.9836,
+      "challenge_rate": 0.16,
       "families": {
         "icu:big_share": {
-          "n": 18,
+          "n": 5,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
           "pred_challenge": 1.0,
           "pred_block": 0.0
         },
         "icu:drift_other_hospital": {
-          "n": 76,
+          "n": 75,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "icu:drift_status": {
-          "n": 85,
+          "n": 59,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "icu:exfil": {
-          "n": 66,
+          "n": 54,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "icu:ok": {
-          "n": 277,
+          "n": 283,
           "true_label": "ALLOW",
-          "pred_allow": 0.9134,
-          "pred_challenge": 0.0866,
+          "pred_allow": 0.9682,
+          "pred_challenge": 0.0318,
           "pred_block": 0.0
         },
         "icu:over_capacity": {
-          "n": 38,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "icu:over_limit": {
-          "n": 39,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "misc:capability_mismatch": {
-          "n": 51,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "misc:expired_intent": {
-          "n": 21,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "misc:rate_burst": {
-          "n": 77,
-          "true_label": "CHALLENGE",
-          "pred_allow": 0.0,
-          "pred_challenge": 1.0,
-          "pred_block": 0.0
-        },
-        "misc:stale_intent": {
-          "n": 49,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "purchase:bad_supplier": {
-          "n": 30,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "purchase:inconsistent": {
           "n": 42,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
-        "purchase:injected_amount": {
-          "n": 77,
+        "icu:over_limit": {
+          "n": 42,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
-          "pred_challenge": 0.2597,
-          "pred_block": 0.7403
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:capability_mismatch": {
+          "n": 52,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:expired_intent": {
+          "n": 18,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:rate_burst": {
+          "n": 65,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "misc:stale_intent": {
+          "n": 51,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:bad_supplier": {
+          "n": 19,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:inconsistent": {
+          "n": 47,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:injected_amount": {
+          "n": 73,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.3562,
+          "pred_block": 0.6438
         },
         "purchase:ok": {
           "n": 269,
@@ -487,77 +494,84 @@
           "pred_block": 0.0
         },
         "purchase:over_budget": {
-          "n": 147,
+          "n": 122,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
           "pred_challenge": 1.0,
           "pred_block": 0.0
         },
         "purchase:over_ceiling": {
-          "n": 68,
+          "n": 55,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "purchase:price_anomaly": {
-          "n": 73,
+          "n": 65,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
           "pred_challenge": 1.0,
           "pred_block": 0.0
         },
         "purchase:salami": {
-          "n": 73,
+          "n": 64,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
-          "pred_challenge": 0.5616,
-          "pred_block": 0.4384
+          "pred_challenge": 0.5312,
+          "pred_block": 0.4688
         },
         "reroute:closed_route": {
-          "n": 37,
+          "n": 45,
           "true_label": "BLOCK",
-          "pred_allow": 0.027,
+          "pred_allow": 0.0222,
           "pred_challenge": 0.0,
-          "pred_block": 0.973
+          "pred_block": 0.9778
         },
         "reroute:diverting_dest": {
-          "n": 45,
+          "n": 50,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "reroute:eta_challenge": {
-          "n": 1,
+          "n": 43,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
           "pred_challenge": 1.0,
           "pred_block": 0.0
         },
         "reroute:injected": {
-          "n": 121,
+          "n": 135,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
+        "reroute:injected_in_scope": {
+          "n": 93,
+          "true_label": "BLOCK",
+          "pred_allow": 0.2796,
+          "pred_challenge": 0.1613,
+          "pred_block": 0.5591
+        },
         "reroute:injected_partial": {
-          "n": 183,
+          "n": 127,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "reroute:ok": {
-          "n": 373,
+          "n": 367,
           "true_label": "ALLOW",
           "pred_allow": 1.0,
           "pred_challenge": 0.0,
           "pred_block": 0.0
         },
         "reroute:out_of_scope_dest": {
-          "n": 64,
+          "n": 80,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
@@ -567,229 +581,236 @@
     },
     "ml_only": {
       "n": 2400,
-      "accuracy": 0.9608,
-      "macro_f1": 0.9517,
+      "accuracy": 0.9421,
+      "macro_f1": 0.9383,
       "per_class": {
         "ALLOW": {
-          "precision": 0.9383,
-          "recall": 0.9825,
-          "f1": 0.9599,
-          "support": 913
+          "precision": 0.9505,
+          "recall": 0.9204,
+          "f1": 0.9352,
+          "support": 917
         },
         "CHALLENGE": {
-          "precision": 0.9539,
-          "recall": 0.8951,
-          "f1": 0.9236,
-          "support": 324
+          "precision": 0.9231,
+          "recall": 0.9351,
+          "f1": 0.929,
+          "support": 308
         },
         "BLOCK": {
-          "precision": 0.9816,
-          "recall": 0.9622,
-          "f1": 0.9718,
-          "support": 1163
+          "precision": 0.9408,
+          "recall": 0.9609,
+          "f1": 0.9507,
+          "support": 1175
         }
       },
       "confusion_matrix": [
         [
-          897,
-          7,
+          844,
+          11,
+          62
+        ],
+        [
+          11,
+          288,
           9
         ],
         [
-          22,
-          290,
-          12
-        ],
-        [
-          37,
-          7,
-          1119
+          33,
+          13,
+          1129
         ]
       ],
-      "false_block_rate_allow": 0.0099,
-      "false_block_rate_legit": 0.017,
-      "unsafe_miss_rate": 0.0318,
-      "unsafe_block_rate": 0.9622,
-      "legit_acceptance_rate": 0.9825,
-      "challenge_rate": 0.1267,
+      "false_block_rate_allow": 0.0676,
+      "false_block_rate_legit": 0.058,
+      "unsafe_miss_rate": 0.0281,
+      "unsafe_block_rate": 0.9609,
+      "legit_acceptance_rate": 0.9204,
+      "challenge_rate": 0.13,
       "families": {
         "icu:big_share": {
-          "n": 18,
+          "n": 5,
           "true_label": "CHALLENGE",
-          "pred_allow": 0.6667,
-          "pred_challenge": 0.0556,
-          "pred_block": 0.2778
+          "pred_allow": 0.4,
+          "pred_challenge": 0.6,
+          "pred_block": 0.0
         },
         "icu:drift_other_hospital": {
-          "n": 76,
+          "n": 75,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "icu:drift_status": {
-          "n": 85,
+          "n": 59,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "icu:exfil": {
-          "n": 66,
+          "n": 54,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "icu:ok": {
-          "n": 277,
+          "n": 283,
           "true_label": "ALLOW",
-          "pred_allow": 0.9639,
-          "pred_challenge": 0.0108,
-          "pred_block": 0.0253
+          "pred_allow": 0.9505,
+          "pred_challenge": 0.0177,
+          "pred_block": 0.0318
         },
         "icu:over_capacity": {
-          "n": 38,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "icu:over_limit": {
-          "n": 39,
-          "true_label": "BLOCK",
-          "pred_allow": 0.8974,
-          "pred_challenge": 0.0513,
-          "pred_block": 0.0513
-        },
-        "misc:capability_mismatch": {
-          "n": 51,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "misc:expired_intent": {
-          "n": 21,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0476,
-          "pred_challenge": 0.0,
-          "pred_block": 0.9524
-        },
-        "misc:rate_burst": {
-          "n": 77,
-          "true_label": "CHALLENGE",
-          "pred_allow": 0.0,
-          "pred_challenge": 1.0,
-          "pred_block": 0.0
-        },
-        "misc:stale_intent": {
-          "n": 49,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "purchase:bad_supplier": {
-          "n": 30,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "purchase:inconsistent": {
           "n": 42,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
-        "purchase:injected_amount": {
-          "n": 77,
+        "icu:over_limit": {
+          "n": 42,
+          "true_label": "BLOCK",
+          "pred_allow": 0.5714,
+          "pred_challenge": 0.2619,
+          "pred_block": 0.1667
+        },
+        "misc:capability_mismatch": {
+          "n": 52,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
+        "misc:expired_intent": {
+          "n": 18,
+          "true_label": "BLOCK",
+          "pred_allow": 0.1111,
+          "pred_challenge": 0.0,
+          "pred_block": 0.8889
+        },
+        "misc:rate_burst": {
+          "n": 65,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0154,
+          "pred_challenge": 0.9538,
+          "pred_block": 0.0308
+        },
+        "misc:stale_intent": {
+          "n": 51,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:bad_supplier": {
+          "n": 19,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:inconsistent": {
+          "n": 47,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:injected_amount": {
+          "n": 73,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0137,
+          "pred_block": 0.9863
+        },
         "purchase:ok": {
           "n": 269,
           "true_label": "ALLOW",
-          "pred_allow": 1.0,
+          "pred_allow": 0.9814,
           "pred_challenge": 0.0,
-          "pred_block": 0.0
+          "pred_block": 0.0186
         },
         "purchase:over_budget": {
-          "n": 147,
+          "n": 122,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
           "pred_challenge": 1.0,
           "pred_block": 0.0
         },
         "purchase:over_ceiling": {
-          "n": 68,
+          "n": 55,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "purchase:price_anomaly": {
-          "n": 73,
+          "n": 65,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
           "pred_challenge": 1.0,
           "pred_block": 0.0
         },
         "purchase:salami": {
-          "n": 73,
+          "n": 64,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "reroute:closed_route": {
-          "n": 37,
-          "true_label": "BLOCK",
-          "pred_allow": 0.027,
-          "pred_challenge": 0.0,
-          "pred_block": 0.973
-        },
-        "reroute:diverting_dest": {
           "n": 45,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
+        "reroute:diverting_dest": {
+          "n": 50,
+          "true_label": "BLOCK",
+          "pred_allow": 0.04,
+          "pred_challenge": 0.0,
+          "pred_block": 0.96
+        },
         "reroute:eta_challenge": {
-          "n": 1,
+          "n": 43,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
           "pred_challenge": 1.0,
           "pred_block": 0.0
         },
         "reroute:injected": {
-          "n": 121,
+          "n": 135,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
+        "reroute:injected_in_scope": {
+          "n": 93,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0645,
+          "pred_challenge": 0.0,
+          "pred_block": 0.9355
+        },
         "reroute:injected_partial": {
-          "n": 183,
+          "n": 127,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "reroute:ok": {
-          "n": 373,
+          "n": 367,
           "true_label": "ALLOW",
-          "pred_allow": 0.9946,
+          "pred_allow": 0.8665,
           "pred_challenge": 0.0,
-          "pred_block": 0.0054
+          "pred_block": 0.1335
         },
         "reroute:out_of_scope_dest": {
-          "n": 64,
+          "n": 80,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
@@ -799,229 +820,236 @@
     },
     "hybrid": {
       "n": 2400,
-      "accuracy": 0.975,
-      "macro_f1": 0.9616,
+      "accuracy": 0.9608,
+      "macro_f1": 0.9559,
       "per_class": {
         "ALLOW": {
-          "precision": 0.9887,
-          "recall": 0.9606,
-          "f1": 0.9744,
-          "support": 913
+          "precision": 0.9849,
+          "recall": 0.9248,
+          "f1": 0.9539,
+          "support": 917
         },
         "CHALLENGE": {
-          "precision": 0.8947,
-          "recall": 0.9444,
-          "f1": 0.9189,
-          "support": 324
+          "precision": 0.9389,
+          "recall": 0.9481,
+          "f1": 0.9435,
+          "support": 308
         },
         "BLOCK": {
-          "precision": 0.988,
-          "recall": 0.9948,
-          "f1": 0.9914,
-          "support": 1163
+          "precision": 0.9495,
+          "recall": 0.9923,
+          "f1": 0.9705,
+          "support": 1175
         }
       },
       "confusion_matrix": [
         [
-          877,
-          31,
-          5
+          848,
+          15,
+          54
         ],
         [
-          9,
-          306,
-          9
+          8,
+          292,
+          8
         ],
         [
-          1,
           5,
-          1157
+          4,
+          1166
         ]
       ],
-      "false_block_rate_allow": 0.0055,
-      "false_block_rate_legit": 0.0113,
-      "unsafe_miss_rate": 0.0009,
-      "unsafe_block_rate": 0.9948,
-      "legit_acceptance_rate": 0.9606,
-      "challenge_rate": 0.1425,
+      "false_block_rate_allow": 0.0589,
+      "false_block_rate_legit": 0.0506,
+      "unsafe_miss_rate": 0.0043,
+      "unsafe_block_rate": 0.9923,
+      "legit_acceptance_rate": 0.9248,
+      "challenge_rate": 0.1296,
       "families": {
         "icu:big_share": {
-          "n": 18,
+          "n": 5,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
-          "pred_challenge": 0.8889,
-          "pred_block": 0.1111
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
         },
         "icu:drift_other_hospital": {
-          "n": 76,
+          "n": 75,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "icu:drift_status": {
-          "n": 85,
+          "n": 59,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "icu:exfil": {
-          "n": 66,
+          "n": 54,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "icu:ok": {
-          "n": 277,
+          "n": 283,
           "true_label": "ALLOW",
-          "pred_allow": 0.9134,
-          "pred_challenge": 0.0722,
-          "pred_block": 0.0144
+          "pred_allow": 0.947,
+          "pred_challenge": 0.0283,
+          "pred_block": 0.0247
         },
         "icu:over_capacity": {
-          "n": 38,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "icu:over_limit": {
-          "n": 39,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "misc:capability_mismatch": {
-          "n": 51,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "misc:expired_intent": {
-          "n": 21,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "misc:rate_burst": {
-          "n": 77,
-          "true_label": "CHALLENGE",
-          "pred_allow": 0.0,
-          "pred_challenge": 1.0,
-          "pred_block": 0.0
-        },
-        "misc:stale_intent": {
-          "n": 49,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "purchase:bad_supplier": {
-          "n": 30,
-          "true_label": "BLOCK",
-          "pred_allow": 0.0,
-          "pred_challenge": 0.0,
-          "pred_block": 1.0
-        },
-        "purchase:inconsistent": {
           "n": 42,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
-        "purchase:injected_amount": {
-          "n": 77,
+        "icu:over_limit": {
+          "n": 42,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
+        "misc:capability_mismatch": {
+          "n": 52,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:expired_intent": {
+          "n": 18,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:rate_burst": {
+          "n": 65,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "misc:stale_intent": {
+          "n": 51,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:bad_supplier": {
+          "n": 19,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:inconsistent": {
+          "n": 47,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:injected_amount": {
+          "n": 73,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0137,
+          "pred_block": 0.9863
+        },
         "purchase:ok": {
           "n": 269,
           "true_label": "ALLOW",
-          "pred_allow": 1.0,
+          "pred_allow": 0.9926,
           "pred_challenge": 0.0,
-          "pred_block": 0.0
+          "pred_block": 0.0074
         },
         "purchase:over_budget": {
-          "n": 147,
+          "n": 122,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
           "pred_challenge": 1.0,
           "pred_block": 0.0
         },
         "purchase:over_ceiling": {
-          "n": 68,
+          "n": 55,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "purchase:price_anomaly": {
-          "n": 73,
+          "n": 65,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
           "pred_challenge": 1.0,
           "pred_block": 0.0
         },
         "purchase:salami": {
-          "n": 73,
+          "n": 64,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "reroute:closed_route": {
-          "n": 37,
-          "true_label": "BLOCK",
-          "pred_allow": 0.027,
-          "pred_challenge": 0.0,
-          "pred_block": 0.973
-        },
-        "reroute:diverting_dest": {
           "n": 45,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
+        "reroute:diverting_dest": {
+          "n": 50,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
         "reroute:eta_challenge": {
-          "n": 1,
+          "n": 43,
           "true_label": "CHALLENGE",
           "pred_allow": 0.0,
           "pred_challenge": 1.0,
           "pred_block": 0.0
         },
         "reroute:injected": {
-          "n": 121,
+          "n": 135,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
+        "reroute:injected_in_scope": {
+          "n": 93,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0645,
+          "pred_challenge": 0.0108,
+          "pred_block": 0.9247
+        },
         "reroute:injected_partial": {
-          "n": 183,
+          "n": 127,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
           "pred_block": 1.0
         },
         "reroute:ok": {
-          "n": 373,
+          "n": 367,
           "true_label": "ALLOW",
-          "pred_allow": 0.9759,
-          "pred_challenge": 0.0214,
-          "pred_block": 0.0027
+          "pred_allow": 0.8719,
+          "pred_challenge": 0.0027,
+          "pred_block": 0.1253
         },
         "reroute:out_of_scope_dest": {
-          "n": 64,
+          "n": 80,
           "true_label": "BLOCK",
           "pred_allow": 0.0,
           "pred_challenge": 0.0,
@@ -1032,33 +1060,33 @@
   },
   "test_all_models": {
     "logistic_regression": {
-      "hybrid_macro_f1": 0.9536,
-      "ml_only_macro_f1": 0.9376
+      "hybrid_macro_f1": 0.9559,
+      "ml_only_macro_f1": 0.9383
     },
     "random_forest": {
-      "hybrid_macro_f1": 0.9565,
-      "ml_only_macro_f1": 0.9397
+      "hybrid_macro_f1": 0.9552,
+      "ml_only_macro_f1": 0.9456
     },
     "hist_gradient_boosting": {
-      "hybrid_macro_f1": 0.943,
-      "ml_only_macro_f1": 0.9165
+      "hybrid_macro_f1": 0.9561,
+      "ml_only_macro_f1": 0.9463
     },
     "mlp": {
-      "hybrid_macro_f1": 0.9616,
-      "ml_only_macro_f1": 0.9517
+      "hybrid_macro_f1": 0.9581,
+      "ml_only_macro_f1": 0.9488
     }
   },
   "calibration": {
-    "p_block_ece_10bin": 0.0225,
-    "multiclass_brier": 0.0687,
+    "p_block_ece_10bin": 0.0215,
+    "multiclass_brier": 0.0953,
     "note": "risk scores are reported as model scores; calibration measured here, not assumed"
   },
   "ablation": {
     "all features": {
-      "hybrid_macro_f1_test": 0.9616
+      "hybrid_macro_f1_test": 0.9559
     },
     "no text / injection signals": {
-      "hybrid_macro_f1_test": 0.947,
+      "hybrid_macro_f1_test": 0.9411,
       "removed": [
         "injection_score",
         "rationale_injection_score",
@@ -1068,14 +1096,14 @@
       ]
     },
     "no provenance signals": {
-      "hybrid_macro_f1_test": 0.9556,
+      "hybrid_macro_f1_test": 0.9499,
       "removed": [
         "n_untrusted_sources",
         "untrusted_security_fields"
       ]
     },
     "no behaviour history": {
-      "hybrid_macro_f1_test": 0.9518,
+      "hybrid_macro_f1_test": 0.9435,
       "removed": [
         "param_change_count",
         "recent_actions_10m",
@@ -1084,7 +1112,7 @@
       ]
     },
     "no intent-alignment signals": {
-      "hybrid_macro_f1_test": 0.9006,
+      "hybrid_macro_f1_test": 0.937,
       "removed": [
         "entity_alignment",
         "scope_violations",
@@ -1108,7 +1136,7 @@
     }
   },
   "seed": 7,
-  "generated_at": "2026-10-17T08:46:07Z",
+  "generated_at": "2026-10-17T08:47:32Z",
   "charts": [
     "confusion_matrices",
     "method_comparison",
