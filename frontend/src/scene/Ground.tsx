@@ -30,7 +30,7 @@ export function Ground({ idx, quality }: { idx: CityIndex; quality: Quality }) {
   const { plinths, tints } = useMemo(() => {
     const geo = new THREE.BoxGeometry(1, 1, 1);
     geo.translate(0, 0.5, 0);
-    const plinthMesh = new THREE.InstancedMesh(geo, new THREE.MeshStandardMaterial({ color: "#0b1724", roughness: 0.95, metalness: 0 }), idx.blocks.length);
+    const plinthMesh = new THREE.InstancedMesh(geo, new THREE.MeshStandardMaterial({ color: "#09131e", roughness: 0.95, metalness: 0 }), idx.blocks.length);
     const tintGeo = new THREE.PlaneGeometry(1, 1);
     tintGeo.rotateX(-Math.PI / 2);
     const tintMesh = new THREE.InstancedMesh(
@@ -133,7 +133,7 @@ export function Roads({ idx, quality }: { idx: CityIndex; quality: Quality }) {
     }
     const g = new THREE.PlaneGeometry(1, 1);
     g.rotateX(-Math.PI / 2);
-    const mesh = new THREE.InstancedMesh(g, new THREE.MeshBasicMaterial({ color: "#122233" }), idx.city.nodes.length);
+    const mesh = new THREE.InstancedMesh(g, new THREE.MeshBasicMaterial({ color: "#1b2c3c" }), idx.city.nodes.length);
     const m = new THREE.Matrix4();
     idx.city.nodes.forEach((n, i) => {
       const p = idx.nodeWorld.get(n.id) ?? [0, 0];

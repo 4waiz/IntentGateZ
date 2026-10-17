@@ -16,7 +16,7 @@ function overviewDistance(aspect: number): number {
   const vf = THREE.MathUtils.degToRad(CAMERA_FOV);
   const hf = 2 * Math.atan(Math.tan(vf / 2) * aspect);
   const f = Math.min(vf, hf);
-  return (R / Math.sin(f / 2)) * 0.72;
+  return (R / Math.sin(f / 2)) * 0.68;
 }
 
 function spherical(target: THREE.Vector3, dist: number, polar: number, azimuth: number): THREE.Vector3 {
@@ -100,19 +100,19 @@ export function CameraRig({ idx }: { idx: CityIndex }) {
       case "ambulance": {
         setState({ cameraMode: "static", followId: null });
         const p = c.id ? ambulanceWorld(c.id) : null;
-        if (p) focusPoint(p[0], p[1], 92, 0.95);
+        if (p) focusPoint(p[0], p[1], 150, 0.74);
         break;
       }
       case "hospital": {
         setState({ cameraMode: "static", followId: null });
         const p = c.id ? hospitalWorld(c.id) : null;
-        if (p) focusPoint(p[0], p[1], 120, 0.9, 8);
+        if (p) focusPoint(p[0], p[1], 165, 0.8, 8);
         break;
       }
       case "incident": {
         setState({ cameraMode: "static", followId: null });
         const p = c.id ? incidentWorld(c.id) : null;
-        if (p) focusPoint(p[0], p[1], 110, 0.92);
+        if (p) focusPoint(p[0], p[1], 155, 0.76);
         break;
       }
       case "follow":
@@ -137,7 +137,7 @@ export function CameraRig({ idx }: { idx: CityIndex }) {
         const r = Math.max(30, Math.hypot(maxX - minX, maxZ - minZ) / 2);
         const vf = THREE.MathUtils.degToRad(CAMERA_FOV);
         const f = Math.min(vf, 2 * Math.atan(Math.tan(vf / 2) * aspect));
-        focusPoint(cx, cz, (r / Math.sin(f / 2)) * 0.95, 0.82);
+        focusPoint(cx, cz, (r / Math.sin(f / 2)) * 0.95, 0.72);
         break;
       }
     }

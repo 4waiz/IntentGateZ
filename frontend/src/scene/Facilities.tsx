@@ -1,6 +1,5 @@
 import { memo, useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
 import * as THREE from "three";
 import type { HospitalState, Purchase } from "../api/types";
 import { type CityIndex, facilityWorld } from "../lib/geo";
@@ -8,6 +7,7 @@ import { money } from "../lib/format";
 import { SUPPLIERS } from "../lib/constants";
 import { setState, useStore } from "../store/store";
 import { createBeamMaterial } from "./materials";
+import { SceneLabel } from "./SceneLabel";
 
 let towerTex: { map: THREE.CanvasTexture; emissive: THREE.CanvasTexture } | null = null;
 
@@ -177,9 +177,9 @@ const Hospital = memo(function Hospital({ pos, h, purchases }: { pos: [number, n
           <cylinderGeometry args={[0.45, 1.1, 34, 16, 1, true]} />
         </mesh>
       </group>
-      <Html position={[0, 22, 0]} center zIndexRange={[24, 10]} style={{ pointerEvents: "none" }}>
+      <SceneLabel position={[0, 22, 0]} minScale={0.8} z={24}>
         <HospitalLabel h={h} purchases={purchases} />
-      </Html>
+      </SceneLabel>
     </group>
   );
 });
@@ -205,11 +205,11 @@ const Station = memo(function Station({ pos, name }: { pos: [number, number]; na
         <boxGeometry args={[13.5, 0.25, 8.5]} />
         <meshStandardMaterial color="#1c2733" />
       </mesh>
-      <Html position={[0, 7.5, 0]} center zIndexRange={[22, 10]} style={{ pointerEvents: "none" }}>
-        <div className="ig-scene-label rounded-[3px] border border-[#ff8a4c]/40 bg-[#07111c]/80 px-1.5 py-[2px] text-[9.5px] font-semibold tracking-[0.1em] text-[#ffb48a] uppercase">
+      <SceneLabel position={[0, 7.5, 0]} hideBeyond={560} z={21}>
+        <div className="ig-scene-label rounded-[3px] border border-[#ff8a4c]/40 bg-[#07111c]/80 px-1.5 py-[2px] text-[9px] font-semibold tracking-[0.1em] text-[#ffb48a] uppercase">
           {name}
         </div>
-      </Html>
+      </SceneLabel>
     </group>
   );
 });

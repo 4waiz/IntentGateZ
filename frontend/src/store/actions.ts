@@ -366,7 +366,6 @@ export async function runScenario(id: string, opts: { focus?: boolean; quiet?: b
   if (getState().busy[key]) return null;
   setBusy(key, true);
   const sc = getState().scenarios.find((s) => s.id === id);
-  if (sc && opts.focus !== false) focusEntity(sc.focus);
   try {
     const res = await api.runScenario(id);
     for (const d of res.decisions) ingestDecision(d);
@@ -376,6 +375,8 @@ export async function runScenario(id: string, opts: { focus?: boolean; quiet?: b
       scenarioRuns: { ...s.scenarioRuns, [id]: res.decisions.map((d) => d.decision_id) },
     }));
     await Promise.all([refreshState(), refreshDecisions()]);
+    // Frame the scenario's focus entity once the server has staged it.
+    if (sc && opts.focus !== false) focusEntity(sc.focus);
     void refreshAudit();
     return res;
   } catch (err) {

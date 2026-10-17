@@ -69,6 +69,7 @@ export default function CityScene({ active, chrome = true }: { active: boolean; 
       </Canvas>
       {chrome && (
         <>
+          <div className="pointer-events-none absolute top-0 left-0 h-24 w-[560px] bg-[radial-gradient(420px_90px_at_0%_0%,rgba(5,11,18,0.92),transparent_75%)]" />
           <div className="pointer-events-none absolute top-3 left-3">
             <SceneHud />
           </div>

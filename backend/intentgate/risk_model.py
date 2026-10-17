@@ -5,12 +5,13 @@ serves single-action inference. Supported serving runtimes:
 
 * ``sklearn``  - scikit-learn estimator serialised with joblib (CPU)
 * ``xgboost``  - XGBoost booster in JSON format (CPU)
-* ``keras``    - Keras MLP via TensorFlow; on IBM z16/z17 with ``ibm-zdnn-plugin`` installed and
-  ``NNPA_DEVICES`` not set to 0, TensorFlow places supported ops on the Telum NNPA device.
+* ``torch``    - PyTorch MLP; on IBM z16/z17 with IBM's ``torch_nnpa`` the model is moved to the
+  "nnpa" device (Telum on-chip AI accelerator) after a smoke test and a CPU cross-check.
+* ``keras``    - Keras MLP via TensorFlow (kept for compatibility).
 
-The runtime reports what actually loaded. NNPA is only reported as active when TensorFlow lists
-an NNPA physical device in this process; detection of the CPU facility alone is not treated as
-proof of acceleration.
+The runtime reports what actually loaded. NNPA is only reported as active when torch_nnpa reports
+the device available, the model's parameters live on it and its outputs match the CPU model;
+detection of the CPU facility alone is never treated as proof of acceleration.
 """
 
 from __future__ import annotations
@@ -43,6 +44,7 @@ class RiskModel:
         self.inference_count = 0
         self.last_error: str | None = None
         self._lock = threading.Lock()
+        self._count_lock = threading.Lock()
         self._load()
 
     # ------------------------------------------------------------------ loading
@@ -59,7 +61,7 @@ class RiskModel:
         self.thresholds = self.meta.get("thresholds", self.thresholds)
         self.version = self.meta.get("version", "unknown")
         preference = os.environ.get("INTENTGATE_RISK_RUNTIME", self.meta.get("serving_runtime", "sklearn"))
-        order = [preference] + [k for k in ("sklearn", "xgboost", "keras") if k != preference]
+        order = [preference] + [k for k in ("sklearn", "xgboost", "torch", "keras") if k != preference]
         for kind in order:
             try:
                 if self._try_load(kind):
@@ -87,6 +89,32 @@ class RiskModel:
             self.kind = "xgboost"
             self.runtime = f"XGBoost {xgb.__version__} gbtree (CPU)"
             self.accelerator = {"device": "cpu", "nnpa_device_listed": False, "verified": False}
+            return True
+        if kind == "torch" and files.get("torch"):
+            from .torch_mlp import TorchRisk, nnpa_status
+
+            want = os.environ.get("INTENTGATE_TORCH_DEVICE", self.meta.get("torch_device", "nnpa"))
+            status = nnpa_status() if want == "nnpa" else {"available": False}
+            device = "nnpa" if (want == "nnpa" and status.get("available") and status.get("smoke_test")) else "cpu"
+            model = TorchRisk.load(self.dir / files["torch"], device)
+            probe = np.random.default_rng(0).normal(size=(64, len(FEATURE_NAMES))).astype(np.float32)
+            diff = None
+            if device == "nnpa":
+                ref = TorchRisk.load(self.dir / files["torch"], "cpu").predict_proba(probe)
+                diff = float(np.abs(model.predict_proba(probe) - ref).max())
+            param_device = next(model.model.parameters()).device.type
+            self.model = model
+            self.kind = "torch"
+            self.accelerator = {
+                "device": device,
+                "requested_device": want,
+                "parameter_device": param_device,
+                "torch_nnpa": status,
+                "max_abs_prob_diff_vs_cpu": None if diff is None else round(diff, 6),
+                "verified": bool(device == "nnpa" and param_device == "nnpa" and diff is not None and diff < 0.05),
+            }
+            where = "IBM Telum NNPA (torch_nnpa)" if self.accelerator["verified"] else "CPU"
+            self.runtime = f"PyTorch MLP on {where}"
             return True
         if kind == "keras" and files.get("keras"):
             os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
@@ -129,6 +157,9 @@ class RiskModel:
             rows = rows[None, :]
         if self.kind == "sklearn":
             return np.asarray(self.model.predict_proba(rows))
+        if self.kind == "torch":
+            with self._lock:
+                return self.model.predict_proba(rows)
         if self.kind == "xgboost":
             import xgboost as xgb
 
@@ -145,7 +176,7 @@ class RiskModel:
         t0 = time.perf_counter()
         probs = self.predict_proba(np.asarray(vec, dtype=np.float32))[0]
         dt = (time.perf_counter() - t0) * 1000
-        with self._lock:
+        with self._count_lock:
             self.inference_count += 1
         return {c: float(p) for c, p in zip(CLASSES, probs)}, dt
 

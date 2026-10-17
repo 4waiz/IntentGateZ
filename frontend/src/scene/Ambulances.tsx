@@ -143,7 +143,7 @@ function AmbulanceUnit({ amb, idx, park }: { amb: Ambulance; idx: CityIndex; par
     g.position.set(x, ROAD_Y, z);
     sg.rotation.y = heading.current ?? 0;
     const dist = state.camera.position.distanceTo(g.position);
-    const sc = THREE.MathUtils.clamp(dist / 165, 0.7, 2.0);
+    const sc = THREE.MathUtils.clamp(dist / 120, 0.9, 3.4);
     sg.scale.setScalar(sc);
     const t = state.clock.elapsedTime + phase;
     if (red.current && blue.current) {

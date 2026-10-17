@@ -1,5 +1,5 @@
 {
-  "version": "igz-risk-mlp-202610171255-716ab639",
+  "version": "igz-risk-mlp-202610171315-716ab639",
   "dataset": {
     "file": "intentgate_synthetic_seed7.csv",
     "sha256": "716ab639441be8371e22b5f7a2f047ff0f7444942882df934e59d965118fbea6",
@@ -16,6 +16,11 @@
   "protocol": "fit on train; thresholds and model selection on validation; single evaluation on held-out test with unseen text templates",
   "max_false_block_constraint": 0.02,
   "selected_model": "mlp",
+  "best_cpu_model": "mlp",
+  "selection_rule": "best validation macro-F1 of the hybrid gateway among CPU models (ties broken by single-request latency)",
+  "nnpa_status": {
+    "available": false
+  },
   "thresholds": {
     "tau_block": 0.65,
     "tau_review": 0.775
@@ -34,12 +39,12 @@
           "tau_block": 0.5,
           "tau_review": 0.725
         },
-        "train_seconds": 0.08,
+        "train_seconds": 0.09,
         "latency": {
-          "single_p50_ms": 0.1376,
-          "single_p95_ms": 0.1668,
+          "single_p50_ms": 0.1511,
+          "single_p95_ms": 0.1584,
           "batch_rows": 1000,
-          "batch_rows_per_s": 3288392.0
+          "batch_rows_per_s": 2530364.4
         }
       },
       "random_forest": {
@@ -54,12 +59,12 @@
           "tau_block": 0.8,
           "tau_review": 0.85
         },
-        "train_seconds": 0.54,
+        "train_seconds": 0.37,
         "latency": {
-          "single_p50_ms": 15.3138,
-          "single_p95_ms": 26.4839,
+          "single_p50_ms": 27.4766,
+          "single_p95_ms": 29.0016,
           "batch_rows": 1000,
-          "batch_rows_per_s": 24627.2
+          "batch_rows_per_s": 26538.7
         }
       },
       "hist_gradient_boosting": {
@@ -68,12 +73,12 @@
         "feasible_under_false_block_constraint": false,
         "thresholds_hybrid": null,
         "thresholds_ml_only": null,
-        "train_seconds": 5.55,
+        "train_seconds": 4.26,
         "latency": {
-          "single_p50_ms": 17.2784,
-          "single_p95_ms": 25.0953,
+          "single_p50_ms": 11.7287,
+          "single_p95_ms": 15.754,
           "batch_rows": 1000,
-          "batch_rows_per_s": 39341.0
+          "batch_rows_per_s": 48283.1
         }
       },
       "mlp": {
@@ -88,12 +93,12 @@
           "tau_block": 0.55,
           "tau_review": 0.6
         },
-        "train_seconds": 0.39,
+        "train_seconds": 0.44,
         "latency": {
-          "single_p50_ms": 0.1198,
-          "single_p95_ms": 0.1662,
+          "single_p50_ms": 0.1545,
+          "single_p95_ms": 0.1629,
           "batch_rows": 1000,
-          "batch_rows_per_s": 1450116.0
+          "batch_rows_per_s": 944554.6
         }
       }
     }
@@ -1130,12 +1135,14 @@
       "pandas": "3.0.5",
       "scikit-learn": "1.9.0",
       "xgboost": null,
+      "torch": "2.11.0+cu128",
+      "torch_nnpa": null,
       "tensorflow": null,
       "ibm-zdnn-plugin": null
     }
   },
   "seed": 7,
-  "generated_at": "2026-10-17T08:55:58Z",
+  "generated_at": "2026-10-17T09:15:36Z",
   "charts": [
     "confusion_matrices",
     "method_comparison",

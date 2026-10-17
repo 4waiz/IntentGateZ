@@ -8,6 +8,7 @@ import { money } from "../lib/format";
 import { commandCamera, useStore, type VerdictEffect } from "../store/store";
 import { ROAD_WIDTH } from "./geometry";
 import { createBeamMaterial, createClosureOverlayMaterial, createHexShieldMaterial, createStripeMaterial } from "./materials";
+import { SceneLabel } from "./SceneLabel";
 
 // ------------------------------------------------------------------ incidents
 
@@ -57,14 +58,14 @@ const IncidentMarker = memo(function IncidentMarker({ inc, pos }: { inc: Inciden
         <octahedronGeometry args={[1.1, 0]} />
         <meshBasicMaterial color={color} wireframe />
       </mesh>
-      <Html position={[0, h + 2.5, 0]} center zIndexRange={[22, 10]} style={{ pointerEvents: "none" }}>
+      <SceneLabel position={[0, h + 2.5, 0]} minScale={0.85} z={22}>
         <div className="ig-scene-label rounded-[3px] border bg-[#140b06]/80 px-1.5 py-[2px]" style={{ borderColor: `${color}66` }}>
           <span className="font-mono text-[9.5px] font-medium" style={{ color }}>
             {inc.id}
           </span>
           <span className="ml-1 text-[9px] tracking-[0.08em] text-[#c3d0dc] uppercase">sev {inc.severity}</span>
         </div>
-      </Html>
+      </SceneLabel>
     </group>
   );
 });
@@ -130,12 +131,12 @@ const ClosureMarker = memo(function ClosureMarker({ closure, idx }: { closure: C
           </mesh>
         </group>
       ))}
-      <Html position={[mx, 5, mz]} center zIndexRange={[22, 10]} style={{ pointerEvents: "none" }}>
+      <SceneLabel position={[mx, 5, mz]} minScale={0.85} z={22}>
         <div className="ig-scene-label rounded-[3px] border border-[#ff5d70]/60 bg-[#1a0910]/85 px-1.5 py-[2px]">
           <span className="text-[9.5px] font-semibold tracking-[0.12em] text-[#ff5d70]">ROAD CLOSED</span>
           <span className="ml-1 text-[9.5px] text-[#c3d0dc]">· {e.edge.name}</span>
         </div>
-      </Html>
+      </SceneLabel>
     </group>
   );
 });

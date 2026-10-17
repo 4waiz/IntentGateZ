@@ -29,9 +29,9 @@ export function createRoadMaterial(): THREE.ShaderMaterial {
     uniforms: withFog({
       uTime: { value: 0 },
       uFlow: { value: 1 },
-      uAsphalt: { value: c("#0d1925") },
-      uEdgeHi: { value: c("#3f8fc4") },
-      uEdgeLo: { value: c("#2a3a4a") },
+      uAsphalt: { value: c("#172736") },
+      uEdgeHi: { value: c("#4aa3dc") },
+      uEdgeLo: { value: c("#3b5064") },
       uMark: { value: c("#9fb0c0") },
       uFlowCol: { value: c("#14c7ff") },
     }),

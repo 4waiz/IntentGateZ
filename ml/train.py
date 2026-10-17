@@ -145,36 +145,17 @@ def candidates(seed: int) -> dict:
     return models
 
 
-def keras_mlp(Xtr: np.ndarray, ytr: np.ndarray, Xva: np.ndarray, yva: np.ndarray, seed: int):
-    """Small Keras MLP for the TensorFlow / IBM zDNN (NNPA) inference path. Trained on CPU."""
+def torch_candidate(Xtr, ytr, Xva, yva, seed: int):
+    """PyTorch MLP for the IBM Telum NNPA inference path (torch_nnpa). Trained on CPU."""
     try:
-        os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
-        import tensorflow as tf
+        from intentgate.torch_mlp import train as torch_train
     except Exception:
-        return None, None
-    tf.keras.utils.set_random_seed(seed)
-    mean, scale = Xtr.mean(0), Xtr.std(0) + 1e-6
-    w = np.bincount(ytr, minlength=3)
-    cw = {i: float(len(ytr) / (3 * max(1, w[i]))) for i in range(3)}
-    model = tf.keras.Sequential(
-        [
-            tf.keras.layers.Input(shape=(Xtr.shape[1],)),
-            tf.keras.layers.Dense(64, activation="relu"),
-            tf.keras.layers.Dense(32, activation="relu"),
-            tf.keras.layers.Dense(3, activation="softmax"),
-        ]
-    )
-    model.compile(optimizer=tf.keras.optimizers.Adam(2e-3), loss="sparse_categorical_crossentropy", metrics=["accuracy"])
-    model.fit(((Xtr - mean) / scale).astype("float32"), ytr, validation_data=(((Xva - mean) / scale).astype("float32"), yva), epochs=40, batch_size=128, class_weight=cw, verbose=0, callbacks=[tf.keras.callbacks.EarlyStopping(patience=5, restore_best_weights=True)])
-    return model, {"mean": mean.tolist(), "scale": scale.tolist()}
-
-
-class KerasWrapper:
-    def __init__(self, model, scaler):
-        self.model, self.mean, self.scale = model, np.asarray(scaler["mean"], dtype="float32"), np.asarray(scaler["scale"], dtype="float32")
-
-    def predict_proba(self, X):
-        return self.model.predict(((np.asarray(X, dtype="float32") - self.mean) / self.scale), verbose=0)
+        return None
+    try:
+        return torch_train(Xtr, ytr, Xva, yva, seed)
+    except Exception as exc:  # pragma: no cover - platform dependent
+        print("torch candidate skipped:", exc)
+        return None
 
 
 def latency(model, X: np.ndarray, n: int = 300) -> dict:
@@ -202,10 +183,15 @@ def importance(name: str, model, Xva: np.ndarray, yva: np.ndarray) -> dict:
     elif hasattr(est, "coef_"):
         imp = np.abs(est.coef_).mean(0)
     else:
-        from sklearn.inspection import permutation_importance
-
-        r = permutation_importance(model, Xva[:1500], yva[:1500], n_repeats=3, random_state=0, scoring="f1_macro")
-        imp = np.clip(r.importances_mean, 0, None)
+        rng = np.random.default_rng(0)
+        X = Xva[:2000].copy()
+        y = yva[:2000]
+        base = f1_score(y, model.predict_proba(X).argmax(1), average="macro")
+        imp = np.zeros(X.shape[1])
+        for j in range(X.shape[1]):
+            Xp = X.copy()
+            Xp[:, j] = rng.permutation(Xp[:, j])
+            imp[j] = max(0.0, base - f1_score(y, model.predict_proba(Xp).argmax(1), average="macro"))
     imp = imp / (imp.sum() + 1e-12)
     return {k: round(float(v), 5) for k, v in zip(FEATURE_NAMES, imp)}
 
@@ -354,7 +340,7 @@ def main() -> None:
     ap.add_argument("--out", default=str(ROOT / "ml" / "artifacts"))
     ap.add_argument("--results", default=str(ROOT / "ml" / "results"))
     ap.add_argument("--seed", type=int, default=7)
-    ap.add_argument("--no-keras", action="store_true")
+    ap.add_argument("--no-torch", action="store_true")
     ap.add_argument("--no-artifacts", action="store_true", help="evaluation only (used by repeated-seed runs)")
     ap.add_argument("--no-charts", action="store_true")
     args = ap.parse_args()
@@ -377,18 +363,26 @@ def main() -> None:
         model.fit(Xtr, ytr)
         timing[name] = round(time.perf_counter() - t0, 2)
         fitted[name] = model
-    if not args.no_keras:
-        km, scaler = keras_mlp(Xtr, ytr, Xva, yva, args.seed)
-        if km is not None:
-            fitted["keras_mlp"] = KerasWrapper(km, scaler)
-            timing["keras_mlp"] = None
+    nnpa = {"available": False}
+    if not args.no_torch:
+        tm = torch_candidate(Xtr, ytr, Xva, yva, args.seed)
+        if tm is not None:
+            fitted["torch_mlp"] = tm
+            timing["torch_mlp"] = getattr(tm, "train_seconds", None)
+            from intentgate.torch_mlp import nnpa_status
+
+            nnpa = nnpa_status()
 
     tuned = {}
     for name, model in fitted.items():
         Pva = model.predict_proba(Xva)
         thr_h, f1_h = tune(Pva, yva, hva)
         thr_m, f1_m = tune(Pva, yva, None)
-        lat = latency(model, Xte, n=200 if name != "keras_mlp" else 100)
+        lat = latency(model, Xte, n=200)
+        if name == "torch_mlp" and nnpa.get("available"):
+            model.to("nnpa")
+            lat = {"cpu": lat, "nnpa": latency(model, Xte, n=200)}
+            model.to("cpu")
         tuned[name] = {"hybrid": thr_h, "ml_only": thr_m}
         feasible = f1_h >= 0
         val_report[name] = {
@@ -402,8 +396,21 @@ def main() -> None:
         }
         print(f"{name:24s} val hybrid F1={f1_h:.4f}  ml-only F1={f1_m:.4f}  p50={lat['single_p50_ms']}ms  feasible={feasible}")
 
-    servable = [n for n in fitted if n != "keras_mlp" and val_report[n]["feasible_under_false_block_constraint"]]
-    selected = max(servable, key=lambda n: (round(val_report[n]["hybrid_macro_f1"], 3), -val_report[n]["latency"]["single_p50_ms"]))
+    def p50(n):
+        lat = val_report[n]["latency"]
+        return lat["single_p50_ms"] if "single_p50_ms" in lat else lat["cpu"]["single_p50_ms"]
+
+    cpu_models = [n for n in fitted if n != "torch_mlp" and val_report[n]["feasible_under_false_block_constraint"]]
+    best_cpu = max(cpu_models, key=lambda n: (round(val_report[n]["hybrid_macro_f1"], 3), -p50(n)))
+    selected = best_cpu
+    selection_rule = "best validation macro-F1 of the hybrid gateway among CPU models (ties broken by single-request latency)"
+    if "torch_mlp" in fitted and val_report["torch_mlp"]["feasible_under_false_block_constraint"] and nnpa.get("available") and nnpa.get("smoke_test"):
+        if val_report["torch_mlp"]["hybrid_macro_f1"] >= val_report[best_cpu]["hybrid_macro_f1"] - 0.01:
+            selected = "torch_mlp"
+            selection_rule = (
+                "PyTorch MLP served on the IBM Telum NNPA because its validation hybrid macro-F1 is within 0.01 of the best CPU model "
+                f"({best_cpu}); otherwise the best CPU model is served"
+            )
     sel = fitted[selected]
     thr = tuned[selected]["hybrid"]
     Pte = sel.predict_proba(Xte)
@@ -455,7 +462,7 @@ def main() -> None:
         "release": platform.release(),
         "python": platform.python_version(),
         "cpu_count": os.cpu_count(),
-        "packages": {k: pkg(k) for k in ("numpy", "pandas", "scikit-learn", "xgboost", "tensorflow", "ibm-zdnn-plugin")},
+        "packages": {k: pkg(k) for k in ("numpy", "pandas", "scikit-learn", "xgboost", "torch", "torch_nnpa", "tensorflow", "ibm-zdnn-plugin")},
     }
     version = f"igz-risk-{selected.replace('_', '-')}-{time.strftime('%Y%m%d%H%M')}-{sha[:8]}"
     res = {
@@ -464,6 +471,9 @@ def main() -> None:
         "protocol": "fit on train; thresholds and model selection on validation; single evaluation on held-out test with unseen text templates",
         "max_false_block_constraint": MAX_FALSE_BLOCK,
         "selected_model": selected,
+        "best_cpu_model": best_cpu,
+        "selection_rule": selection_rule,
+        "nnpa_status": nnpa,
         "thresholds": thr,
         "validation": {"models": val_report},
         "test": results_test,
@@ -477,34 +487,34 @@ def main() -> None:
 
     if not args.no_artifacts:
         artifacts = {}
-        if selected == "xgboost":
-            sel.save_model(out / "risk_model_xgb.json")
+        cpu_sel = fitted[best_cpu]
+        if best_cpu == "xgboost":
+            cpu_sel.save_model(out / "risk_model_xgb.json")
             artifacts["xgboost"] = "risk_model_xgb.json"
-            serving = "xgboost"
-        else:
-            serving = "sklearn"
-        joblib.dump(sel, out / "risk_model.joblib", compress=3)
+        joblib.dump(cpu_sel, out / "risk_model.joblib", compress=3)
         artifacts["sklearn"] = "risk_model.joblib"
-        keras_scaler = None
-        if "keras_mlp" in fitted:
-            fitted["keras_mlp"].model.save(out / "risk_mlp.keras")
-            artifacts["keras"] = "risk_mlp.keras"
-            keras_scaler = {"mean": fitted["keras_mlp"].mean.tolist(), "scale": fitted["keras_mlp"].scale.tolist()}
+        if "torch_mlp" in fitted:
+            fitted["torch_mlp"].to("cpu").save(out / "risk_mlp_torch.pt", {"seed": args.seed})
+            artifacts["torch"] = "risk_mlp_torch.pt"
+        serving = "torch" if selected == "torch_mlp" else ("xgboost" if best_cpu == "xgboost" else "sklearn")
+        name_of = lambda m: type(m.named_steps["clf"] if hasattr(m, "named_steps") else m).__name__  # noqa: E731
         meta = {
             "version": version,
             "serving_runtime": serving,
+            "torch_device": "nnpa" if serving == "torch" else "cpu",
             "selected_model": selected,
+            "best_cpu_model": best_cpu,
+            "selection_rule": selection_rule,
             "artifacts": artifacts,
-            "models": {"sklearn": {"name": type(sel.named_steps['clf'] if hasattr(sel, 'named_steps') else sel).__name__}},
+            "models": {"sklearn": {"name": name_of(cpu_sel)}, "torch": {"name": "PyTorch MLP 43-64-32-3"}},
             "feature_names": FEATURE_NAMES,
             "classes": CLASSES,
             "thresholds": thr,
-            "keras_thresholds": tuned.get("keras_mlp", {}).get("hybrid"),
-            "scaler": keras_scaler,
-            "keras_outputs": "probs",
+            "thresholds_by_model": {n: tuned[n]["hybrid"] for n in tuned if val_report[n]["feasible_under_false_block_constraint"]},
             "feature_importance": imp,
             "benign_means": {k: round(float(v), 6) for k, v in allow_means.items()},
             "training": {**plat, "trained_at": res["generated_at"], "dataset": data_path.name, "dataset_sha256": sha, "seed": args.seed},
+            "nnpa_status_at_training": nnpa,
             "metrics": {"test_hybrid": {k: results_test["hybrid"][k] for k in ("macro_f1", "accuracy", "false_block_rate_allow", "unsafe_miss_rate", "challenge_rate")}},
         }
         (out / "model_meta.json").write_text(json.dumps(meta, indent=2))

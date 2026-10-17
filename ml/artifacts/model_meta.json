@@ -1,13 +1,19 @@
 {
-  "version": "igz-risk-mlp-202610171255-716ab639",
+  "version": "igz-risk-mlp-202610171315-716ab639",
   "serving_runtime": "sklearn",
+  "torch_device": "cpu",
   "selected_model": "mlp",
+  "best_cpu_model": "mlp",
+  "selection_rule": "best validation macro-F1 of the hybrid gateway among CPU models (ties broken by single-request latency)",
   "artifacts": {
     "sklearn": "risk_model.joblib"
   },
   "models": {
     "sklearn": {
       "name": "MLPClassifier"
+    },
+    "torch": {
+      "name": "PyTorch MLP 43-64-32-3"
     }
   },
   "feature_names": [
@@ -64,52 +70,63 @@
     "tau_block": 0.65,
     "tau_review": 0.775
   },
-  "keras_thresholds": null,
-  "scaler": null,
-  "keras_outputs": "probs",
+  "thresholds_by_model": {
+    "logistic_regression": {
+      "tau_block": 0.5,
+      "tau_review": 0.8
+    },
+    "random_forest": {
+      "tau_block": 0.825,
+      "tau_review": 0.85
+    },
+    "mlp": {
+      "tau_block": 0.65,
+      "tau_review": 0.775
+    }
+  },
   "feature_importance": {
     "agent_known": 0.0,
-    "capability_match": 0.01943,
+    "capability_match": 0.02334,
     "tool_match": 0.0,
     "intent_present": 0.0,
-    "intent_stale": 0.02714,
-    "intent_age_frac": 0.00952,
-    "op_in_intent": 0.01172,
-    "scope_violations": 0.09846,
-    "dest_accepting": 0.02674,
+    "intent_stale": 0.02329,
+    "intent_age_frac": 0.00715,
+    "op_in_intent": 0.01335,
+    "scope_violations": 0.09462,
+    "dest_accepting": 0.03008,
     "specialty_match": 0.0,
-    "capacity_ok": 0.02291,
-    "icu_share": 0.01763,
+    "capacity_ok": 0.02265,
+    "icu_share": 0.01524,
     "route_invalid": 0.0,
-    "route_closed_edges": 0.0199,
-    "eta_ratio": 0.00814,
-    "eta_over_limit": 0.04634,
-    "amount_log10": 0.00243,
-    "budget_ratio": 0.01003,
-    "over_budget": 0.14684,
-    "over_ceiling": 0.06234,
-    "price_ratio": 0.08123,
-    "params_inconsistent": 0.02639,
-    "cum_spend_ratio": 0.00978,
-    "n_untrusted_sources": 0.00102,
-    "untrusted_security_fields": 0.01482,
-    "injection_score": 0.12204,
-    "rationale_injection_score": 0.01994,
-    "lexical_hits": 0.00551,
-    "imperative_density": 0.00025,
-    "entity_alignment": 0.02074,
-    "text_similarity": 0.00021,
-    "param_change_count": 0.02573,
-    "recent_actions_10m": 0.06597,
-    "recent_high_value_10m": 0.03064,
-    "agent_prior_blocks": 0.00019,
-    "phi_egress": 0.01323,
-    "op_reroute_ambulance": 0.00529,
+    "route_closed_edges": 0.02011,
+    "eta_ratio": 0.00682,
+    "eta_over_limit": 0.04118,
+    "amount_log10": 0.00201,
+    "budget_ratio": 0.01011,
+    "over_budget": 0.15578,
+    "over_ceiling": 0.06098,
+    "price_ratio": 0.0782,
+    "params_inconsistent": 0.03057,
+    "cum_spend_ratio": 0.00886,
+    "n_untrusted_sources": 0.0,
+    "untrusted_security_fields": 0.00857,
+    "injection_score": 0.12809,
+    "rationale_injection_score": 0.01785,
+    "lexical_hits": 0.00337,
+    "imperative_density": 8e-05,
+    "entity_alignment": 0.02079,
+    "text_similarity": 0.00096,
+    "param_change_count": 0.02678,
+    "recent_actions_10m": 0.07504,
+    "recent_high_value_10m": 0.02293,
+    "agent_prior_blocks": 0.0,
+    "phi_egress": 0.01509,
+    "op_reroute_ambulance": 0.00425,
     "op_dispatch_ambulance": 0.0,
-    "op_reserve_icu_beds": 0.01629,
-    "op_purchase_supplies": 0.00634,
-    "op_update_hospital_status": 0.00183,
-    "op_share_patient_record": 0.00296,
+    "op_reserve_icu_beds": 0.01933,
+    "op_purchase_supplies": 0.00823,
+    "op_update_hospital_status": 0.0,
+    "op_share_patient_record": 0.00432,
     "op_cancel_dispatch": 0.0
   },
   "benign_means": {
@@ -168,13 +185,18 @@
       "pandas": "3.0.5",
       "scikit-learn": "1.9.0",
       "xgboost": null,
+      "torch": "2.11.0+cu128",
+      "torch_nnpa": null,
       "tensorflow": null,
       "ibm-zdnn-plugin": null
     },
-    "trained_at": "2026-10-17T08:55:58Z",
+    "trained_at": "2026-10-17T09:15:36Z",
     "dataset": "intentgate_synthetic_seed7.csv",
     "dataset_sha256": "716ab639441be8371e22b5f7a2f047ff0f7444942882df934e59d965118fbea6",
     "seed": 7
+  },
+  "nnpa_status_at_training": {
+    "available": false
   },
   "metrics": {
     "test_hybrid": {
