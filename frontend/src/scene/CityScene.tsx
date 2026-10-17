@@ -73,9 +73,11 @@ export default function CityScene({ active, chrome = true }: { active: boolean; 
           <div className="pointer-events-none absolute top-3 left-3">
             <SceneHud />
           </div>
-          <div className="pointer-events-none absolute top-3 right-3 flex justify-end">
-            <CameraToolbar />
-          </div>
+          {!presentation && (
+            <div className="pointer-events-none absolute top-3 right-3 flex justify-end">
+              <CameraToolbar />
+            </div>
+          )}
           {!presentation && (
             <div className="pointer-events-none absolute bottom-3 left-3">
               <Legend />

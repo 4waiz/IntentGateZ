@@ -40,7 +40,11 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
+          // Shared by the shell and the lazy 3D scene: keep them in the core chunk so the entry
+          // never has to import (and preload) the three.js / r3f chunks.
+          if (id.includes("vite/preload-helper") || id.includes("commonjsHelpers")) return "react";
           if (!id.includes("node_modules")) return undefined;
+          if (id.includes("zustand") || id.includes("use-sync-external-store")) return "react";
           if (id.includes("postprocessing")) return "postfx";
           if (id.includes("/three/") || id.includes("\\three\\")) return "three";
           if (id.includes("@react-three") || id.includes("three-stdlib") || id.includes("camera-controls") || id.includes("troika")) return "r3f";
