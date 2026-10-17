@@ -78,12 +78,19 @@ function GhostRoute({ d, idx, emphasized }: { d: Decision; idx: CityIndex; empha
     },
     [geo, mat, shieldMat],
   );
+  const checkpoint = useRef<THREE.Group>(null);
   useFrame((state) => {
     const t = state.clock.elapsedTime;
     mat.uniforms.uTime.value = t;
     mat.uniforms.uOpacity.value = emphasized ? 1 : 0.45;
     shieldMat.uniforms.uTime.value = t;
     shieldMat.uniforms.uOpacity.value = emphasized ? 1 : 0.5;
+    const g = checkpoint.current;
+    if (g) {
+      // Same distance scaling as the vehicles, so the field always encloses the held unit.
+      const s = THREE.MathUtils.clamp(state.camera.position.distanceTo(g.position) / 120, 0.9, 3.4);
+      g.scale.setScalar(s);
+    }
   });
   if (!geo || pts.length < 2) return null;
   const total = polylineLength(pts);
@@ -96,7 +103,7 @@ function GhostRoute({ d, idx, emphasized }: { d: Decision; idx: CityIndex; empha
     <group>
       <mesh geometry={geo} material={mat} renderOrder={6} />
       {/* IntentGate checkpoint: a hexagonal force field holding the unit where the blocked plan would start */}
-      <group position={[start[0], 0, start[1]]} rotation-y={heading}>
+      <group ref={checkpoint} position={[start[0], 0, start[1]]} rotation-y={heading}>
         <mesh position={[0, 3.6, 0]} material={shieldMat} renderOrder={7}>
           <cylinderGeometry args={[6.5, 6.5, 7.2, 6, 1, true]} />
         </mesh>
@@ -104,7 +111,7 @@ function GhostRoute({ d, idx, emphasized }: { d: Decision; idx: CityIndex; empha
           <meshBasicMaterial color="#ff5d70" transparent opacity={emphasized ? 0.9 : 0.45} depthWrite={false} blending={THREE.AdditiveBlending} />
         </mesh>
         {emphasized && (
-          <Html position={[0, 12.5, 0]} center zIndexRange={[34, 10]} style={{ pointerEvents: "none" }}>
+          <Html position={[0, 9.5, 0]} center zIndexRange={[34, 10]} style={{ pointerEvents: "none" }}>
             <div className="ig-scene-label rounded-[4px] border border-[#ff5d70]/70 bg-[#1a0910]/90 px-2 py-1 shadow-[0_0_24px_rgba(255,93,112,0.35)]">
               <div className="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.14em] text-[#ff5d70]">
                 <svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true">

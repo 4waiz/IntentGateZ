@@ -442,7 +442,9 @@ def main() -> None:
         }
 
     ablation = {"all features": {"hybrid_macro_f1_test": results_test["hybrid"]["macro_f1"]}}
-    base = candidates(args.seed)[selected] if selected in candidates(args.seed) else None
+    # Ablation retrains the best CPU model family with feature groups removed (same protocol).
+    base = candidates(args.seed).get(best_cpu)
+    ablation["all features"]["note"] = f"selected model ({selected}); ablation rows retrain {best_cpu}"
     if base is not None:
         from sklearn.base import clone
 
