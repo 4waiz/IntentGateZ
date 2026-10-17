@@ -1,11 +1,14 @@
-import { Bloom, EffectComposer, Vignette } from "@react-three/postprocessing";
+import { Bloom, EffectComposer, ToneMapping, Vignette } from "@react-three/postprocessing";
+import { ToneMappingMode } from "postprocessing";
+import type { Quality } from "../store/store";
 
-/** High quality only: a restrained bloom on emissive lights and route glows. */
-export default function PostFX() {
+/** Medium/High: HDR bloom on lit windows, lamps, beacons and route glows, then ACES tone mapping. */
+export default function PostFX({ quality }: { quality: Quality }) {
   return (
-    <EffectComposer multisampling={4}>
-      <Bloom intensity={0.75} luminanceThreshold={0.42} luminanceSmoothing={0.25} mipmapBlur radius={0.7} />
-      <Vignette offset={0.32} darkness={0.55} eskil={false} />
+    <EffectComposer multisampling={quality === "high" ? 4 : 0}>
+      <Bloom intensity={quality === "high" ? 1.25 : 1.05} luminanceThreshold={0.9} luminanceSmoothing={0.35} mipmapBlur radius={quality === "high" ? 0.75 : 0.65} />
+      <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
+      <Vignette offset={0.3} darkness={0.62} eskil={false} />
     </EffectComposer>
   );
 }

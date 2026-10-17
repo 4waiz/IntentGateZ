@@ -1,0 +1,2627 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-10-13T10:57:43.283Z",
+  "units": "m",
+  "up": "+Y",
+  "front": "+Z",
+  "basePath": "/models/",
+  "conventions": {
+    "coordinates": "Metres, +Y up, model fronts face +Z. Each asset node has its origin at the centre of its footprint on the ground (y = 0); every root node has an identity transform (except skyline.glb, whose nodes carry a suggested world placement).",
+    "nodeLookup": "Layout buildings map to node `${kind}_v${variant}`. Facilities that exist twice with different footprints (pump-station, water-tower) have one node per facility: resolve by assets[].facilityId first, then by kind + variant.",
+    "kitScaling": "Kit buildings (tower-residential, tower-office, midrise-residential, lowrise-residential, villa, commercial-podium) are modelled at nominalSize [w, d, h] and tolerate non-uniform scaling of about +/-30% to the layout footprint/height. Facility, prop and underground assets are modelled at real size and placed unscaled.",
+    "glazing": "Material \"glazing\" marks window surfaces for the scene's lit-window shader. UV0 on glazing encodes the window grid: v = storey coordinate (the lobby spans v 0..1, every storey above adds 1.0, aligned with the modelled slabs, so fract(v) is the position inside a storey even after non-uniform scaling); u = facade bay coordinate (1.0 per ~1.5-3 m bay, see assets[].notes). World-space window shaders also work.",
+    "vertexAO": "Building, facility, underground and district-base meshes carry baked ambient occlusion in COLOR_0 (linear, ~0.38-1.0; the base has hand-placed gallery occlusion). On kit buildings the facade/facade_alt faces are additionally multiplied by a subtle per-variant stone tint (assets[].stoneTint: white, cream, beige or sand) so two stone materials give four tones. three.js GLTFLoader enables vertexColors automatically, which multiplies baseColor; keep vertexColors on any replacement material to keep the grounding and the tints.",
+    "compression": "EXT_meshopt_compression (decode with GLTFLoader.setMeshoptDecoder(MeshoptDecoder) from three/examples/jsm/libs/meshopt_decoder.module.js). Normals are int16 and COLOR_0 uint8 (KHR_mesh_quantization); positions and UVs are float32.",
+    "emissive": "Emissive materials (\"emissive_sign\", \"light_emissive\", \"water\") carry emissive colour/strength suitable for bloom; the scene may drive their intensity (e.g. night/outage states).",
+    "props": "Props have their origin at the base on the ground. streetlight arms point along local +Z (layout rotation 0 = towards +Z / the road centre); palms are rotationally free and scale uniformly (layout scale 0.8-1.25); solar-array_v0 is a ~10 x 6 m rooftop rack whose modules face +Z (south).",
+    "skyline": "skyline.glb node transforms carry a suggested placement (assets[].placement) with the tower bases at y = 0. If the background ground/sea is lower than the district surface, offset the whole skyline group to that level (the previews use y = -59).",
+    "pipes": "Exposed mains are rendered by the scene from district.json routes. district-base gallery saddles and underground-kit flanges are sized for a visual pipe radius of 0.9 m (anchors.pipeVisualRadius).",
+    "provenance": "All assets are original procedural geometry and textures generated for Encirra by the scripts in assets/blender/. No third-party models, textures or HDRIs are used."
+  },
+  "materials": {
+    "facade": "Primary warm-white stone/render: walls, slabs, piers, balcony fronts.",
+    "facade_alt": "Secondary sand/beige stone: bands, alternate volumes, podiums.",
+    "glazing": "Facade glazing planes/bands; replaced in the scene by the lit-window shader. UV0 encodes the window grid: v = storey index (1.0 per storey, slab-aligned), u = bay index (1.0 per ~3 m bay).",
+    "roof": "Roof decks and membranes.",
+    "trim": "Dark anodised aluminium: mullions, frames, louvres, copings, rails.",
+    "accent": "Bronze/champagne metal accents: fins, mashrabiya-style screens, signage bands.",
+    "glass_clear": "Clear glass (balustrades, canopies, tank level band); alpha blended.",
+    "emissive_sign": "Self-lit signage: hospital red cross and lettering.",
+    "solar": "Photovoltaic module glass.",
+    "metal": "Galvanised/bright steel: fences, gantries, rails, vents, ladders.",
+    "steel_dark": "Dark painted steel: transformers, machinery, frames, antenna masts.",
+    "concrete": "Cast concrete: plinths, slabs, galleries, pipe supports, paving.",
+    "asphalt": "Asphalt / dark paving / helipad deck.",
+    "foliage": "Palm fronds and planting (double sided).",
+    "trunk": "Palm trunks.",
+    "water": "Water bodies (tank level column); faintly self-lit cyan.",
+    "soil": "Soil/rock strata on the district base cut faces (baked colour + normal textures).",
+    "rock": "Rock and gravel: bedrock underside, substation yard gravel.",
+    "light_emissive": "Warm lamp heads, aviation and helipad lights.",
+    "pipe": "Painted pipework and pump/valve bodies (industrial blue).",
+    "valve_red": "Red-painted valve handwheels, check-valve covers and fire equipment."
+  },
+  "materialPBR": {
+    "facade": {
+      "baseColor": "#E8E1D4",
+      "roughness": 0.78,
+      "metalness": 0
+    },
+    "facade_alt": {
+      "baseColor": "#D2BC98",
+      "roughness": 0.82,
+      "metalness": 0
+    },
+    "glazing": {
+      "baseColor": "#24313B",
+      "roughness": 0.14,
+      "metalness": 0.15
+    },
+    "roof": {
+      "baseColor": "#B6AFA3",
+      "roughness": 0.92,
+      "metalness": 0
+    },
+    "trim": {
+      "baseColor": "#555A61",
+      "roughness": 0.45,
+      "metalness": 0.45
+    },
+    "accent": {
+      "baseColor": "#A88457",
+      "roughness": 0.45,
+      "metalness": 0.45
+    },
+    "glass_clear": {
+      "baseColor": "#BCD5DC",
+      "roughness": 0.06,
+      "metalness": 0,
+      "opacity": 0.35,
+      "transparent": true,
+      "doubleSided": true
+    },
+    "emissive_sign": {
+      "baseColor": "#E3242B",
+      "roughness": 0.5,
+      "metalness": 0,
+      "emissive": "#FF2A2A",
+      "emissiveIntensity": 4
+    },
+    "solar": {
+      "baseColor": "#1F3150",
+      "roughness": 0.22,
+      "metalness": 0.25
+    },
+    "metal": {
+      "baseColor": "#A7ABAE",
+      "roughness": 0.42,
+      "metalness": 0.6
+    },
+    "steel_dark": {
+      "baseColor": "#3E434A",
+      "roughness": 0.5,
+      "metalness": 0.4
+    },
+    "concrete": {
+      "baseColor": "#B8AFA2",
+      "roughness": 0.92,
+      "metalness": 0
+    },
+    "asphalt": {
+      "baseColor": "#343537",
+      "roughness": 0.95,
+      "metalness": 0
+    },
+    "foliage": {
+      "baseColor": "#55702E",
+      "roughness": 0.72,
+      "metalness": 0,
+      "doubleSided": true
+    },
+    "trunk": {
+      "baseColor": "#8A7152",
+      "roughness": 0.95,
+      "metalness": 0
+    },
+    "water": {
+      "baseColor": "#2A7C9E",
+      "roughness": 0.08,
+      "metalness": 0,
+      "emissive": "#1A8FD0",
+      "emissiveIntensity": 0.6
+    },
+    "soil": {
+      "baseColor": "#FFFFFF",
+      "roughness": 0.95,
+      "metalness": 0
+    },
+    "rock": {
+      "baseColor": "#7B6F61",
+      "roughness": 0.95,
+      "metalness": 0
+    },
+    "light_emissive": {
+      "baseColor": "#FFE6BF",
+      "roughness": 0.4,
+      "metalness": 0,
+      "emissive": "#FFD08A",
+      "emissiveIntensity": 6
+    },
+    "pipe": {
+      "baseColor": "#3F6D8C",
+      "roughness": 0.45,
+      "metalness": 0.35
+    },
+    "valve_red": {
+      "baseColor": "#B0231D",
+      "roughness": 0.5,
+      "metalness": 0.2
+    }
+  },
+  "files": {
+    "commercial-podium.glb": {
+      "bytes": 115644,
+      "group": "buildings",
+      "nodes": [
+        "commercial-podium_v0",
+        "commercial-podium_v1",
+        "commercial-podium_v2"
+      ]
+    },
+    "cooling-plant.glb": {
+      "bytes": 221080,
+      "group": "facilities",
+      "nodes": [
+        "cooling-plant_v0"
+      ]
+    },
+    "desalination-inlet.glb": {
+      "bytes": 324748,
+      "group": "facilities",
+      "nodes": [
+        "desalination-inlet_v0"
+      ]
+    },
+    "district-base.glb": {
+      "bytes": 781772,
+      "group": "base",
+      "nodes": [
+        "district-base"
+      ]
+    },
+    "emergency-ops.glb": {
+      "bytes": 154148,
+      "group": "facilities",
+      "nodes": [
+        "emergency-ops_v0"
+      ]
+    },
+    "hospital.glb": {
+      "bytes": 138332,
+      "group": "facilities",
+      "nodes": [
+        "hospital_v0"
+      ]
+    },
+    "lowrise-residential.glb": {
+      "bytes": 149596,
+      "group": "buildings",
+      "nodes": [
+        "lowrise-residential_v0",
+        "lowrise-residential_v1",
+        "lowrise-residential_v2"
+      ]
+    },
+    "mall.glb": {
+      "bytes": 167008,
+      "group": "facilities",
+      "nodes": [
+        "mall_v0"
+      ]
+    },
+    "midrise-residential.glb": {
+      "bytes": 266724,
+      "group": "buildings",
+      "nodes": [
+        "midrise-residential_v0",
+        "midrise-residential_v1",
+        "midrise-residential_v2",
+        "midrise-residential_v3"
+      ]
+    },
+    "office-complex.glb": {
+      "bytes": 102336,
+      "group": "facilities",
+      "nodes": [
+        "office-complex_v0"
+      ]
+    },
+    "palm.glb": {
+      "bytes": 90860,
+      "group": "props",
+      "nodes": [
+        "palm_v0",
+        "palm_v1",
+        "palm_v2"
+      ]
+    },
+    "pump-station.glb": {
+      "bytes": 473072,
+      "group": "facilities",
+      "nodes": [
+        "pump-station_v0",
+        "pump-station_v1"
+      ]
+    },
+    "skyline.glb": {
+      "bytes": 429280,
+      "group": "skyline",
+      "nodes": [
+        "skyline_spire",
+        "skyline_twist",
+        "skyline_sail",
+        "skyline_twin_a",
+        "skyline_twin_b",
+        "skyline_stepped",
+        "skyline_glass_a",
+        "skyline_glass_b",
+        "skyline_glass_c",
+        "skyline_marina_a",
+        "skyline_marina_b",
+        "skyline_marina_c",
+        "skyline_twist_b"
+      ]
+    },
+    "solar-array.glb": {
+      "bytes": 23656,
+      "group": "props",
+      "nodes": [
+        "solar-array_v0"
+      ]
+    },
+    "street-furniture.glb": {
+      "bytes": 21380,
+      "group": "props",
+      "nodes": [
+        "planter_v0",
+        "bench_v0"
+      ]
+    },
+    "streetlight.glb": {
+      "bytes": 19380,
+      "group": "props",
+      "nodes": [
+        "streetlight_v0",
+        "streetlight_v1"
+      ]
+    },
+    "substation.glb": {
+      "bytes": 861436,
+      "group": "facilities",
+      "nodes": [
+        "substation_v0"
+      ]
+    },
+    "tower-office.glb": {
+      "bytes": 173084,
+      "group": "buildings",
+      "nodes": [
+        "tower-office_v0",
+        "tower-office_v1",
+        "tower-office_v2",
+        "tower-office_v3"
+      ]
+    },
+    "tower-residential.glb": {
+      "bytes": 380396,
+      "group": "buildings",
+      "nodes": [
+        "tower-residential_v0",
+        "tower-residential_v1",
+        "tower-residential_v2",
+        "tower-residential_v3"
+      ]
+    },
+    "underground-kit.glb": {
+      "bytes": 167812,
+      "group": "underground",
+      "nodes": [
+        "pump-unit_v0",
+        "gate-valve_v0",
+        "check-valve_v0",
+        "pipe-saddle_v0",
+        "chamber_v0",
+        "cable-duct_v0"
+      ]
+    },
+    "villa.glb": {
+      "bytes": 61000,
+      "group": "buildings",
+      "nodes": [
+        "villa_v0",
+        "villa_v1"
+      ]
+    },
+    "water-tower.glb": {
+      "bytes": 190476,
+      "group": "facilities",
+      "nodes": [
+        "water-tower_v0",
+        "water-tower_v1"
+      ]
+    }
+  },
+  "totalBytes": 5313220,
+  "assets": [
+    {
+      "id": "tower-residential_v0",
+      "kind": "tower-residential",
+      "variant": 0,
+      "node": "tower-residential_v0",
+      "nominalSize": [
+        22.04,
+        19.04,
+        51.2
+      ],
+      "tris": 3244,
+      "materials": [
+        "glazing",
+        "facade_alt",
+        "facade",
+        "glass_clear",
+        "trim",
+        "roof",
+        "metal",
+        "steel_dark"
+      ],
+      "floors": 14,
+      "storeyHeight": 3.25,
+      "lobbyHeight": 5,
+      "roofY": 47.75,
+      "stoneTint": "white",
+      "anchors": {
+        "label": [
+          0,
+          55.2,
+          0
+        ],
+        "roof": [
+          0,
+          47.75,
+          0
+        ],
+        "roofY": 47.75
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (14 storeys, lobby 5.0 m, storey 3.25 m), u = facade bay.",
+      "file": "tower-residential.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "tower-residential_v1",
+      "kind": "tower-residential",
+      "variant": 1,
+      "node": "tower-residential_v1",
+      "nominalSize": [
+        22.08,
+        19.08,
+        54.05
+      ],
+      "tris": 1732,
+      "materials": [
+        "glazing",
+        "facade",
+        "facade_alt",
+        "roof",
+        "trim",
+        "metal",
+        "steel_dark"
+      ],
+      "floors": 14,
+      "storeyHeight": 3.3,
+      "lobbyHeight": 5.5,
+      "roofY": 48.9,
+      "stoneTint": "beige",
+      "anchors": {
+        "label": [
+          0,
+          58.05,
+          0
+        ],
+        "roof": [
+          0,
+          48.9,
+          0
+        ],
+        "roofY": 48.9
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (14 storeys, lobby 5.5 m, storey 3.30 m), u = facade bay.",
+      "file": "tower-residential.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "tower-residential_v2",
+      "kind": "tower-residential",
+      "variant": 2,
+      "node": "tower-residential_v2",
+      "nominalSize": [
+        22.08,
+        19.08,
+        52.5
+      ],
+      "tris": 3348,
+      "materials": [
+        "glazing",
+        "facade_alt",
+        "facade",
+        "roof",
+        "trim",
+        "accent",
+        "metal",
+        "steel_dark"
+      ],
+      "floors": 14,
+      "storeyHeight": 3.2,
+      "lobbyHeight": 5,
+      "roofY": 47.1,
+      "stoneTint": "cream",
+      "anchors": {
+        "label": [
+          0,
+          56.5,
+          0
+        ],
+        "roof": [
+          0,
+          47.1,
+          0
+        ],
+        "roofY": 47.1
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (14 storeys, lobby 5.0 m, storey 3.20 m), u = facade bay.",
+      "file": "tower-residential.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "tower-residential_v3",
+      "kind": "tower-residential",
+      "variant": 3,
+      "node": "tower-residential_v3",
+      "nominalSize": [
+        22,
+        19,
+        54.5
+      ],
+      "tris": 3762,
+      "materials": [
+        "glazing",
+        "facade_alt",
+        "facade",
+        "glass_clear",
+        "trim",
+        "roof",
+        "metal",
+        "steel_dark"
+      ],
+      "floors": 15,
+      "storeyHeight": 3.2,
+      "lobbyHeight": 5,
+      "roofY": 50.3,
+      "stoneTint": "white",
+      "anchors": {
+        "label": [
+          0,
+          58.5,
+          0
+        ],
+        "roof": [
+          0,
+          50.3,
+          0
+        ],
+        "roofY": 50.3
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (15 storeys, lobby 5.0 m, storey 3.20 m), u = facade bay.",
+      "file": "tower-residential.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "tower-office_v0",
+      "kind": "tower-office",
+      "variant": 0,
+      "node": "tower-office_v0",
+      "nominalSize": [
+        21.4,
+        17.9,
+        55.95
+      ],
+      "tris": 1390,
+      "materials": [
+        "roof",
+        "glazing",
+        "facade",
+        "trim",
+        "metal",
+        "steel_dark"
+      ],
+      "floors": 13,
+      "storeyHeight": 3.8,
+      "lobbyHeight": 6.5,
+      "roofY": 52.5,
+      "stoneTint": "white",
+      "anchors": {
+        "label": [
+          0,
+          59.95,
+          0
+        ],
+        "roof": [
+          0,
+          52.5,
+          0
+        ],
+        "roofY": 52.5
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (13 storeys, lobby 6.5 m, storey 3.80 m), u = facade bay.",
+      "file": "tower-office.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "tower-office_v1",
+      "kind": "tower-office",
+      "variant": 1,
+      "node": "tower-office_v1",
+      "nominalSize": [
+        21.4,
+        17.95,
+        55.95
+      ],
+      "tris": 1076,
+      "materials": [
+        "roof",
+        "glazing",
+        "facade",
+        "trim",
+        "metal",
+        "steel_dark"
+      ],
+      "floors": 13,
+      "storeyHeight": 3.8,
+      "lobbyHeight": 6.5,
+      "roofY": 52.5,
+      "stoneTint": "cream",
+      "anchors": {
+        "label": [
+          0,
+          59.95,
+          0
+        ],
+        "roof": [
+          0,
+          52.5,
+          0
+        ],
+        "roofY": 52.5
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (13 storeys, lobby 6.5 m, storey 3.80 m), u = facade bay.",
+      "file": "tower-office.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "tower-office_v2",
+      "kind": "tower-office",
+      "variant": 2,
+      "node": "tower-office_v2",
+      "nominalSize": [
+        21.4,
+        18,
+        61.29
+      ],
+      "tris": 964,
+      "materials": [
+        "roof",
+        "glazing",
+        "facade",
+        "trim",
+        "accent"
+      ],
+      "floors": 13,
+      "storeyHeight": 3.8,
+      "lobbyHeight": 6.5,
+      "roofY": 52.1,
+      "stoneTint": "beige",
+      "anchors": {
+        "label": [
+          0,
+          65.29,
+          0
+        ],
+        "roof": [
+          0,
+          52.1,
+          0
+        ],
+        "roofY": 52.1
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (13 storeys, lobby 6.5 m, storey 3.80 m), u = facade bay.",
+      "file": "tower-office.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "tower-office_v3",
+      "kind": "tower-office",
+      "variant": 3,
+      "node": "tower-office_v3",
+      "nominalSize": [
+        21.4,
+        17.9,
+        58.1
+      ],
+      "tris": 1362,
+      "materials": [
+        "roof",
+        "glazing",
+        "facade",
+        "trim",
+        "metal",
+        "steel_dark"
+      ],
+      "floors": 13,
+      "storeyHeight": 3.8,
+      "lobbyHeight": 6.5,
+      "roofY": 52.6,
+      "stoneTint": "white",
+      "anchors": {
+        "label": [
+          0,
+          62.1,
+          0
+        ],
+        "roof": [
+          0,
+          52.6,
+          0
+        ],
+        "roofY": 52.6
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (13 storeys, lobby 6.5 m, storey 3.80 m), u = facade bay.",
+      "file": "tower-office.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "midrise-residential_v0",
+      "kind": "midrise-residential",
+      "variant": 0,
+      "node": "midrise-residential_v0",
+      "nominalSize": [
+        20.08,
+        18.58,
+        30.95
+      ],
+      "tris": 1464,
+      "materials": [
+        "glazing",
+        "facade_alt",
+        "facade",
+        "roof",
+        "trim",
+        "accent",
+        "metal",
+        "steel_dark"
+      ],
+      "floors": 8,
+      "storeyHeight": 3.2,
+      "lobbyHeight": 4.6,
+      "roofY": 27.5,
+      "stoneTint": "cream",
+      "anchors": {
+        "label": [
+          0,
+          34.95,
+          0
+        ],
+        "roof": [
+          0,
+          27.5,
+          0
+        ],
+        "roofY": 27.5
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (8 storeys, lobby 4.6 m, storey 3.20 m), u = facade bay.",
+      "file": "midrise-residential.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "midrise-residential_v1",
+      "kind": "midrise-residential",
+      "variant": 1,
+      "node": "midrise-residential_v1",
+      "nominalSize": [
+        20.06,
+        18.56,
+        30.95
+      ],
+      "tris": 1988,
+      "materials": [
+        "glazing",
+        "facade",
+        "facade_alt",
+        "glass_clear",
+        "trim",
+        "roof",
+        "metal",
+        "steel_dark"
+      ],
+      "floors": 8,
+      "storeyHeight": 3.2,
+      "lobbyHeight": 4.6,
+      "roofY": 27.5,
+      "stoneTint": "white",
+      "anchors": {
+        "label": [
+          0,
+          34.95,
+          0
+        ],
+        "roof": [
+          0,
+          27.5,
+          0
+        ],
+        "roofY": 27.5
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (8 storeys, lobby 4.6 m, storey 3.20 m), u = facade bay.",
+      "file": "midrise-residential.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "midrise-residential_v2",
+      "kind": "midrise-residential",
+      "variant": 2,
+      "node": "midrise-residential_v2",
+      "nominalSize": [
+        20.08,
+        18.58,
+        30.95
+      ],
+      "tris": 2268,
+      "materials": [
+        "glazing",
+        "facade_alt",
+        "facade",
+        "roof",
+        "trim",
+        "accent",
+        "metal",
+        "steel_dark"
+      ],
+      "floors": 8,
+      "storeyHeight": 3.2,
+      "lobbyHeight": 4.6,
+      "roofY": 27.5,
+      "stoneTint": "beige",
+      "anchors": {
+        "label": [
+          0,
+          34.95,
+          0
+        ],
+        "roof": [
+          0,
+          27.5,
+          0
+        ],
+        "roofY": 27.5
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (8 storeys, lobby 4.6 m, storey 3.20 m), u = facade bay.",
+      "file": "midrise-residential.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "midrise-residential_v3",
+      "kind": "midrise-residential",
+      "variant": 3,
+      "node": "midrise-residential_v3",
+      "nominalSize": [
+        20,
+        18.5,
+        30.95
+      ],
+      "tris": 2166,
+      "materials": [
+        "glazing",
+        "facade_alt",
+        "facade",
+        "roof",
+        "accent",
+        "trim",
+        "metal",
+        "steel_dark"
+      ],
+      "floors": 8,
+      "storeyHeight": 3.2,
+      "lobbyHeight": 4.6,
+      "roofY": 27.5,
+      "stoneTint": "sand",
+      "anchors": {
+        "label": [
+          0,
+          34.95,
+          0
+        ],
+        "roof": [
+          0,
+          27.5,
+          0
+        ],
+        "roofY": 27.5
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (8 storeys, lobby 4.6 m, storey 3.20 m), u = facade bay.",
+      "file": "midrise-residential.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "lowrise-residential_v0",
+      "kind": "lowrise-residential",
+      "variant": 0,
+      "node": "lowrise-residential_v0",
+      "nominalSize": [
+        18.58,
+        18.08,
+        14.15
+      ],
+      "tris": 1020,
+      "materials": [
+        "glazing",
+        "facade_alt",
+        "facade",
+        "roof",
+        "trim",
+        "accent",
+        "metal",
+        "steel_dark"
+      ],
+      "floors": 3,
+      "storeyHeight": 3.2,
+      "lobbyHeight": 3.8,
+      "roofY": 10.7,
+      "stoneTint": "beige",
+      "anchors": {
+        "label": [
+          0,
+          18.15,
+          0
+        ],
+        "roof": [
+          0,
+          10.7,
+          0
+        ],
+        "roofY": 10.7
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (3 storeys, lobby 3.8 m, storey 3.20 m), u = facade bay.",
+      "file": "lowrise-residential.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "lowrise-residential_v1",
+      "kind": "lowrise-residential",
+      "variant": 1,
+      "node": "lowrise-residential_v1",
+      "nominalSize": [
+        18.58,
+        18.08,
+        14.15
+      ],
+      "tris": 1320,
+      "materials": [
+        "glazing",
+        "facade",
+        "facade_alt",
+        "glass_clear",
+        "trim",
+        "roof",
+        "accent",
+        "metal",
+        "steel_dark"
+      ],
+      "floors": 3,
+      "storeyHeight": 3.2,
+      "lobbyHeight": 3.8,
+      "roofY": 10.7,
+      "stoneTint": "white",
+      "anchors": {
+        "label": [
+          0,
+          18.15,
+          0
+        ],
+        "roof": [
+          0,
+          10.7,
+          0
+        ],
+        "roofY": 10.7
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (3 storeys, lobby 3.8 m, storey 3.20 m), u = facade bay.",
+      "file": "lowrise-residential.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "lowrise-residential_v2",
+      "kind": "lowrise-residential",
+      "variant": 2,
+      "node": "lowrise-residential_v2",
+      "nominalSize": [
+        18.56,
+        18.06,
+        15.95
+      ],
+      "tris": 1436,
+      "materials": [
+        "glazing",
+        "facade_alt",
+        "facade",
+        "glass_clear",
+        "trim",
+        "roof",
+        "metal",
+        "steel_dark",
+        "accent"
+      ],
+      "floors": 4,
+      "storeyHeight": 3.2,
+      "lobbyHeight": 3.8,
+      "roofY": 13.9,
+      "stoneTint": "cream",
+      "anchors": {
+        "label": [
+          0,
+          19.95,
+          0
+        ],
+        "roof": [
+          0,
+          13.9,
+          0
+        ],
+        "roofY": 13.9
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (4 storeys, lobby 3.8 m, storey 3.20 m), u = facade bay.",
+      "file": "lowrise-residential.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "villa_v0",
+      "kind": "villa",
+      "variant": 0,
+      "node": "villa_v0",
+      "nominalSize": [
+        15,
+        14.5,
+        8.15
+      ],
+      "tris": 440,
+      "materials": [
+        "concrete",
+        "facade_alt",
+        "trim",
+        "roof",
+        "glazing",
+        "facade",
+        "accent",
+        "water"
+      ],
+      "floors": 2,
+      "storeyHeight": 3.4,
+      "lobbyHeight": 3.85,
+      "roofY": 7.4,
+      "stoneTint": "white",
+      "anchors": {
+        "label": [
+          0,
+          12.15,
+          0
+        ],
+        "roof": [
+          0,
+          7.4,
+          0
+        ],
+        "roofY": 7.4
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (2 storeys, lobby 3.9 m, storey 3.40 m), u = facade bay.",
+      "file": "villa.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "villa_v1",
+      "kind": "villa",
+      "variant": 1,
+      "node": "villa_v1",
+      "nominalSize": [
+        15,
+        14.5,
+        10.05
+      ],
+      "tris": 726,
+      "materials": [
+        "concrete",
+        "facade_alt",
+        "trim",
+        "roof",
+        "facade",
+        "glazing",
+        "glass_clear",
+        "accent"
+      ],
+      "floors": 2,
+      "storeyHeight": 3.3,
+      "lobbyHeight": 3.55,
+      "roofY": 6.85,
+      "stoneTint": "sand",
+      "anchors": {
+        "label": [
+          0,
+          14.05,
+          0
+        ],
+        "roof": [
+          0,
+          6.85,
+          0
+        ],
+        "roofY": 6.85
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (2 storeys, lobby 3.5 m, storey 3.30 m), u = facade bay.",
+      "file": "villa.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "commercial-podium_v0",
+      "kind": "commercial-podium",
+      "variant": 0,
+      "node": "commercial-podium_v0",
+      "nominalSize": [
+        20.9,
+        17.7,
+        16.1
+      ],
+      "tris": 1212,
+      "materials": [
+        "roof",
+        "glazing",
+        "facade_alt",
+        "trim",
+        "accent",
+        "metal",
+        "steel_dark"
+      ],
+      "floors": 3,
+      "storeyHeight": 4.2,
+      "lobbyHeight": 5.5,
+      "roofY": 14.3,
+      "stoneTint": "cream",
+      "anchors": {
+        "label": [
+          0,
+          20.1,
+          0
+        ],
+        "roof": [
+          0,
+          14.3,
+          0
+        ],
+        "roofY": 14.3
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (3 storeys, lobby 5.5 m, storey 4.20 m), u = facade bay.",
+      "file": "commercial-podium.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "commercial-podium_v1",
+      "kind": "commercial-podium",
+      "variant": 1,
+      "node": "commercial-podium_v1",
+      "nominalSize": [
+        20.9,
+        17.7,
+        16.1
+      ],
+      "tris": 2124,
+      "materials": [
+        "roof",
+        "glazing",
+        "facade",
+        "trim",
+        "accent",
+        "metal",
+        "steel_dark"
+      ],
+      "floors": 3,
+      "storeyHeight": 4.2,
+      "lobbyHeight": 5.5,
+      "roofY": 14.3,
+      "stoneTint": "white",
+      "anchors": {
+        "label": [
+          0,
+          20.1,
+          0
+        ],
+        "roof": [
+          0,
+          14.3,
+          0
+        ],
+        "roofY": 14.3
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (3 storeys, lobby 5.5 m, storey 4.20 m), u = facade bay.",
+      "file": "commercial-podium.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "commercial-podium_v2",
+      "kind": "commercial-podium",
+      "variant": 2,
+      "node": "commercial-podium_v2",
+      "nominalSize": [
+        20.9,
+        17.7,
+        16.1
+      ],
+      "tris": 756,
+      "materials": [
+        "roof",
+        "glazing",
+        "facade_alt",
+        "trim",
+        "accent",
+        "metal",
+        "steel_dark"
+      ],
+      "floors": 3,
+      "storeyHeight": 4.2,
+      "lobbyHeight": 5.5,
+      "roofY": 14.3,
+      "stoneTint": "beige",
+      "anchors": {
+        "label": [
+          0,
+          20.1,
+          0
+        ],
+        "roof": [
+          0,
+          14.3,
+          0
+        ],
+        "roofY": 14.3
+      },
+      "notes": "Kit building: scale non-uniformly to the layout footprint/height (+/-30% tolerated). Glazing UV0: v = storey (3 storeys, lobby 5.5 m, storey 4.20 m), u = facade bay.",
+      "file": "commercial-podium.glb",
+      "vertexAO": true
+    },
+    {
+      "id": "hospital_v0",
+      "kind": "hospital",
+      "variant": 0,
+      "node": "hospital_v0",
+      "nominalSize": [
+        52,
+        40.01,
+        39.8
+      ],
+      "anchors": {
+        "label": [
+          0,
+          45.8,
+          0
+        ],
+        "roofY": 35.1,
+        "helipad": [
+          9.5,
+          36.7,
+          -1
+        ],
+        "redCross": [
+          0,
+          35.2,
+          11.1
+        ],
+        "sign": [
+          0,
+          8.2,
+          13.3
+        ],
+        "roofSign": [
+          -12.6,
+          37.4,
+          9
+        ]
+      },
+      "notes": "City Hospital: podium + ward tower, red cross and HOSPITAL lettering (emissive_sign), drop-off canopy, emergency canopy, rooftop helipad.",
+      "facilityId": "hospital",
+      "file": "hospital.glb",
+      "tris": 4308,
+      "materials": [
+        "concrete",
+        "glazing",
+        "facade",
+        "roof",
+        "trim",
+        "emissive_sign",
+        "steel_dark",
+        "glass_clear",
+        "metal",
+        "light_emissive",
+        "valve_red",
+        "asphalt",
+        "rock",
+        "foliage"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "substation_v0",
+      "kind": "substation",
+      "variant": 0,
+      "node": "substation_v0",
+      "nominalSize": [
+        61.32,
+        60.86,
+        18.5
+      ],
+      "anchors": {
+        "label": [
+          0,
+          24.5,
+          0
+        ],
+        "roofY": 6.6,
+        "transformers": [
+          [
+            -12.5,
+            4.85,
+            8
+          ],
+          [
+            12.5,
+            4.85,
+            8
+          ]
+        ]
+      },
+      "notes": "Substation S1 compound: two power transformers with radiator banks/conservators/bushings, firewalls, busbar gantries with insulator strings, breakers and disconnectors, control building, palisade fence and gate.",
+      "facilityId": "substation-s1",
+      "file": "substation.glb",
+      "tris": 31792,
+      "materials": [
+        "concrete",
+        "asphalt",
+        "metal",
+        "steel_dark",
+        "facade",
+        "facade_alt",
+        "roof",
+        "glazing",
+        "trim",
+        "light_emissive",
+        "rock",
+        "valve_red"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "pump-station_v0",
+      "kind": "pump-station",
+      "variant": 0,
+      "node": "pump-station_v0",
+      "nominalSize": [
+        26,
+        18,
+        11.65
+      ],
+      "anchors": {
+        "label": [
+          0,
+          17.65,
+          0
+        ],
+        "roofY": 10.1,
+        "suctionFlange": [
+          0,
+          -24,
+          6
+        ],
+        "dischargeFlange": [
+          0,
+          -15,
+          6
+        ],
+        "pumpCutawayNode": "pump_cutaway",
+        "pumpCutawayMinY": -27.6,
+        "pumpCutawayMaxY": -11.5
+      },
+      "notes": "Pumping station PS-1. Child node 'pump_cutaway' sits below grade (y -27.6..-11.5, z +1..+12 local) in the district-base chamber: suction gate valve, end-suction pump + motor, check and gate valves, discharge riser. The suction main (y=-24) ends at the suction flange; the transmission main (y=-15) starts at the discharge flange (local x=0, z=+6).",
+      "facilityId": "ps-1",
+      "file": "pump-station.glb",
+      "tris": 8660,
+      "materials": [
+        "concrete",
+        "facade_alt",
+        "glazing",
+        "facade",
+        "trim",
+        "metal",
+        "light_emissive",
+        "pipe",
+        "steel_dark",
+        "valve_red",
+        "accent"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "pump-station_v1",
+      "kind": "pump-station",
+      "variant": 1,
+      "node": "pump-station_v1",
+      "nominalSize": [
+        28,
+        18,
+        11.65
+      ],
+      "anchors": {
+        "label": [
+          0,
+          17.65,
+          0
+        ],
+        "roofY": 10.1,
+        "suctionFlange": [
+          0,
+          -24,
+          6
+        ],
+        "dischargeFlange": [
+          0,
+          -15,
+          6
+        ],
+        "pumpCutawayNode": "pump_cutaway_v1",
+        "pumpCutawayMinY": -27.6,
+        "pumpCutawayMaxY": -11.5
+      },
+      "notes": "Pumping station PS-2. Child node 'pump_cutaway_v1' sits below grade (y -27.6..-11.5, z +1..+12 local) in the district-base chamber: suction gate valve, end-suction pump + motor, check and gate valves, discharge riser. The suction main (y=-24) ends at the suction flange; the transmission main (y=-15) starts at the discharge flange (local x=0, z=+6).",
+      "facilityId": "ps-2",
+      "file": "pump-station.glb",
+      "tris": 8684,
+      "materials": [
+        "concrete",
+        "facade_alt",
+        "glazing",
+        "facade",
+        "trim",
+        "metal",
+        "light_emissive",
+        "pipe",
+        "steel_dark",
+        "valve_red",
+        "accent"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "water-tower_v0",
+      "kind": "water-tower",
+      "variant": 0,
+      "node": "water-tower_v0",
+      "nominalSize": [
+        15.52,
+        15.52,
+        49.97
+      ],
+      "anchors": {
+        "label": [
+          0,
+          55.97,
+          0
+        ],
+        "waterLevelNode": "water_level",
+        "waterLevelMinY": 36,
+        "waterLevelMaxY": 45,
+        "tankMaxLevelM": 9,
+        "beacon": [
+          0,
+          50,
+          0
+        ]
+      },
+      "notes": "Elevated tank TANK-T1. Child 'water_level' is the water column: origin at waterLevelMinY, height = waterLevelMaxY - waterLevelMinY at scale.y = 1; set scale.y = clamp(levelM / tankMaxLevelM, 0.001, 1). It is visible through the glass_clear band of the vessel.",
+      "facilityId": "tank-t1",
+      "file": "water-tower.glb",
+      "tris": 3482,
+      "materials": [
+        "concrete",
+        "facade",
+        "water",
+        "glazing",
+        "trim",
+        "glass_clear",
+        "steel_dark",
+        "metal",
+        "light_emissive"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "water-tower_v1",
+      "kind": "water-tower",
+      "variant": 1,
+      "node": "water-tower_v1",
+      "nominalSize": [
+        13.53,
+        13.53,
+        48.97
+      ],
+      "anchors": {
+        "label": [
+          0,
+          54.97,
+          0
+        ],
+        "waterLevelNode": "water_level_v1",
+        "waterLevelMinY": 37,
+        "waterLevelMaxY": 44,
+        "tankMaxLevelM": 7,
+        "beacon": [
+          0,
+          49,
+          0
+        ]
+      },
+      "notes": "Elevated tank TANK-T2. Child 'water_level_v1' is the water column: origin at waterLevelMinY, height = waterLevelMaxY - waterLevelMinY at scale.y = 1; set scale.y = clamp(levelM / tankMaxLevelM, 0.001, 1). It is visible through the glass_clear band of the vessel.",
+      "facilityId": "tank-t2",
+      "file": "water-tower.glb",
+      "tris": 3482,
+      "materials": [
+        "concrete",
+        "facade",
+        "water",
+        "glazing",
+        "trim",
+        "glass_clear",
+        "steel_dark",
+        "metal",
+        "light_emissive"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "desalination-inlet_v0",
+      "kind": "desalination-inlet",
+      "variant": 0,
+      "node": "desalination-inlet_v0",
+      "nominalSize": [
+        44,
+        24.7,
+        12.3
+      ],
+      "anchors": {
+        "label": [
+          0,
+          18.3,
+          0
+        ],
+        "roofY": 11.8,
+        "suctionOrigin": [
+          0,
+          -24,
+          6
+        ],
+        "intakeCutawayNode": "intake_cutaway"
+      },
+      "notes": "Desalination supply R1: three ground storage tanks, header and valves, pump/control building. Child 'intake_cutaway' drops the outlet riser into the base's R1 chamber and tees onto the suction main at (local) x=0, y=-24, z=+6.",
+      "facilityId": "desal-r1",
+      "file": "desalination-inlet.glb",
+      "tris": 11184,
+      "materials": [
+        "concrete",
+        "rock",
+        "facade",
+        "facade_alt",
+        "metal",
+        "steel_dark",
+        "pipe",
+        "valve_red",
+        "roof",
+        "glazing",
+        "trim",
+        "light_emissive"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "cooling-plant_v0",
+      "kind": "cooling-plant",
+      "variant": 0,
+      "node": "cooling-plant_v0",
+      "nominalSize": [
+        36,
+        30,
+        17.9
+      ],
+      "anchors": {
+        "label": [
+          0,
+          23.9,
+          0
+        ],
+        "roofY": 11
+      },
+      "notes": "District cooling plant DC-1: chiller hall with louvres, six rooftop cooling-tower cells with fan stacks, thermal storage tank and chilled-water pipework.",
+      "facilityId": "cooling-dc1",
+      "file": "cooling-plant.glb",
+      "tris": 7968,
+      "materials": [
+        "concrete",
+        "facade_alt",
+        "roof",
+        "facade",
+        "trim",
+        "steel_dark",
+        "glazing",
+        "metal",
+        "pipe",
+        "valve_red"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "emergency-ops_v0",
+      "kind": "emergency-ops",
+      "variant": 0,
+      "node": "emergency-ops_v0",
+      "nominalSize": [
+        40,
+        30,
+        39.56
+      ],
+      "anchors": {
+        "label": [
+          0,
+          45.56,
+          0
+        ],
+        "roofY": 22.3,
+        "mastTop": [
+          -9,
+          39.4,
+          -5
+        ]
+      },
+      "notes": "Emergency Operations Centre: robust stone civic block, glazed operations room, antenna mast with aviation light, satellite dishes, standby generator.",
+      "facilityId": "eoc",
+      "file": "emergency-ops.glb",
+      "tris": 5110,
+      "materials": [
+        "concrete",
+        "roof",
+        "glazing",
+        "facade_alt",
+        "facade",
+        "trim",
+        "light_emissive",
+        "metal",
+        "steel_dark"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "mall_v0",
+      "kind": "mall",
+      "variant": 0,
+      "node": "mall_v0",
+      "nominalSize": [
+        56,
+        44.1,
+        22.4
+      ],
+      "anchors": {
+        "label": [
+          0,
+          28.4,
+          0
+        ],
+        "roofY": 18.5
+      },
+      "notes": "Retail mall: shopfront arcade, mashrabiya-screen upper mass, glass atrium with cantilevered canopy, barrel skylight.",
+      "facilityId": "mall",
+      "file": "mall.glb",
+      "tris": 4674,
+      "materials": [
+        "concrete",
+        "glazing",
+        "facade_alt",
+        "trim",
+        "roof",
+        "facade",
+        "accent",
+        "light_emissive",
+        "glass_clear",
+        "metal",
+        "steel_dark",
+        "rock",
+        "foliage"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "office-complex_v0",
+      "kind": "office-complex",
+      "variant": 0,
+      "node": "office-complex_v0",
+      "nominalSize": [
+        48,
+        40.1,
+        66.1
+      ],
+      "anchors": {
+        "label": [
+          0,
+          72.1,
+          0
+        ],
+        "roofY": 62.65
+      },
+      "notes": "Office complex: three-storey podium with two curtain-wall towers (62 m / 47 m) linked by a sky bridge.",
+      "facilityId": "office-complex",
+      "file": "office-complex.glb",
+      "tris": 2988,
+      "materials": [
+        "concrete",
+        "glazing",
+        "facade",
+        "trim",
+        "metal",
+        "glass_clear",
+        "roof",
+        "steel_dark",
+        "accent"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "district-base",
+      "kind": "district-base",
+      "variant": 0,
+      "node": "district-base",
+      "nominalSize": [
+        500,
+        320,
+        42
+      ],
+      "anchors": {
+        "surfaceY": 0,
+        "bottomY": -42,
+        "transmissionFront": [
+          0,
+          -15,
+          152
+        ],
+        "suctionFront": [
+          0,
+          -24,
+          152
+        ],
+        "transmissionWest": [
+          -242,
+          -15,
+          0
+        ],
+        "saddleTopTransmissionY": -15.9,
+        "saddleTopSuctionY": -24.9,
+        "pipeVisualRadius": 0.9
+      },
+      "galleries": [
+        {
+          "name": "transmission-front",
+          "min": [
+            -250,
+            -18.2,
+            147
+          ],
+          "max": [
+            236,
+            -10.4,
+            160
+          ]
+        },
+        {
+          "name": "suction-front",
+          "min": [
+            -236,
+            -27.6,
+            147
+          ],
+          "max": [
+            236,
+            -19.2,
+            160
+          ]
+        },
+        {
+          "name": "transmission-west",
+          "min": [
+            -250,
+            -18.2,
+            -130
+          ],
+          "max": [
+            -237,
+            -10.4,
+            160
+          ]
+        }
+      ],
+      "chambers": [
+        {
+          "name": "PS-2",
+          "minX": -169,
+          "maxX": -151,
+          "minY": -27.6,
+          "maxY": -10.4,
+          "minZ": 147,
+          "maxZ": 160
+        },
+        {
+          "name": "R1",
+          "minX": 47,
+          "maxX": 65,
+          "minY": -27.6,
+          "maxY": -10.4,
+          "minZ": 147,
+          "maxZ": 160
+        },
+        {
+          "name": "PS-1",
+          "minX": 91,
+          "maxX": 109,
+          "minY": -27.6,
+          "maxY": -10.4,
+          "minZ": 147,
+          "maxZ": 160
+        }
+      ],
+      "strata": [
+        {
+          "name": "topsoil",
+          "topY": -1.2,
+          "bottomY": -4
+        },
+        {
+          "name": "compacted sand",
+          "topY": -4,
+          "bottomY": -13
+        },
+        {
+          "name": "limestone",
+          "topY": -13,
+          "bottomY": -30
+        },
+        {
+          "name": "bedrock",
+          "topY": -30,
+          "bottomY": -42
+        }
+      ],
+      "textures": [
+        "assets/textures/soil_strata_basecolor.jpg",
+        "assets/textures/soil_strata_normal.jpg"
+      ],
+      "notes": "Top face at y=0 (render roads/blocks >= 0.02 m above it or with polygonOffset). Strata faces are recessed 0.3 m under a 1.2 m concrete band. Galleries: front upper (transmission, pipe centre y=-15, z=152), front lower (suction, y=-24, z=152), west (transmission, y=-15, x=-242). Saddles are sized for a visual pipe radius of 0.9 m. COLOR_0 carries hand-placed occlusion for gallery interiors. Soil UVs: u = perimeter metres / 84 (seamless), v = (y + 42) / 40.8.",
+      "file": "district-base.glb",
+      "tris": 8380,
+      "materials": [
+        "concrete",
+        "rock",
+        "soil",
+        "light_emissive",
+        "metal",
+        "steel_dark"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "palm_v0",
+      "kind": "palm",
+      "variant": 0,
+      "node": "palm_v0",
+      "nominalSize": [
+        9.79,
+        9.4,
+        12.65
+      ],
+      "tris": 1267,
+      "materials": [
+        "trunk",
+        "foliage"
+      ],
+      "file": "palm.glb",
+      "vertexAO": false
+    },
+    {
+      "id": "palm_v1",
+      "kind": "palm",
+      "variant": 1,
+      "node": "palm_v1",
+      "nominalSize": [
+        8.8,
+        7.91,
+        9.49
+      ],
+      "tris": 1267,
+      "materials": [
+        "trunk",
+        "foliage"
+      ],
+      "file": "palm.glb",
+      "vertexAO": false
+    },
+    {
+      "id": "palm_v2",
+      "kind": "palm",
+      "variant": 2,
+      "node": "palm_v2",
+      "nominalSize": [
+        10.44,
+        9.26,
+        15.52
+      ],
+      "tris": 1267,
+      "materials": [
+        "trunk",
+        "foliage"
+      ],
+      "file": "palm.glb",
+      "vertexAO": false
+    },
+    {
+      "id": "skyline_glass_a",
+      "kind": "skyline",
+      "variant": 6,
+      "node": "skyline_glass_a",
+      "nominalSize": [
+        36.7,
+        28.6,
+        247.4
+      ],
+      "placement": {
+        "position": [
+          -320,
+          0,
+          -720
+        ],
+        "rotationY": 0.3
+      },
+      "anchors": {
+        "top": [
+          0,
+          247,
+          0
+        ]
+      },
+      "notes": "Background tower (generic, stylised). Node transform = suggested placement; mesh origin = base centre.",
+      "file": "skyline.glb",
+      "tris": 316,
+      "materials": [
+        "glazing",
+        "trim",
+        "light_emissive"
+      ],
+      "vertexAO": false
+    },
+    {
+      "id": "skyline_glass_b",
+      "kind": "skyline",
+      "variant": 7,
+      "node": "skyline_glass_b",
+      "nominalSize": [
+        26.5,
+        26.5,
+        216.4
+      ],
+      "placement": {
+        "position": [
+          700,
+          0,
+          -1060
+        ],
+        "rotationY": -0.2
+      },
+      "anchors": {
+        "top": [
+          0,
+          216,
+          0
+        ]
+      },
+      "notes": "Background tower (generic, stylised). Node transform = suggested placement; mesh origin = base centre.",
+      "file": "skyline.glb",
+      "tris": 316,
+      "materials": [
+        "glazing",
+        "trim",
+        "light_emissive"
+      ],
+      "vertexAO": false
+    },
+    {
+      "id": "skyline_glass_c",
+      "kind": "skyline",
+      "variant": 8,
+      "node": "skyline_glass_c",
+      "nominalSize": [
+        31.4,
+        25.4,
+        229.4
+      ],
+      "placement": {
+        "position": [
+          -1080,
+          0,
+          -470
+        ],
+        "rotationY": 0.4
+      },
+      "anchors": {
+        "top": [
+          0,
+          229,
+          0
+        ]
+      },
+      "notes": "Background tower (generic, stylised). Node transform = suggested placement; mesh origin = base centre.",
+      "file": "skyline.glb",
+      "tris": 430,
+      "materials": [
+        "glazing",
+        "facade",
+        "trim",
+        "light_emissive"
+      ],
+      "vertexAO": false
+    },
+    {
+      "id": "skyline_marina_a",
+      "kind": "skyline",
+      "variant": 9,
+      "node": "skyline_marina_a",
+      "nominalSize": [
+        43.2,
+        32.4,
+        204.4
+      ],
+      "placement": {
+        "position": [
+          1130,
+          0,
+          -160
+        ],
+        "rotationY": -0.4
+      },
+      "anchors": {
+        "top": [
+          0,
+          204,
+          0
+        ]
+      },
+      "notes": "Background tower (generic, stylised). Node transform = suggested placement; mesh origin = base centre.",
+      "file": "skyline.glb",
+      "tris": 2010,
+      "materials": [
+        "glazing",
+        "facade",
+        "trim",
+        "light_emissive"
+      ],
+      "vertexAO": false
+    },
+    {
+      "id": "skyline_marina_b",
+      "kind": "skyline",
+      "variant": 10,
+      "node": "skyline_marina_b",
+      "nominalSize": [
+        41,
+        34.6,
+        184.4
+      ],
+      "placement": {
+        "position": [
+          -1220,
+          0,
+          -150
+        ],
+        "rotationY": 0.5
+      },
+      "anchors": {
+        "top": [
+          0,
+          184,
+          0
+        ]
+      },
+      "notes": "Background tower (generic, stylised). Node transform = suggested placement; mesh origin = base centre.",
+      "file": "skyline.glb",
+      "tris": 1790,
+      "materials": [
+        "glazing",
+        "facade",
+        "trim",
+        "light_emissive"
+      ],
+      "vertexAO": false
+    },
+    {
+      "id": "skyline_marina_c",
+      "kind": "skyline",
+      "variant": 11,
+      "node": "skyline_marina_c",
+      "nominalSize": [
+        38.9,
+        30.2,
+        169.4
+      ],
+      "placement": {
+        "position": [
+          320,
+          0,
+          -1320
+        ],
+        "rotationY": 0
+      },
+      "anchors": {
+        "top": [
+          0,
+          169,
+          0
+        ]
+      },
+      "notes": "Background tower (generic, stylised). Node transform = suggested placement; mesh origin = base centre.",
+      "file": "skyline.glb",
+      "tris": 1658,
+      "materials": [
+        "glazing",
+        "facade",
+        "trim",
+        "light_emissive"
+      ],
+      "vertexAO": false
+    },
+    {
+      "id": "skyline_sail",
+      "kind": "skyline",
+      "variant": 2,
+      "node": "skyline_sail",
+      "nominalSize": [
+        66.5,
+        48,
+        361.7
+      ],
+      "placement": {
+        "position": [
+          960,
+          0,
+          -420
+        ],
+        "rotationY": -0.6
+      },
+      "anchors": {
+        "top": [
+          0,
+          361,
+          0
+        ]
+      },
+      "notes": "Background tower (generic, stylised). Node transform = suggested placement; mesh origin = base centre.",
+      "file": "skyline.glb",
+      "tris": 708,
+      "materials": [
+        "glazing",
+        "trim",
+        "facade",
+        "light_emissive"
+      ],
+      "vertexAO": false
+    },
+    {
+      "id": "skyline_spire",
+      "kind": "skyline",
+      "variant": 0,
+      "node": "skyline_spire",
+      "nominalSize": [
+        76.4,
+        69.5,
+        765
+      ],
+      "placement": {
+        "position": [
+          -560,
+          0,
+          -1150
+        ],
+        "rotationY": 0.35
+      },
+      "anchors": {
+        "top": [
+          0,
+          766,
+          0
+        ]
+      },
+      "notes": "Background tower (generic, stylised). Node transform = suggested placement; mesh origin = base centre.",
+      "file": "skyline.glb",
+      "tris": 2359,
+      "materials": [
+        "glazing",
+        "facade",
+        "trim",
+        "light_emissive"
+      ],
+      "vertexAO": false
+    },
+    {
+      "id": "skyline_stepped",
+      "kind": "skyline",
+      "variant": 5,
+      "node": "skyline_stepped",
+      "nominalSize": [
+        41.2,
+        35.2,
+        286.4
+      ],
+      "placement": {
+        "position": [
+          150,
+          0,
+          -1020
+        ],
+        "rotationY": 0.1
+      },
+      "anchors": {
+        "top": [
+          0,
+          286,
+          0
+        ]
+      },
+      "notes": "Background tower (generic, stylised). Node transform = suggested placement; mesh origin = base centre.",
+      "file": "skyline.glb",
+      "tris": 828,
+      "materials": [
+        "trim",
+        "glazing",
+        "facade",
+        "light_emissive"
+      ],
+      "vertexAO": false
+    },
+    {
+      "id": "skyline_twin_a",
+      "kind": "skyline",
+      "variant": 3,
+      "node": "skyline_twin_a",
+      "nominalSize": [
+        46.6,
+        46.6,
+        375
+      ],
+      "placement": {
+        "position": [
+          -860,
+          0,
+          -690
+        ],
+        "rotationY": 0
+      },
+      "anchors": {
+        "top": [
+          0,
+          374.6,
+          0
+        ]
+      },
+      "notes": "Background tower (generic, stylised). Node transform = suggested placement; mesh origin = base centre.",
+      "file": "skyline.glb",
+      "tris": 516,
+      "materials": [
+        "glazing",
+        "facade",
+        "trim",
+        "light_emissive"
+      ],
+      "vertexAO": false
+    },
+    {
+      "id": "skyline_twin_b",
+      "kind": "skyline",
+      "variant": 4,
+      "node": "skyline_twin_b",
+      "nominalSize": [
+        44.3,
+        44.3,
+        348.4
+      ],
+      "placement": {
+        "position": [
+          -790,
+          0,
+          -760
+        ],
+        "rotationY": 0
+      },
+      "anchors": {
+        "top": [
+          0,
+          348,
+          0
+        ]
+      },
+      "notes": "Background tower (generic, stylised). Node transform = suggested placement; mesh origin = base centre.",
+      "file": "skyline.glb",
+      "tris": 488,
+      "materials": [
+        "glazing",
+        "facade",
+        "trim",
+        "light_emissive"
+      ],
+      "vertexAO": false
+    },
+    {
+      "id": "skyline_twist",
+      "kind": "skyline",
+      "variant": 1,
+      "node": "skyline_twist",
+      "nominalSize": [
+        47.1,
+        47.1,
+        352.3
+      ],
+      "placement": {
+        "position": [
+          430,
+          0,
+          -760
+        ],
+        "rotationY": 0.2
+      },
+      "anchors": {
+        "top": [
+          0,
+          351,
+          0
+        ]
+      },
+      "notes": "Background tower (generic, stylised). Node transform = suggested placement; mesh origin = base centre.",
+      "file": "skyline.glb",
+      "tris": 938,
+      "materials": [
+        "glazing",
+        "trim",
+        "facade",
+        "light_emissive"
+      ],
+      "vertexAO": false
+    },
+    {
+      "id": "skyline_twist_b",
+      "kind": "skyline",
+      "variant": 12,
+      "node": "skyline_twist_b",
+      "nominalSize": [
+        30.8,
+        30.8,
+        272.3
+      ],
+      "placement": {
+        "position": [
+          -150,
+          0,
+          -1450
+        ],
+        "rotationY": 0
+      },
+      "anchors": {
+        "top": [
+          0,
+          271,
+          0
+        ]
+      },
+      "notes": "Background tower (generic, stylised). Node transform = suggested placement; mesh origin = base centre.",
+      "file": "skyline.glb",
+      "tris": 938,
+      "materials": [
+        "glazing",
+        "trim",
+        "facade",
+        "light_emissive"
+      ],
+      "vertexAO": false
+    },
+    {
+      "id": "solar-array_v0",
+      "kind": "solar-array",
+      "variant": 0,
+      "node": "solar-array_v0",
+      "nominalSize": [
+        9.8,
+        5.54,
+        0.85
+      ],
+      "tris": 546,
+      "materials": [
+        "solar",
+        "trim",
+        "metal",
+        "concrete"
+      ],
+      "file": "solar-array.glb",
+      "vertexAO": false
+    },
+    {
+      "id": "bench_v0",
+      "kind": "bench",
+      "variant": 0,
+      "node": "bench_v0",
+      "nominalSize": [
+        2,
+        0.56,
+        0.9
+      ],
+      "tris": 168,
+      "materials": [
+        "concrete",
+        "accent"
+      ],
+      "file": "street-furniture.glb",
+      "vertexAO": false
+    },
+    {
+      "id": "planter_v0",
+      "kind": "planter",
+      "variant": 0,
+      "node": "planter_v0",
+      "nominalSize": [
+        2.4,
+        2.4,
+        1.7
+      ],
+      "tris": 294,
+      "materials": [
+        "concrete",
+        "rock",
+        "foliage"
+      ],
+      "file": "street-furniture.glb",
+      "vertexAO": false
+    },
+    {
+      "id": "streetlight_v0",
+      "kind": "streetlight",
+      "variant": 0,
+      "node": "streetlight_v0",
+      "nominalSize": [
+        0.56,
+        2.88,
+        9.25
+      ],
+      "tris": 168,
+      "materials": [
+        "concrete",
+        "steel_dark",
+        "light_emissive"
+      ],
+      "file": "streetlight.glb",
+      "vertexAO": false
+    },
+    {
+      "id": "streetlight_v1",
+      "kind": "streetlight",
+      "variant": 1,
+      "node": "streetlight_v1",
+      "nominalSize": [
+        0.56,
+        5.2,
+        10.25
+      ],
+      "tris": 262,
+      "materials": [
+        "concrete",
+        "steel_dark",
+        "light_emissive"
+      ],
+      "file": "streetlight.glb",
+      "vertexAO": false
+    },
+    {
+      "id": "cable-duct_v0",
+      "kind": "cable-duct",
+      "variant": 0,
+      "node": "cable-duct_v0",
+      "nominalSize": [
+        10.06,
+        1.8,
+        2.04
+      ],
+      "anchors": {
+        "length": 10,
+        "pipeVisualRadius": 0.9
+      },
+      "notes": "10 m concrete duct-bank section along X with six conduits and a cable tray on brackets.",
+      "file": "underground-kit.glb",
+      "tris": 972,
+      "materials": [
+        "concrete",
+        "steel_dark",
+        "valve_red",
+        "trim",
+        "metal"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "chamber_v0",
+      "kind": "chamber",
+      "variant": 0,
+      "node": "chamber_v0",
+      "nominalSize": [
+        8.1,
+        6,
+        6.98
+      ],
+      "anchors": {
+        "pipeAxis": [
+          0,
+          2.6,
+          0
+        ],
+        "pipeAxisDirection": "x",
+        "pipeVisualRadius": 0.9
+      },
+      "notes": "Open-front concrete valve chamber (8 x 6 x 6 m) with manhole collar, ladder and wall sleeves; front (+Z) cut away for the cutaway view.",
+      "file": "underground-kit.glb",
+      "tris": 624,
+      "materials": [
+        "concrete",
+        "steel_dark",
+        "metal"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "check-valve_v0",
+      "kind": "check-valve",
+      "variant": 0,
+      "node": "check-valve_v0",
+      "nominalSize": [
+        3.12,
+        2.43,
+        2.85
+      ],
+      "anchors": {
+        "pipeAxis": [
+          0,
+          0,
+          0
+        ],
+        "pipeVisualRadius": 0.9
+      },
+      "notes": "Inline swing check valve with red cover and counterweight; origin on the pipe axis, pipe along X.",
+      "file": "underground-kit.glb",
+      "tris": 690,
+      "materials": [
+        "pipe",
+        "steel_dark",
+        "valve_red"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "gate-valve_v0",
+      "kind": "gate-valve",
+      "variant": 0,
+      "node": "gate-valve_v0",
+      "nominalSize": [
+        2.5,
+        2.33,
+        4.14
+      ],
+      "anchors": {
+        "pipeAxis": [
+          0,
+          0,
+          0
+        ],
+        "pipeVisualRadius": 0.9
+      },
+      "notes": "Inline flanged gate valve with handwheel; origin on the pipe axis, pipe along X, stem +Y.",
+      "file": "underground-kit.glb",
+      "tris": 920,
+      "materials": [
+        "pipe",
+        "steel_dark",
+        "metal",
+        "valve_red"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "pipe-saddle_v0",
+      "kind": "pipe-saddle",
+      "variant": 0,
+      "node": "pipe-saddle_v0",
+      "nominalSize": [
+        1.8,
+        3.1,
+        3.5
+      ],
+      "anchors": {
+        "pipeAxis": [
+          0,
+          2.5,
+          0
+        ],
+        "topY": 1.6,
+        "pipeVisualRadius": 0.9
+      },
+      "notes": "Concrete pipe saddle with steel strap; origin on the floor, pipe along X, pipe axis at anchors.pipeAxis.",
+      "file": "underground-kit.glb",
+      "tris": 220,
+      "materials": [
+        "concrete",
+        "steel_dark"
+      ],
+      "vertexAO": true
+    },
+    {
+      "id": "pump-unit_v0",
+      "kind": "pump-unit",
+      "variant": 0,
+      "node": "pump-unit_v0",
+      "nominalSize": [
+        9.32,
+        3.51,
+        4.89
+      ],
+      "anchors": {
+        "suctionFlange": [
+          0,
+          2.34,
+          0
+        ],
+        "dischargeNozzle": [
+          2.15,
+          4.815,
+          0.495
+        ],
+        "pipeVisualRadius": 0.9
+      },
+      "notes": "Horizontal end-suction pump set (suction flange on the origin side, body along +X, discharge nozzle up). Origin on the floor below the suction flange.",
+      "file": "underground-kit.glb",
+      "tris": 1524,
+      "materials": [
+        "concrete",
+        "steel_dark",
+        "pipe",
+        "accent",
+        "metal"
+      ],
+      "vertexAO": true
+    }
+  ]
+}

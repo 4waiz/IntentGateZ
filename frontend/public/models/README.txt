@@ -1,0 +1,1 @@
+These GLB models come from Encirra (https://encirra.kanbanstudios.ae), an earlier MIT-licensed project by the same team (Team Kanban), built from an original procedural Blender kit. They are reused here only for the visual city in the 3D command center; none of the IntentGate Z gateway, data or ML depends on them.

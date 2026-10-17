@@ -9,14 +9,14 @@ import { ambulanceWorld, hospitalWorld, incidentWorld } from "../store/actions";
 import { currentDecisionId, getState, setState, useStore, type CameraCommand } from "../store/store";
 
 export const CAMERA_FOV = 40;
-const OVERVIEW = { polar: 0.9, azimuth: -0.34, target: new THREE.Vector3(4, 0, 10) };
+const OVERVIEW = { polar: 0.84, azimuth: -0.5, target: new THREE.Vector3(8, 0, 22) };
 
 function overviewDistance(aspect: number): number {
   const R = 228;
   const vf = THREE.MathUtils.degToRad(CAMERA_FOV);
   const hf = 2 * Math.atan(Math.tan(vf / 2) * aspect);
   const f = Math.min(vf, hf);
-  return (R / Math.sin(f / 2)) * 0.68;
+  return (R / Math.sin(f / 2)) * 0.6;
 }
 
 function spherical(target: THREE.Vector3, dist: number, polar: number, azimuth: number): THREE.Vector3 {
