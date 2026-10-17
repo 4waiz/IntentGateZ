@@ -10,7 +10,6 @@ if [ ! -f "$HOME/intentgate.env" ]; then
     echo "INTENTGATE_SIGNING_KEY=$(head -c 48 /dev/urandom | base64 | tr -d '\n=+/')"
     echo "INTENTGATE_OPERATOR_TOKEN=$(head -c 32 /dev/urandom | base64 | tr -d '\n=+/')"
     echo "INTENTGATE_CORS_ORIGINS=${IG_CORS_ORIGINS:-https://localhost}"
-    echo "INTENTGATE_RISK_RUNTIME=${IG_RISK_RUNTIME:-}"
   } > "$HOME/intentgate.env"
 fi
 
@@ -25,6 +24,7 @@ sudo docker run -d --name intentgate \
   -e INTENTGATE_LLM_PATH="${IG_LLM_PATH:-/home/ibm-user/granite-4.0-h-350m-base-be.f16.gguf}" \
   -e INTENTGATE_LLM_THREADS=2 \
   -v "$HOME/intentgate-data:/app/backend/data" \
+  -v /etc/os-release:/host/os-release:ro \
   -v "$HOME/IntentGateZ/evidence:/app/evidence:ro" \
   -v "$HOME/IntentGateZ/ml/artifacts:/app/ml/artifacts:ro" \
   -v "$HOME/IntentGateZ/ml/results:/app/ml/results:ro" \

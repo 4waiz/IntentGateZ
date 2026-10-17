@@ -59,11 +59,16 @@ def static_facts() -> dict[str, Any]:
     u = platform.uname()
     cpuinfo = _read("/proc/cpuinfo")
     lscpu = _run(["lscpu"])
-    os_release = {}
-    for line in _read("/etc/os-release").splitlines():
-        if "=" in line:
-            k, v = line.split("=", 1)
-            os_release[k] = v.strip('"')
+    def _osr(path: str) -> dict:
+        out = {}
+        for line in _read(path).splitlines():
+            if "=" in line:
+                k, v = line.split("=", 1)
+                out[k] = v.strip('"')
+        return out
+
+    os_release = _osr("/etc/os-release")
+    host_release = _osr("/host/os-release")  # mounted read-only from the VM when containerised
     features: list[str] = []
     m = re.search(r"^features\s*:\s*(.+)$", cpuinfo, re.MULTILINE)
     if m:
@@ -87,7 +92,8 @@ def static_facts() -> dict[str, Any]:
         "is_ibm_z": u.machine == "s390x",
         "system": u.system,
         "kernel": u.release,
-        "os": os_release.get("PRETTY_NAME") or f"{u.system} {u.release}",
+        "os": host_release.get("PRETTY_NAME") or os_release.get("PRETTY_NAME") or f"{u.system} {u.release}",
+        "container_os": os_release.get("PRETTY_NAME") if host_release else None,
         "cpu_vendor": vendor,
         "machine_type": machine_type,
         "machine_model": MACHINE_TYPES.get(machine_type or "", None),

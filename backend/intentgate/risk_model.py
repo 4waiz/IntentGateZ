@@ -42,6 +42,7 @@ class RiskModel:
         self.accelerator: dict[str, Any] = {"device": "cpu", "nnpa_device_listed": False, "verified": False}
         self.thresholds = {"tau_block": 0.85, "tau_review": 0.5}
         self.inference_count = 0
+        self.model_name: str | None = None
         self.last_error: str | None = None
         self._lock = threading.Lock()
         self._count_lock = threading.Lock()
@@ -60,11 +61,17 @@ class RiskModel:
             return
         self.thresholds = self.meta.get("thresholds", self.thresholds)
         self.version = self.meta.get("version", "unknown")
-        preference = os.environ.get("INTENTGATE_RISK_RUNTIME", self.meta.get("serving_runtime", "sklearn"))
+        preference = os.environ.get("INTENTGATE_RISK_RUNTIME") or self.meta.get("serving_runtime", "sklearn")
         order = [preference] + [k for k in ("sklearn", "xgboost", "torch", "keras") if k != preference]
         for kind in order:
             try:
                 if self._try_load(kind):
+                    # Each runtime uses the thresholds tuned for that model on the validation split.
+                    by_model = self.meta.get("thresholds_by_model") or {}
+                    name = self.meta.get("selected_model") if kind == self.meta.get("serving_runtime") else self.meta.get("best_cpu_model")
+                    if name in by_model:
+                        self.thresholds = by_model[name]
+                    self.model_name = name
                     return
             except Exception as exc:  # pragma: no cover - depends on platform packages
                 self.last_error = f"{kind}: {exc.__class__.__name__}: {exc}"
@@ -210,6 +217,7 @@ class RiskModel:
         return {
             "available": self.available,
             "kind": self.kind,
+            "model_name": self.model_name,
             "runtime": self.runtime,
             "version": self.version,
             "accelerator": self.accelerator,
