@@ -8,19 +8,19 @@
   },
   "labels": {
     "test": {
-      "ALLOW": 917,
-      "BLOCK": 1175,
-      "CHALLENGE": 308
+      "ALLOW": 921,
+      "BLOCK": 1153,
+      "CHALLENGE": 326
     },
     "train": {
-      "ALLOW": 2717,
-      "BLOCK": 3487,
-      "CHALLENGE": 996
+      "ALLOW": 2658,
+      "BLOCK": 3475,
+      "CHALLENGE": 1067
     },
     "val": {
-      "ALLOW": 920,
-      "BLOCK": 1151,
-      "CHALLENGE": 329
+      "ALLOW": 906,
+      "BLOCK": 1135,
+      "CHALLENGE": 359
     }
   },
   "families": [
@@ -97,7 +97,7 @@
     "op_share_patient_record",
     "op_cancel_dispatch"
   ],
-  "injection_scorer": "scikit-learn TF-IDF + LogisticRegression (igz-injection-tfidf-lr-20261017-s7)",
-  "generated_in_s": 6.0,
+  "injection_scorer": "scikit-learn TF-IDF + LogisticRegression (feed, rationale channels)",
+  "generated_in_s": 10.9,
   "generator": "ml/generate_dataset.py"
 }

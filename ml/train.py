@@ -262,7 +262,7 @@ def charts(res: dict, test_df: pd.DataFrame, P_sel: np.ndarray, out_dir: Path) -
     made.append("method_comparison")
 
     fig, ax = plt.subplots(figsize=(8, 4))
-    names = list(res["validation"]["models"].keys())
+    names = [n for n in res["validation"]["models"] if res["validation"]["models"][n]["hybrid_macro_f1"] is not None]
     v = [res["validation"]["models"][n]["hybrid_macro_f1"] for n in names]
     ax.barh(names, v, color=[teal if n == res["selected_model"] else blue for n in names])
     for i, val in enumerate(v):
@@ -390,10 +390,19 @@ def main() -> None:
         thr_m, f1_m = tune(Pva, yva, None)
         lat = latency(model, Xte, n=200 if name != "keras_mlp" else 100)
         tuned[name] = {"hybrid": thr_h, "ml_only": thr_m}
-        val_report[name] = {"hybrid_macro_f1": round(f1_h, 4), "ml_only_macro_f1": round(f1_m, 4), "thresholds_hybrid": thr_h, "thresholds_ml_only": thr_m, "train_seconds": timing.get(name), "latency": lat}
-        print(f"{name:24s} val hybrid F1={f1_h:.4f}  ml-only F1={f1_m:.4f}  p50={lat['single_p50_ms']}ms")
+        feasible = f1_h >= 0
+        val_report[name] = {
+            "hybrid_macro_f1": round(f1_h, 4) if feasible else None,
+            "ml_only_macro_f1": round(f1_m, 4) if f1_m >= 0 else None,
+            "feasible_under_false_block_constraint": feasible,
+            "thresholds_hybrid": thr_h if feasible else None,
+            "thresholds_ml_only": thr_m if f1_m >= 0 else None,
+            "train_seconds": timing.get(name),
+            "latency": lat,
+        }
+        print(f"{name:24s} val hybrid F1={f1_h:.4f}  ml-only F1={f1_m:.4f}  p50={lat['single_p50_ms']}ms  feasible={feasible}")
 
-    servable = [n for n in fitted if n != "keras_mlp"]
+    servable = [n for n in fitted if n != "keras_mlp" and val_report[n]["feasible_under_false_block_constraint"]]
     selected = max(servable, key=lambda n: (round(val_report[n]["hybrid_macro_f1"], 3), -val_report[n]["latency"]["single_p50_ms"]))
     sel = fitted[selected]
     thr = tuned[selected]["hybrid"]
@@ -406,6 +415,9 @@ def main() -> None:
     }
     all_models_test = {}
     for name, model in fitted.items():
+        if not val_report[name]["feasible_under_false_block_constraint"]:
+            all_models_test[name] = {"hybrid_macro_f1": None, "ml_only_macro_f1": None, "note": "no threshold met the false-block constraint on validation"}
+            continue
         P = model.predict_proba(Xte)
         all_models_test[name] = {
             "hybrid_macro_f1": evaluate(yte, np.maximum(ml_decide(P, **tuned[name]["hybrid"]), hte))["macro_f1"],

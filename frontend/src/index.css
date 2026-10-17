@@ -1,0 +1,309 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #050b12;
+  --color-ink-2: #07111c;
+  --color-panel: #0c1a28;
+  --color-panel-2: #102233;
+  --color-fg: #e8f0f7;
+  --color-fg-2: #c3d0dc;
+  --color-muted: #8496a8;
+  --color-dim: #5b6c7e;
+  --color-allow: #00d5b5;
+  --color-challenge: #ffbc5c;
+  --color-block: #ff5d70;
+  --color-ibm: #0f62fe;
+  --color-ibm-2: #4589ff;
+  --color-incident: #ff8a4c;
+  --color-line: rgb(132 150 168 / 0.18);
+  --color-line-2: rgb(132 150 168 / 0.28);
+
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
+  --animate-sweep: sweep 2.8s linear infinite;
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  html {
+    color-scheme: dark;
+    background: var(--color-ink);
+  }
+
+  body {
+    margin: 0;
+    background: radial-gradient(1200px 700px at 50% -10%, rgb(15 98 254 / 0.07), transparent 60%), var(--color-ink);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow: hidden;
+  }
+
+  button {
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  ::selection {
+    background: rgb(15 98 254 / 0.45);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(132 150 168 / 0.25) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: rgb(132 150 168 / 0.22);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-ibm-2);
+    outline-offset: 1px;
+  }
+}
+
+@layer components {
+  .ig-panel {
+    background: linear-gradient(180deg, rgb(12 26 40 / 0.9), rgb(9 20 32 / 0.88));
+    border: 1px solid var(--color-line);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .ig-label {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    line-height: 1.2;
+  }
+
+  .ig-label-sm {
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    line-height: 1.2;
+  }
+
+  .ig-card {
+    background: rgb(255 255 255 / 0.018);
+    border: 1px solid rgb(132 150 168 / 0.14);
+    border-radius: 4px;
+  }
+
+  .ig-mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+  }
+
+  .ig-num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ig-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 28px;
+    padding: 0 10px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 4px;
+    border: 1px solid var(--color-line-2);
+    background: rgb(255 255 255 / 0.025);
+    color: var(--color-fg);
+    white-space: nowrap;
+    transition:
+      background 120ms ease,
+      border-color 120ms ease,
+      color 120ms ease,
+      opacity 120ms ease;
+  }
+
+  .ig-btn:hover:not(:disabled) {
+    background: rgb(255 255 255 / 0.06);
+    border-color: rgb(132 150 168 / 0.45);
+  }
+
+  .ig-btn:disabled {
+    opacity: 0.45;
+  }
+
+  .ig-btn-primary {
+    background: var(--color-ibm);
+    border-color: var(--color-ibm);
+    color: #fff;
+  }
+
+  .ig-btn-primary:hover:not(:disabled) {
+    background: #0353e9;
+    border-color: #0353e9;
+  }
+
+  .ig-btn-allow {
+    background: rgb(0 213 181 / 0.12);
+    border-color: rgb(0 213 181 / 0.5);
+    color: var(--color-allow);
+  }
+
+  .ig-btn-allow:hover:not(:disabled) {
+    background: rgb(0 213 181 / 0.2);
+    border-color: rgb(0 213 181 / 0.75);
+  }
+
+  .ig-btn-challenge {
+    background: rgb(255 188 92 / 0.12);
+    border-color: rgb(255 188 92 / 0.5);
+    color: var(--color-challenge);
+  }
+
+  .ig-btn-challenge:hover:not(:disabled) {
+    background: rgb(255 188 92 / 0.2);
+    border-color: rgb(255 188 92 / 0.8);
+  }
+
+  .ig-btn-block {
+    background: rgb(255 93 112 / 0.1);
+    border-color: rgb(255 93 112 / 0.45);
+    color: var(--color-block);
+  }
+
+  .ig-btn-block:hover:not(:disabled) {
+    background: rgb(255 93 112 / 0.18);
+    border-color: rgb(255 93 112 / 0.75);
+  }
+
+  .ig-btn-ghost {
+    border-color: transparent;
+    background: transparent;
+  }
+
+  .ig-input {
+    height: 28px;
+    width: 100%;
+    padding: 0 8px;
+    font-size: 12px;
+    border-radius: 4px;
+    border: 1px solid var(--color-line-2);
+    background: rgb(5 11 18 / 0.6);
+    color: var(--color-fg);
+    outline: none;
+  }
+
+  .ig-input:focus {
+    border-color: var(--color-ibm-2);
+  }
+
+  textarea.ig-input {
+    height: auto;
+    padding: 6px 8px;
+    line-height: 1.45;
+    resize: vertical;
+  }
+
+  select.ig-input {
+    appearance: none;
+    padding-right: 24px;
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--color-muted) 50%), linear-gradient(135deg, var(--color-muted) 50%, transparent 50%);
+    background-position:
+      calc(100% - 13px) 12px,
+      calc(100% - 9px) 12px;
+    background-size: 4px 4px;
+    background-repeat: no-repeat;
+  }
+
+  select.ig-input option {
+    background: #0c1a28;
+  }
+
+  .ig-divider {
+    height: 1px;
+    background: var(--color-line);
+  }
+
+  .ig-hairline-top {
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  }
+
+  .ig-grid-bg {
+    background-image:
+      linear-gradient(rgb(132 150 168 / 0.05) 1px, transparent 1px), linear-gradient(90deg, rgb(132 150 168 / 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+}
+
+/* drei <Html> labels inside the 3D scene */
+.ig-scene-label {
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  font-family: var(--font-sans);
+  transform: translate3d(0, 0, 0);
+}
