@@ -10,65 +10,65 @@
   "runs": {
     "cpu": {
       "1": {
-        "median_ms": 0.0425,
-        "p95_ms": 0.0544,
-        "rows_per_s": 23546.0,
+        "median_ms": 0.0415,
+        "p95_ms": 0.0425,
+        "rows_per_s": 24070.3,
         "reps": 30
       },
       "16": {
-        "median_ms": 0.0545,
-        "p95_ms": 0.0564,
-        "rows_per_s": 293421.8,
+        "median_ms": 0.053,
+        "p95_ms": 0.0618,
+        "rows_per_s": 301613.6,
         "reps": 30
       },
       "128": {
-        "median_ms": 0.1454,
-        "p95_ms": 0.1569,
-        "rows_per_s": 880299.9,
+        "median_ms": 0.1435,
+        "p95_ms": 0.1539,
+        "rows_per_s": 891961.2,
         "reps": 30
       },
       "1024": {
-        "median_ms": 0.7002,
-        "p95_ms": 0.7797,
-        "rows_per_s": 1462395.4,
+        "median_ms": 0.6899,
+        "p95_ms": 0.761,
+        "rows_per_s": 1484258.0,
         "reps": 30
       },
       "8192": {
-        "median_ms": 6.7691,
-        "p95_ms": 7.1082,
-        "rows_per_s": 1210201.8,
+        "median_ms": 6.6503,
+        "p95_ms": 7.0104,
+        "rows_per_s": 1231817.6,
         "reps": 30
       }
     },
     "nnpa": {
       "1": {
-        "median_ms": 0.0509,
-        "p95_ms": 0.0527,
-        "rows_per_s": 19663.0,
+        "median_ms": 0.0502,
+        "p95_ms": 0.0513,
+        "rows_per_s": 19925.5,
         "reps": 30
       },
       "16": {
-        "median_ms": 0.0572,
-        "p95_ms": 0.0659,
-        "rows_per_s": 279920.9,
+        "median_ms": 0.0556,
+        "p95_ms": 0.0682,
+        "rows_per_s": 287547.4,
         "reps": 30
       },
       "128": {
-        "median_ms": 0.0933,
-        "p95_ms": 0.1079,
-        "rows_per_s": 1372404.0,
+        "median_ms": 0.0901,
+        "p95_ms": 0.0937,
+        "rows_per_s": 1420233.9,
         "reps": 30
       },
       "1024": {
-        "median_ms": 0.3392,
-        "p95_ms": 0.3518,
-        "rows_per_s": 3019241.8,
+        "median_ms": 0.3205,
+        "p95_ms": 0.3352,
+        "rows_per_s": 3194708.8,
         "reps": 30
       },
       "8192": {
-        "median_ms": 4.4201,
-        "p95_ms": 4.7596,
-        "rows_per_s": 1853337.9,
+        "median_ms": 4.3049,
+        "p95_ms": 4.5429,
+        "rows_per_s": 1902938.5,
         "reps": 30
       }
     }
@@ -80,11 +80,11 @@
   "max_abs_prob_difference": 0.002015,
   "argmax_agreement": 0.999512,
   "cpu_over_nnpa_time_ratio": {
-    "1": 0.835,
+    "1": 0.827,
     "16": 0.953,
-    "128": 1.558,
-    "1024": 2.064,
-    "8192": 1.531
+    "128": 1.593,
+    "1024": 2.153,
+    "8192": 1.545
   },
   "tensorflow_zdnn_plugin": {
     "version": "2.3.0",
@@ -97,5 +97,5 @@
     "torch": "2.11.0+cpu"
   },
   "interpretation": "ratio > 1 means the NNPA run was faster for that batch size",
-  "generated_at": "2026-10-17T09:28:34Z"
+  "generated_at": "2026-10-17T09:42:47Z"
 }

@@ -1,5 +1,5 @@
 {
-  "version": "igz-risk-torch-mlp-202610170928-a2d0c481",
+  "version": "igz-risk-torch-mlp-202610170942-a2d0c481",
   "dataset": {
     "file": "intentgate_synthetic_seed99.csv",
     "sha256": "a2d0c4813b1e3114252e0ee2ca1e199e977c325e3240fa8c8d1c929ffedb95ee",
@@ -46,10 +46,10 @@
         },
         "train_seconds": 0.08,
         "latency": {
-          "single_p50_ms": 0.199,
-          "single_p95_ms": 0.225,
+          "single_p50_ms": 0.1982,
+          "single_p95_ms": 0.2142,
           "batch_rows": 1000,
-          "batch_rows_per_s": 1878805.8
+          "batch_rows_per_s": 1911950.8
         }
       },
       "random_forest": {
@@ -64,12 +64,12 @@
           "tau_block": 0.65,
           "tau_review": 0.75
         },
-        "train_seconds": 0.81,
+        "train_seconds": 0.77,
         "latency": {
-          "single_p50_ms": 21.4649,
-          "single_p95_ms": 22.497,
+          "single_p50_ms": 21.2875,
+          "single_p95_ms": 21.7673,
           "batch_rows": 1000,
-          "batch_rows_per_s": 31861.5
+          "batch_rows_per_s": 31922.3
         }
       },
       "hist_gradient_boosting": {
@@ -81,12 +81,12 @@
           "tau_review": 0.925
         },
         "thresholds_ml_only": null,
-        "train_seconds": 3.16,
+        "train_seconds": 3.49,
         "latency": {
-          "single_p50_ms": 6.1919,
-          "single_p95_ms": 7.0226,
+          "single_p50_ms": 6.3619,
+          "single_p95_ms": 6.7827,
           "batch_rows": 1000,
-          "batch_rows_per_s": 25302.6
+          "batch_rows_per_s": 24527.5
         }
       },
       "mlp": {
@@ -101,12 +101,12 @@
           "tau_block": 0.45,
           "tau_review": 0.525
         },
-        "train_seconds": 0.38,
+        "train_seconds": 0.37,
         "latency": {
-          "single_p50_ms": 0.1999,
-          "single_p95_ms": 0.2246,
+          "single_p50_ms": 0.2012,
+          "single_p95_ms": 0.2229,
           "batch_rows": 1000,
-          "batch_rows_per_s": 1153008.9
+          "batch_rows_per_s": 1170283.2
         }
       },
       "xgboost": {
@@ -118,12 +118,12 @@
           "tau_review": 0.925
         },
         "thresholds_ml_only": null,
-        "train_seconds": 0.82,
+        "train_seconds": 0.81,
         "latency": {
-          "single_p50_ms": 0.1601,
-          "single_p95_ms": 0.217,
+          "single_p50_ms": 0.5164,
+          "single_p95_ms": 0.6296,
           "batch_rows": 1000,
-          "batch_rows_per_s": 111656.7
+          "batch_rows_per_s": 58909.0
         }
       },
       "torch_mlp": {
@@ -138,19 +138,19 @@
           "tau_block": 0.5,
           "tau_review": 0.8
         },
-        "train_seconds": 0.64,
+        "train_seconds": 0.58,
         "latency": {
           "cpu": {
-            "single_p50_ms": 0.042,
+            "single_p50_ms": 0.0421,
             "single_p95_ms": 0.0467,
             "batch_rows": 1000,
-            "batch_rows_per_s": 1252260.3
+            "batch_rows_per_s": 558622.1
           },
           "nnpa": {
-            "single_p50_ms": 0.0509,
-            "single_p95_ms": 0.064,
+            "single_p50_ms": 0.0508,
+            "single_p95_ms": 0.0563,
             "batch_rows": 1000,
-            "batch_rows_per_s": 2014768.3
+            "batch_rows_per_s": 681669.8
           }
         }
       }
@@ -1147,7 +1147,42 @@
   },
   "ablation": {
     "all features": {
-      "hybrid_macro_f1_test": 0.9259
+      "hybrid_macro_f1_test": 0.9259,
+      "note": "selected model (torch_mlp); ablation rows retrain mlp"
+    },
+    "no text / injection signals": {
+      "hybrid_macro_f1_test": 0.9313,
+      "removed": [
+        "injection_score",
+        "rationale_injection_score",
+        "lexical_hits",
+        "imperative_density",
+        "text_similarity"
+      ]
+    },
+    "no provenance signals": {
+      "hybrid_macro_f1_test": 0.9298,
+      "removed": [
+        "n_untrusted_sources",
+        "untrusted_security_fields"
+      ]
+    },
+    "no behaviour history": {
+      "hybrid_macro_f1_test": 0.9187,
+      "removed": [
+        "param_change_count",
+        "recent_actions_10m",
+        "recent_high_value_10m",
+        "agent_prior_blocks"
+      ]
+    },
+    "no intent-alignment signals": {
+      "hybrid_macro_f1_test": 0.9339,
+      "removed": [
+        "entity_alignment",
+        "scope_violations",
+        "op_in_intent"
+      ]
     }
   },
   "platform": {
@@ -1168,5 +1203,5 @@
     }
   },
   "seed": 99,
-  "generated_at": "2026-10-17T09:28:33Z"
+  "generated_at": "2026-10-17T09:42:45Z"
 }

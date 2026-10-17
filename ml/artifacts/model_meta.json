@@ -1,5 +1,5 @@
 {
-  "version": "igz-risk-torch-mlp-202610170926-5efd2225",
+  "version": "igz-risk-torch-mlp-202610170940-5efd2225",
   "serving_runtime": "torch",
   "torch_device": "nnpa",
   "selected_model": "torch_mlp",
@@ -204,7 +204,7 @@
       "tensorflow": "2.18.1",
       "ibm-zdnn-plugin": "2.3.0"
     },
-    "trained_at": "2026-10-17T09:26:47Z",
+    "trained_at": "2026-10-17T09:40:34Z",
     "dataset": "intentgate_synthetic_seed7.csv",
     "dataset_sha256": "5efd2225bdcc94fdd7046dcd1354f0725dd622e91417c27b8d92f9dc0554a97a",
     "seed": 7

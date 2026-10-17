@@ -1,5 +1,5 @@
 {
-  "version": "igz-risk-torch-mlp-202610170928-64e92286",
+  "version": "igz-risk-torch-mlp-202610170942-64e92286",
   "dataset": {
     "file": "intentgate_synthetic_seed42.csv",
     "sha256": "64e92286a1599ca7acc77f5fc6d5fa7079b7f7c57775249af3e817fd087495b0",
@@ -46,10 +46,10 @@
         },
         "train_seconds": 0.09,
         "latency": {
-          "single_p50_ms": 0.199,
-          "single_p95_ms": 0.2226,
+          "single_p50_ms": 0.1972,
+          "single_p95_ms": 0.2078,
           "batch_rows": 1000,
-          "batch_rows_per_s": 1890437.8
+          "batch_rows_per_s": 1888178.3
         }
       },
       "random_forest": {
@@ -66,10 +66,10 @@
         },
         "train_seconds": 0.77,
         "latency": {
-          "single_p50_ms": 21.3591,
-          "single_p95_ms": 22.0974,
+          "single_p50_ms": 21.4755,
+          "single_p95_ms": 22.2152,
           "batch_rows": 1000,
-          "batch_rows_per_s": 31871.4
+          "batch_rows_per_s": 29273.8
         }
       },
       "hist_gradient_boosting": {
@@ -81,12 +81,12 @@
           "tau_review": 0.925
         },
         "thresholds_ml_only": null,
-        "train_seconds": 3.25,
+        "train_seconds": 3.3,
         "latency": {
-          "single_p50_ms": 6.3494,
-          "single_p95_ms": 7.194,
+          "single_p50_ms": 6.2293,
+          "single_p95_ms": 6.766,
           "batch_rows": 1000,
-          "batch_rows_per_s": 25434.5
+          "batch_rows_per_s": 24632.5
         }
       },
       "mlp": {
@@ -103,10 +103,10 @@
         },
         "train_seconds": 0.34,
         "latency": {
-          "single_p50_ms": 0.201,
-          "single_p95_ms": 0.22,
+          "single_p50_ms": 0.1986,
+          "single_p95_ms": 0.2139,
           "batch_rows": 1000,
-          "batch_rows_per_s": 1154327.9
+          "batch_rows_per_s": 1170342.1
         }
       },
       "xgboost": {
@@ -121,12 +121,12 @@
           "tau_block": 0.975,
           "tau_review": 0.925
         },
-        "train_seconds": 0.83,
+        "train_seconds": 0.87,
         "latency": {
-          "single_p50_ms": 0.1609,
-          "single_p95_ms": 0.1882,
+          "single_p50_ms": 0.1551,
+          "single_p95_ms": 0.2277,
           "batch_rows": 1000,
-          "batch_rows_per_s": 118074.8
+          "batch_rows_per_s": 104173.1
         }
       },
       "torch_mlp": {
@@ -141,19 +141,19 @@
           "tau_block": 0.4,
           "tau_review": 0.65
         },
-        "train_seconds": 0.45,
+        "train_seconds": 0.42,
         "latency": {
           "cpu": {
             "single_p50_ms": 0.0417,
-            "single_p95_ms": 0.0447,
+            "single_p95_ms": 0.043,
             "batch_rows": 1000,
-            "batch_rows_per_s": 1193944.3
+            "batch_rows_per_s": 1355915.7
           },
           "nnpa": {
-            "single_p50_ms": 0.0508,
-            "single_p95_ms": 0.0598,
+            "single_p50_ms": 0.0503,
+            "single_p95_ms": 0.0555,
             "batch_rows": 1000,
-            "batch_rows_per_s": 1889834.0
+            "batch_rows_per_s": 2005209.5
           }
         }
       }
@@ -1150,7 +1150,42 @@
   },
   "ablation": {
     "all features": {
-      "hybrid_macro_f1_test": 0.9201
+      "hybrid_macro_f1_test": 0.9201,
+      "note": "selected model (torch_mlp); ablation rows retrain mlp"
+    },
+    "no text / injection signals": {
+      "hybrid_macro_f1_test": 0.9242,
+      "removed": [
+        "injection_score",
+        "rationale_injection_score",
+        "lexical_hits",
+        "imperative_density",
+        "text_similarity"
+      ]
+    },
+    "no provenance signals": {
+      "hybrid_macro_f1_test": 0.9151,
+      "removed": [
+        "n_untrusted_sources",
+        "untrusted_security_fields"
+      ]
+    },
+    "no behaviour history": {
+      "hybrid_macro_f1_test": 0.8966,
+      "removed": [
+        "param_change_count",
+        "recent_actions_10m",
+        "recent_high_value_10m",
+        "agent_prior_blocks"
+      ]
+    },
+    "no intent-alignment signals": {
+      "hybrid_macro_f1_test": 0.9157,
+      "removed": [
+        "entity_alignment",
+        "scope_violations",
+        "op_in_intent"
+      ]
     }
   },
   "platform": {
@@ -1171,5 +1206,5 @@
     }
   },
   "seed": 42,
-  "generated_at": "2026-10-17T09:28:07Z"
+  "generated_at": "2026-10-17T09:42:13Z"
 }

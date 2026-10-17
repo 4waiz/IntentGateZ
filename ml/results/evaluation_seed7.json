@@ -1,5 +1,5 @@
 {
-  "version": "igz-risk-torch-mlp-202610170926-5efd2225",
+  "version": "igz-risk-torch-mlp-202610170940-5efd2225",
   "dataset": {
     "file": "intentgate_synthetic_seed7.csv",
     "sha256": "5efd2225bdcc94fdd7046dcd1354f0725dd622e91417c27b8d92f9dc0554a97a",
@@ -44,12 +44,12 @@
           "tau_block": 0.5,
           "tau_review": 0.725
         },
-        "train_seconds": 0.08,
+        "train_seconds": 0.1,
         "latency": {
-          "single_p50_ms": 0.2174,
-          "single_p95_ms": 0.2309,
+          "single_p50_ms": 0.1956,
+          "single_p95_ms": 0.1986,
           "batch_rows": 1000,
-          "batch_rows_per_s": 1823792.5
+          "batch_rows_per_s": 1882643.5
         }
       },
       "random_forest": {
@@ -64,12 +64,12 @@
           "tau_block": 0.8,
           "tau_review": 0.85
         },
-        "train_seconds": 0.82,
+        "train_seconds": 0.78,
         "latency": {
-          "single_p50_ms": 24.2149,
-          "single_p95_ms": 46.5587,
+          "single_p50_ms": 21.4921,
+          "single_p95_ms": 22.2862,
           "batch_rows": 1000,
-          "batch_rows_per_s": 28693.7
+          "batch_rows_per_s": 31841.7
         }
       },
       "hist_gradient_boosting": {
@@ -81,12 +81,12 @@
           "tau_review": 0.925
         },
         "thresholds_ml_only": null,
-        "train_seconds": 3.74,
+        "train_seconds": 3.13,
         "latency": {
-          "single_p50_ms": 6.3305,
-          "single_p95_ms": 8.0504,
+          "single_p50_ms": 6.3467,
+          "single_p95_ms": 6.8166,
           "batch_rows": 1000,
-          "batch_rows_per_s": 24585.0
+          "batch_rows_per_s": 25849.9
         }
       },
       "mlp": {
@@ -101,12 +101,12 @@
           "tau_block": 0.55,
           "tau_review": 0.6
         },
-        "train_seconds": 0.49,
+        "train_seconds": 0.47,
         "latency": {
-          "single_p50_ms": 0.2193,
-          "single_p95_ms": 0.2422,
+          "single_p50_ms": 0.2001,
+          "single_p95_ms": 0.2036,
           "batch_rows": 1000,
-          "batch_rows_per_s": 1121129.0
+          "batch_rows_per_s": 1161561.6
         }
       },
       "xgboost": {
@@ -121,12 +121,12 @@
           "tau_block": 0.975,
           "tau_review": 0.925
         },
-        "train_seconds": 0.91,
+        "train_seconds": 0.88,
         "latency": {
-          "single_p50_ms": 0.17,
-          "single_p95_ms": 0.2898,
+          "single_p50_ms": 0.1586,
+          "single_p95_ms": 0.1812,
           "batch_rows": 1000,
-          "batch_rows_per_s": 116813.3
+          "batch_rows_per_s": 115013.9
         }
       },
       "torch_mlp": {
@@ -141,19 +141,19 @@
           "tau_block": 0.4,
           "tau_review": 0.675
         },
-        "train_seconds": 0.82,
+        "train_seconds": 0.92,
         "latency": {
           "cpu": {
-            "single_p50_ms": 0.0417,
-            "single_p95_ms": 0.0429,
+            "single_p50_ms": 0.042,
+            "single_p95_ms": 0.0437,
             "batch_rows": 1000,
-            "batch_rows_per_s": 1269673.6
+            "batch_rows_per_s": 1287268.0
           },
           "nnpa": {
-            "single_p50_ms": 0.0493,
-            "single_p95_ms": 0.0506,
+            "single_p50_ms": 0.0498,
+            "single_p95_ms": 0.0505,
             "batch_rows": 1000,
-            "batch_rows_per_s": 2136683.7
+            "batch_rows_per_s": 295005.4
           }
         }
       }
@@ -1150,7 +1150,42 @@
   },
   "ablation": {
     "all features": {
-      "hybrid_macro_f1_test": 0.912
+      "hybrid_macro_f1_test": 0.912,
+      "note": "selected model (torch_mlp); ablation rows retrain mlp"
+    },
+    "no text / injection signals": {
+      "hybrid_macro_f1_test": 0.9328,
+      "removed": [
+        "injection_score",
+        "rationale_injection_score",
+        "lexical_hits",
+        "imperative_density",
+        "text_similarity"
+      ]
+    },
+    "no provenance signals": {
+      "hybrid_macro_f1_test": 0.908,
+      "removed": [
+        "n_untrusted_sources",
+        "untrusted_security_fields"
+      ]
+    },
+    "no behaviour history": {
+      "hybrid_macro_f1_test": 0.9082,
+      "removed": [
+        "param_change_count",
+        "recent_actions_10m",
+        "recent_high_value_10m",
+        "agent_prior_blocks"
+      ]
+    },
+    "no intent-alignment signals": {
+      "hybrid_macro_f1_test": 0.9123,
+      "removed": [
+        "entity_alignment",
+        "scope_violations",
+        "op_in_intent"
+      ]
     }
   },
   "platform": {
@@ -1171,7 +1206,7 @@
     }
   },
   "seed": 7,
-  "generated_at": "2026-10-17T09:26:47Z",
+  "generated_at": "2026-10-17T09:40:34Z",
   "charts": [
     "confusion_matrices",
     "method_comparison",
