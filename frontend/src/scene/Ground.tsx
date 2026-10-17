@@ -238,23 +238,24 @@ export function Ground({ idx, quality }: { idx: CityIndex; quality: Quality }) {
     [plinths, pools, streaks],
   );
 
-  const eastX = idx.halfW + 300;
-  const northZ = -idx.halfD - 300;
+  // land runs out past the fog distance so the city never reads as a slab floating in the sea
+  const eastX = idx.halfW + 1800;
+  const northZ = -idx.halfD - 1800;
   const landW = eastX - wf.seaE;
   const landD = wf.riverN - northZ;
   return (
     <group>
       {/* water */}
       <mesh rotation-x={-Math.PI / 2} position={[0, -0.55, 0]} material={water}>
-        <planeGeometry args={[4200, 4200]} />
+        <planeGeometry args={[9000, 9000]} />
       </mesh>
       {/* city land and far bank (tops at y = 0, embankments drop into the water) */}
       <mesh position={[(wf.seaE + eastX) / 2, -0.6, (northZ + wf.riverN) / 2]}>
         <boxGeometry args={[landW, 1.2, landD]} />
         <meshStandardMaterial color="#0a1219" roughness={0.95} />
       </mesh>
-      <mesh position={[0, -0.6, wf.riverS + 300]}>
-        <boxGeometry args={[2400, 1.2, 600]} />
+      <mesh position={[0, -0.6, wf.riverS + 1200]}>
+        <boxGeometry args={[5200, 1.2, 2400]} />
         <meshStandardMaterial color="#0a1219" roughness={0.95} />
       </mesh>
       {/* lit quay edges */}
@@ -267,7 +268,7 @@ export function Ground({ idx, quality }: { idx: CityIndex; quality: Quality }) {
         <meshBasicMaterial color="#9fd8ff" toneMapped={false} />
       </mesh>
       <mesh position={[0, -0.05, wf.riverS]}>
-        <boxGeometry args={[2400, 0.1, 0.18]} />
+        <boxGeometry args={[5200, 0.1, 0.18]} />
         <meshBasicMaterial color="#7fb8e6" toneMapped={false} />
       </mesh>
       {/* promenades */}
