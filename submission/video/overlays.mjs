@@ -28,6 +28,17 @@ const http1 = http.levels.find((l) => l.concurrency === 1);
 const ratioMax = Math.max(...Object.values(nnpa.cpu_over_nnpa_time_ratio));
 const ratioBatch = Object.entries(nnpa.cpu_over_nnpa_time_ratio).find(([, v]) => v === ratioMax)[0];
 const chartUrl = pathToFileURL(path.join(root, "ml", "results", "charts", "nnpa_vs_cpu.png")).href;
+const session = fs.readFileSync(path.join(root, "evidence", "ibmz", "instance_session.txt"), "utf8").trimEnd().split(/\r?\n/);
+const esc = (t) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const hi = (t) => esc(t).replace(/\b(s390x|9175|ME1|nnpa|True|healthy)\b/g, '<span class="teal">$1</span>');
+const terminalLines = session
+  .map((l) => {
+    if (l.startsWith("#")) return `<div class="muted">${esc(l)}</div>`;
+    const m = l.match(/^(\S+@\S+:~\$) (.*)$/);
+    if (m) return `<div style="margin-top:10px"><span class="blue">${esc(m[1])}</span> <span style="color:#E8F0F7">${esc(m[2])}</span></div>`;
+    return `<div style="color:#AFC0D0">${hi(l)}</div>`;
+  })
+  .join("");
 
 const MARK = `<svg width="56" height="56" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00D5B5"/><stop offset="1" stop-color="#0F62FE"/></linearGradient></defs><path d="M16 3.5 26.5 7.4v7.6c0 6.4-4.3 11.1-10.5 12.9C9.8 26.1 5.5 21.4 5.5 15V7.4L16 3.5Z" fill="rgba(0,213,181,0.06)" stroke="url(#g)" stroke-width="1.6" stroke-linejoin="round"/><path d="M11.4 22.2V12.1M20.6 22.2V12.1M10.4 12.1h11.2" fill="none" stroke="#E8F0F7" stroke-width="1.7" stroke-linecap="round"/><path d="M13.9 16.9h4.2" stroke="#00D5B5" stroke-width="1.7" stroke-linecap="round"/></svg>`;
 
@@ -99,6 +110,17 @@ const OVERLAYS = {
       <div class="panel" style="padding:18px 30px;font-size:26px">Up to <b class="teal">${ratioMax.toFixed(2)}×</b> faster than CPU <span class="muted">(batch ${ratioBatch})</span></div>
       <div class="panel" style="padding:18px 30px;font-size:26px">Device verified: <b class="mono teal">nnpa</b></div>
       <div class="panel" style="padding:18px 30px;font-size:26px">Max |Δp| vs CPU <b class="mono">${nnpa.max_abs_prob_difference.toFixed(4)}</b></div>
+    </div>`,
+
+  instance_terminal: `
+    <div class="abs" style="inset:0;background:radial-gradient(1400px 800px at 50% 45%,#0b1a2a,#03070d)"></div>
+    ${chapter("IBM LinuxONE · the live instance", "#4589FF")}
+    <div class="abs panel" style="left:110px;right:110px;top:120px;bottom:70px;padding:0;overflow:hidden;text-shadow:none">
+      <div style="height:46px;display:flex;align-items:center;gap:10px;padding:0 18px;border-bottom:1px solid #1f3a52;background:rgba(5,11,18,.9)">
+        <span style="width:13px;height:13px;border-radius:50%;background:#FF5D70"></span><span style="width:13px;height:13px;border-radius:50%;background:#FFBC5C"></span><span style="width:13px;height:13px;border-radius:50%;background:#00D5B5"></span>
+        <span class="mono muted" style="margin-left:14px;font-size:17px">ssh linux1@intentgatez · IBM LinuxONE Community Cloud · s390x</span>
+      </div>
+      <div class="mono" style="padding:22px 30px;font-size:24px;line-height:1.42;white-space:pre-wrap;word-break:break-all">${terminalLines}</div>
     </div>`,
 
   ibmz_latency: `
