@@ -1,0 +1,223 @@
+{
+  "version": "igz-risk-torch-mlp-202610170919-5efd2225",
+  "serving_runtime": "torch",
+  "torch_device": "nnpa",
+  "selected_model": "torch_mlp",
+  "best_cpu_model": "mlp",
+  "selection_rule": "PyTorch MLP served on the IBM Telum NNPA because its validation hybrid macro-F1 is within 0.01 of the best CPU model (mlp); otherwise the best CPU model is served",
+  "artifacts": {
+    "sklearn": "risk_model.joblib",
+    "torch": "risk_mlp_torch.pt"
+  },
+  "models": {
+    "sklearn": {
+      "name": "MLPClassifier"
+    },
+    "torch": {
+      "name": "PyTorch MLP 43-64-32-3"
+    }
+  },
+  "feature_names": [
+    "agent_known",
+    "capability_match",
+    "tool_match",
+    "intent_present",
+    "intent_stale",
+    "intent_age_frac",
+    "op_in_intent",
+    "scope_violations",
+    "dest_accepting",
+    "specialty_match",
+    "capacity_ok",
+    "icu_share",
+    "route_invalid",
+    "route_closed_edges",
+    "eta_ratio",
+    "eta_over_limit",
+    "amount_log10",
+    "budget_ratio",
+    "over_budget",
+    "over_ceiling",
+    "price_ratio",
+    "params_inconsistent",
+    "cum_spend_ratio",
+    "n_untrusted_sources",
+    "untrusted_security_fields",
+    "injection_score",
+    "rationale_injection_score",
+    "lexical_hits",
+    "imperative_density",
+    "entity_alignment",
+    "text_similarity",
+    "param_change_count",
+    "recent_actions_10m",
+    "recent_high_value_10m",
+    "agent_prior_blocks",
+    "phi_egress",
+    "op_reroute_ambulance",
+    "op_dispatch_ambulance",
+    "op_reserve_icu_beds",
+    "op_purchase_supplies",
+    "op_update_hospital_status",
+    "op_share_patient_record",
+    "op_cancel_dispatch"
+  ],
+  "classes": [
+    "ALLOW",
+    "CHALLENGE",
+    "BLOCK"
+  ],
+  "thresholds": {
+    "tau_block": 0.525,
+    "tau_review": 0.625
+  },
+  "thresholds_by_model": {
+    "logistic_regression": {
+      "tau_block": 0.5,
+      "tau_review": 0.8
+    },
+    "random_forest": {
+      "tau_block": 0.825,
+      "tau_review": 0.85
+    },
+    "mlp": {
+      "tau_block": 0.65,
+      "tau_review": 0.775
+    },
+    "xgboost": {
+      "tau_block": 0.975,
+      "tau_review": 0.925
+    },
+    "torch_mlp": {
+      "tau_block": 0.525,
+      "tau_review": 0.625
+    }
+  },
+  "feature_importance": {
+    "agent_known": 0.0,
+    "capability_match": 0.02254,
+    "tool_match": 0.0,
+    "intent_present": 0.0,
+    "intent_stale": 0.02443,
+    "intent_age_frac": 0.01152,
+    "op_in_intent": 0.00482,
+    "scope_violations": 0.09685,
+    "dest_accepting": 0.03041,
+    "specialty_match": 0.0,
+    "capacity_ok": 0.02767,
+    "icu_share": 0.0173,
+    "route_invalid": 0.0,
+    "route_closed_edges": 0.02016,
+    "eta_ratio": 0.00614,
+    "eta_over_limit": 0.03966,
+    "amount_log10": 0.0,
+    "budget_ratio": 0.0058,
+    "over_budget": 0.14437,
+    "over_ceiling": 0.05708,
+    "price_ratio": 0.07663,
+    "params_inconsistent": 0.03073,
+    "cum_spend_ratio": 0.01353,
+    "n_untrusted_sources": 0.00122,
+    "untrusted_security_fields": 0.01037,
+    "injection_score": 0.11366,
+    "rationale_injection_score": 0.01871,
+    "lexical_hits": 0.00292,
+    "imperative_density": 0.00075,
+    "entity_alignment": 0.03871,
+    "text_similarity": 0.00169,
+    "param_change_count": 0.04109,
+    "recent_actions_10m": 0.04125,
+    "recent_high_value_10m": 0.04786,
+    "agent_prior_blocks": 0.0,
+    "phi_egress": 0.01248,
+    "op_reroute_ambulance": 0.00694,
+    "op_dispatch_ambulance": 0.0,
+    "op_reserve_icu_beds": 0.0084,
+    "op_purchase_supplies": 1e-05,
+    "op_update_hospital_status": 0.01792,
+    "op_share_patient_record": 0.00638,
+    "op_cancel_dispatch": 0.0
+  },
+  "benign_means": {
+    "agent_known": 1.0,
+    "capability_match": 1.0,
+    "tool_match": 1.0,
+    "intent_present": 1.0,
+    "intent_stale": 0.0,
+    "intent_age_frac": 0.239875,
+    "op_in_intent": 1.0,
+    "scope_violations": 0.0,
+    "dest_accepting": 0.956358,
+    "specialty_match": 1.0,
+    "capacity_ok": 1.0,
+    "icu_share": 0.03514,
+    "route_invalid": 0.0,
+    "route_closed_edges": 0.0,
+    "eta_ratio": 1.000788,
+    "eta_over_limit": 0.000752,
+    "amount_log10": 1.319867,
+    "budget_ratio": 0.184387,
+    "over_budget": 0.003762,
+    "over_ceiling": 0.0,
+    "price_ratio": 1.001373,
+    "params_inconsistent": 0.0,
+    "cum_spend_ratio": 0.184387,
+    "n_untrusted_sources": 0.202032,
+    "untrusted_security_fields": 0.0,
+    "injection_score": 0.000927,
+    "rationale_injection_score": 0.001983,
+    "lexical_hits": 0.0,
+    "imperative_density": 0.022197,
+    "entity_alignment": 1.0,
+    "text_similarity": 0.121874,
+    "param_change_count": 0.003762,
+    "recent_actions_10m": 0.296464,
+    "recent_high_value_10m": 0.0,
+    "agent_prior_blocks": 0.102709,
+    "phi_egress": 0.0,
+    "op_reroute_ambulance": 0.397667,
+    "op_dispatch_ambulance": 0.0,
+    "op_reserve_icu_beds": 0.298345,
+    "op_purchase_supplies": 0.303988,
+    "op_update_hospital_status": 0.0,
+    "op_share_patient_record": 0.0,
+    "op_cancel_dispatch": 0.0
+  },
+  "training": {
+    "architecture": "s390x",
+    "system": "Linux",
+    "release": "6.8.0-147-generic",
+    "python": "3.12.15",
+    "cpu_count": 2,
+    "packages": {
+      "numpy": "2.0.2",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.0",
+      "xgboost": "3.4.1",
+      "torch": "2.11.0+cpu",
+      "torch_nnpa": "1.5.0+gite861108",
+      "tensorflow": "2.18.1",
+      "ibm-zdnn-plugin": "2.3.0"
+    },
+    "trained_at": "2026-10-17T09:19:27Z",
+    "dataset": "intentgate_synthetic_seed7.csv",
+    "dataset_sha256": "5efd2225bdcc94fdd7046dcd1354f0725dd622e91417c27b8d92f9dc0554a97a",
+    "seed": 7
+  },
+  "nnpa_status_at_training": {
+    "torch_nnpa_installed": true,
+    "available": true,
+    "device_count": 1,
+    "smoke_test": true,
+    "torch_nnpa_version": "1.5.0+gite861108"
+  },
+  "metrics": {
+    "test_hybrid": {
+      "macro_f1": 0.9357,
+      "accuracy": 0.9446,
+      "false_block_rate_allow": 0.0695,
+      "unsafe_miss_rate": 0.0087,
+      "challenge_rate": 0.1388
+    }
+  }
+}

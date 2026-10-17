@@ -1,0 +1,1167 @@
+{
+  "version": "igz-risk-torch-mlp-202610170919-94696407",
+  "dataset": {
+    "file": "intentgate_synthetic_seed11.csv",
+    "sha256": "9469640744312df371a82dc3d4f120f503dd44deef785b60fa019548a724a98b",
+    "rows": 12000,
+    "train": 7200,
+    "val": 2400,
+    "test": 2400,
+    "test_label_counts": {
+      "BLOCK": 1172,
+      "ALLOW": 897,
+      "CHALLENGE": 331
+    }
+  },
+  "protocol": "fit on train; thresholds and model selection on validation; single evaluation on held-out test with unseen text templates",
+  "max_false_block_constraint": 0.02,
+  "selected_model": "torch_mlp",
+  "best_cpu_model": "random_forest",
+  "selection_rule": "PyTorch MLP served on the IBM Telum NNPA because its validation hybrid macro-F1 is within 0.01 of the best CPU model (random_forest); otherwise the best CPU model is served",
+  "nnpa_status": {
+    "torch_nnpa_installed": true,
+    "available": true,
+    "device_count": 1,
+    "smoke_test": true,
+    "torch_nnpa_version": "1.5.0+gite861108"
+  },
+  "thresholds": {
+    "tau_block": 0.425,
+    "tau_review": 0.55
+  },
+  "validation": {
+    "models": {
+      "logistic_regression": {
+        "hybrid_macro_f1": 0.9505,
+        "ml_only_macro_f1": 0.9324,
+        "feasible_under_false_block_constraint": true,
+        "thresholds_hybrid": {
+          "tau_block": 0.55,
+          "tau_review": 0.75
+        },
+        "thresholds_ml_only": {
+          "tau_block": 0.55,
+          "tau_review": 0.925
+        },
+        "train_seconds": 0.09,
+        "latency": {
+          "single_p50_ms": 0.1989,
+          "single_p95_ms": 0.2215,
+          "batch_rows": 1000,
+          "batch_rows_per_s": 1928964.0
+        }
+      },
+      "random_forest": {
+        "hybrid_macro_f1": 0.9617,
+        "ml_only_macro_f1": 0.9391,
+        "feasible_under_false_block_constraint": true,
+        "thresholds_hybrid": {
+          "tau_block": 0.75,
+          "tau_review": 0.825
+        },
+        "thresholds_ml_only": {
+          "tau_block": 0.725,
+          "tau_review": 0.8
+        },
+        "train_seconds": 0.75,
+        "latency": {
+          "single_p50_ms": 21.6287,
+          "single_p95_ms": 28.1687,
+          "batch_rows": 1000,
+          "batch_rows_per_s": 31740.3
+        }
+      },
+      "hist_gradient_boosting": {
+        "hybrid_macro_f1": null,
+        "ml_only_macro_f1": null,
+        "feasible_under_false_block_constraint": false,
+        "thresholds_hybrid": null,
+        "thresholds_ml_only": null,
+        "train_seconds": 3.47,
+        "latency": {
+          "single_p50_ms": 6.1074,
+          "single_p95_ms": 7.6113,
+          "batch_rows": 1000,
+          "batch_rows_per_s": 24559.1
+        }
+      },
+      "mlp": {
+        "hybrid_macro_f1": 0.9589,
+        "ml_only_macro_f1": 0.9424,
+        "feasible_under_false_block_constraint": true,
+        "thresholds_hybrid": {
+          "tau_block": 0.65,
+          "tau_review": 0.675
+        },
+        "thresholds_ml_only": {
+          "tau_block": 0.55,
+          "tau_review": 0.675
+        },
+        "train_seconds": 0.27,
+        "latency": {
+          "single_p50_ms": 0.2003,
+          "single_p95_ms": 0.2229,
+          "batch_rows": 1000,
+          "batch_rows_per_s": 1146351.2
+        }
+      },
+      "xgboost": {
+        "hybrid_macro_f1": null,
+        "ml_only_macro_f1": null,
+        "feasible_under_false_block_constraint": false,
+        "thresholds_hybrid": null,
+        "thresholds_ml_only": null,
+        "train_seconds": 0.85,
+        "latency": {
+          "single_p50_ms": 0.1611,
+          "single_p95_ms": 0.2347,
+          "batch_rows": 1000,
+          "batch_rows_per_s": 114313.1
+        }
+      },
+      "torch_mlp": {
+        "hybrid_macro_f1": 0.959,
+        "ml_only_macro_f1": 0.9462,
+        "feasible_under_false_block_constraint": true,
+        "thresholds_hybrid": {
+          "tau_block": 0.425,
+          "tau_review": 0.55
+        },
+        "thresholds_ml_only": {
+          "tau_block": 0.4,
+          "tau_review": 0.7
+        },
+        "train_seconds": 0.52,
+        "latency": {
+          "cpu": {
+            "single_p50_ms": 0.0423,
+            "single_p95_ms": 0.0469,
+            "batch_rows": 1000,
+            "batch_rows_per_s": 685812.3
+          },
+          "nnpa": {
+            "single_p50_ms": 0.0499,
+            "single_p95_ms": 0.0538,
+            "batch_rows": 1000,
+            "batch_rows_per_s": 2053890.0
+          }
+        }
+      }
+    }
+  },
+  "test": {
+    "hard_policy": {
+      "n": 2400,
+      "accuracy": 0.9233,
+      "macro_f1": 0.9077,
+      "per_class": {
+        "ALLOW": {
+          "precision": 0.9151,
+          "recall": 0.9732,
+          "f1": 0.9433,
+          "support": 897
+        },
+        "CHALLENGE": {
+          "precision": 0.769,
+          "recall": 0.9456,
+          "f1": 0.8482,
+          "support": 331
+        },
+        "BLOCK": {
+          "precision": 0.9913,
+          "recall": 0.8788,
+          "f1": 0.9317,
+          "support": 1172
+        }
+      },
+      "confusion_matrix": [
+        [
+          873,
+          24,
+          0
+        ],
+        [
+          9,
+          313,
+          9
+        ],
+        [
+          72,
+          70,
+          1030
+        ]
+      ],
+      "false_block_rate_allow": 0.0,
+      "false_block_rate_legit": 0.0073,
+      "unsafe_miss_rate": 0.0614,
+      "unsafe_block_rate": 0.8788,
+      "legit_acceptance_rate": 0.9732,
+      "challenge_rate": 0.1696,
+      "families": {
+        "icu:big_share": {
+          "n": 14,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "icu:drift_other_hospital": {
+          "n": 74,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "icu:drift_status": {
+          "n": 53,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "icu:exfil": {
+          "n": 59,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "icu:ok": {
+          "n": 264,
+          "true_label": "ALLOW",
+          "pred_allow": 0.947,
+          "pred_challenge": 0.053,
+          "pred_block": 0.0
+        },
+        "icu:over_capacity": {
+          "n": 28,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "icu:over_limit": {
+          "n": 54,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:capability_mismatch": {
+          "n": 43,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:expired_intent": {
+          "n": 23,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:rate_burst": {
+          "n": 71,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "misc:stale_intent": {
+          "n": 39,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:bad_supplier": {
+          "n": 18,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:inconsistent": {
+          "n": 46,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:injected_amount": {
+          "n": 63,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.5238,
+          "pred_block": 0.4762
+        },
+        "purchase:ok": {
+          "n": 263,
+          "true_label": "ALLOW",
+          "pred_allow": 1.0,
+          "pred_challenge": 0.0,
+          "pred_block": 0.0
+        },
+        "purchase:over_budget": {
+          "n": 144,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "purchase:over_ceiling": {
+          "n": 66,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:price_anomaly": {
+          "n": 47,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "purchase:salami": {
+          "n": 63,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.5556,
+          "pred_block": 0.4444
+        },
+        "reroute:closed_route": {
+          "n": 52,
+          "true_label": "BLOCK",
+          "pred_allow": 0.1154,
+          "pred_challenge": 0.0,
+          "pred_block": 0.8846
+        },
+        "reroute:diverting_dest": {
+          "n": 54,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "reroute:eta_challenge": {
+          "n": 49,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "reroute:injected": {
+          "n": 129,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "reroute:injected_in_scope": {
+          "n": 117,
+          "true_label": "BLOCK",
+          "pred_allow": 0.5641,
+          "pred_challenge": 0.0,
+          "pred_block": 0.4359
+        },
+        "reroute:injected_partial": {
+          "n": 129,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "reroute:ok": {
+          "n": 369,
+          "true_label": "ALLOW",
+          "pred_allow": 1.0,
+          "pred_challenge": 0.0,
+          "pred_block": 0.0
+        },
+        "reroute:out_of_scope_dest": {
+          "n": 69,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        }
+      }
+    },
+    "rules_heuristic": {
+      "n": 2400,
+      "accuracy": 0.9308,
+      "macro_f1": 0.9129,
+      "per_class": {
+        "ALLOW": {
+          "precision": 0.9367,
+          "recall": 0.9732,
+          "f1": 0.9546,
+          "support": 897
+        },
+        "CHALLENGE": {
+          "precision": 0.7616,
+          "recall": 0.9456,
+          "f1": 0.8437,
+          "support": 331
+        },
+        "BLOCK": {
+          "precision": 0.9915,
+          "recall": 0.8942,
+          "f1": 0.9403,
+          "support": 1172
+        }
+      },
+      "confusion_matrix": [
+        [
+          873,
+          24,
+          0
+        ],
+        [
+          9,
+          313,
+          9
+        ],
+        [
+          50,
+          74,
+          1048
+        ]
+      ],
+      "false_block_rate_allow": 0.0,
+      "false_block_rate_legit": 0.0073,
+      "unsafe_miss_rate": 0.0427,
+      "unsafe_block_rate": 0.8942,
+      "legit_acceptance_rate": 0.9732,
+      "challenge_rate": 0.1713,
+      "families": {
+        "icu:big_share": {
+          "n": 14,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "icu:drift_other_hospital": {
+          "n": 74,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "icu:drift_status": {
+          "n": 53,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "icu:exfil": {
+          "n": 59,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "icu:ok": {
+          "n": 264,
+          "true_label": "ALLOW",
+          "pred_allow": 0.947,
+          "pred_challenge": 0.053,
+          "pred_block": 0.0
+        },
+        "icu:over_capacity": {
+          "n": 28,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "icu:over_limit": {
+          "n": 54,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:capability_mismatch": {
+          "n": 43,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:expired_intent": {
+          "n": 23,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:rate_burst": {
+          "n": 71,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "misc:stale_intent": {
+          "n": 39,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:bad_supplier": {
+          "n": 18,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:inconsistent": {
+          "n": 46,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:injected_amount": {
+          "n": 63,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.3651,
+          "pred_block": 0.6349
+        },
+        "purchase:ok": {
+          "n": 263,
+          "true_label": "ALLOW",
+          "pred_allow": 1.0,
+          "pred_challenge": 0.0,
+          "pred_block": 0.0
+        },
+        "purchase:over_budget": {
+          "n": 144,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "purchase:over_ceiling": {
+          "n": 66,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:price_anomaly": {
+          "n": 47,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "purchase:salami": {
+          "n": 63,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.5556,
+          "pred_block": 0.4444
+        },
+        "reroute:closed_route": {
+          "n": 52,
+          "true_label": "BLOCK",
+          "pred_allow": 0.1154,
+          "pred_challenge": 0.0,
+          "pred_block": 0.8846
+        },
+        "reroute:diverting_dest": {
+          "n": 54,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "reroute:eta_challenge": {
+          "n": 49,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "reroute:injected": {
+          "n": 129,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "reroute:injected_in_scope": {
+          "n": 117,
+          "true_label": "BLOCK",
+          "pred_allow": 0.3761,
+          "pred_challenge": 0.1197,
+          "pred_block": 0.5043
+        },
+        "reroute:injected_partial": {
+          "n": 129,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "reroute:ok": {
+          "n": 369,
+          "true_label": "ALLOW",
+          "pred_allow": 1.0,
+          "pred_challenge": 0.0,
+          "pred_block": 0.0
+        },
+        "reroute:out_of_scope_dest": {
+          "n": 69,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        }
+      }
+    },
+    "ml_only": {
+      "n": 2400,
+      "accuracy": 0.9346,
+      "macro_f1": 0.9275,
+      "per_class": {
+        "ALLOW": {
+          "precision": 0.9306,
+          "recall": 0.9264,
+          "f1": 0.9285,
+          "support": 897
+        },
+        "CHALLENGE": {
+          "precision": 0.9141,
+          "recall": 0.9003,
+          "f1": 0.9072,
+          "support": 331
+        },
+        "BLOCK": {
+          "precision": 0.9433,
+          "recall": 0.9505,
+          "f1": 0.9469,
+          "support": 1172
+        }
+      },
+      "confusion_matrix": [
+        [
+          831,
+          13,
+          53
+        ],
+        [
+          19,
+          298,
+          14
+        ],
+        [
+          43,
+          15,
+          1114
+        ]
+      ],
+      "false_block_rate_allow": 0.0591,
+      "false_block_rate_legit": 0.0546,
+      "unsafe_miss_rate": 0.0367,
+      "unsafe_block_rate": 0.9505,
+      "legit_acceptance_rate": 0.9264,
+      "challenge_rate": 0.1358,
+      "families": {
+        "icu:big_share": {
+          "n": 14,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.7857,
+          "pred_challenge": 0.0714,
+          "pred_block": 0.1429
+        },
+        "icu:drift_other_hospital": {
+          "n": 74,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0135,
+          "pred_block": 0.9865
+        },
+        "icu:drift_status": {
+          "n": 53,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "icu:exfil": {
+          "n": 59,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "icu:ok": {
+          "n": 264,
+          "true_label": "ALLOW",
+          "pred_allow": 0.9848,
+          "pred_challenge": 0.0038,
+          "pred_block": 0.0114
+        },
+        "icu:over_capacity": {
+          "n": 28,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "icu:over_limit": {
+          "n": 54,
+          "true_label": "BLOCK",
+          "pred_allow": 0.6296,
+          "pred_challenge": 0.1481,
+          "pred_block": 0.2222
+        },
+        "misc:capability_mismatch": {
+          "n": 43,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:expired_intent": {
+          "n": 23,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:rate_burst": {
+          "n": 71,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "misc:stale_intent": {
+          "n": 39,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:bad_supplier": {
+          "n": 18,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:inconsistent": {
+          "n": 46,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:injected_amount": {
+          "n": 63,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:ok": {
+          "n": 263,
+          "true_label": "ALLOW",
+          "pred_allow": 0.9658,
+          "pred_challenge": 0.0076,
+          "pred_block": 0.0266
+        },
+        "purchase:over_budget": {
+          "n": 144,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "purchase:over_ceiling": {
+          "n": 66,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:price_anomaly": {
+          "n": 47,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "purchase:salami": {
+          "n": 63,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "reroute:closed_route": {
+          "n": 52,
+          "true_label": "BLOCK",
+          "pred_allow": 0.1154,
+          "pred_challenge": 0.0192,
+          "pred_block": 0.8654
+        },
+        "reroute:diverting_dest": {
+          "n": 54,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "reroute:eta_challenge": {
+          "n": 49,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "reroute:injected": {
+          "n": 129,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "reroute:injected_in_scope": {
+          "n": 117,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0256,
+          "pred_challenge": 0.0,
+          "pred_block": 0.9744
+        },
+        "reroute:injected_partial": {
+          "n": 129,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "reroute:ok": {
+          "n": 369,
+          "true_label": "ALLOW",
+          "pred_allow": 0.8808,
+          "pred_challenge": 0.0027,
+          "pred_block": 0.1165
+        },
+        "reroute:out_of_scope_dest": {
+          "n": 69,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        }
+      }
+    },
+    "hybrid": {
+      "n": 2400,
+      "accuracy": 0.9487,
+      "macro_f1": 0.9375,
+      "per_class": {
+        "ALLOW": {
+          "precision": 0.9783,
+          "recall": 0.9041,
+          "f1": 0.9397,
+          "support": 897
+        },
+        "CHALLENGE": {
+          "precision": 0.8778,
+          "recall": 0.9335,
+          "f1": 0.9048,
+          "support": 331
+        },
+        "BLOCK": {
+          "precision": 0.9491,
+          "recall": 0.9872,
+          "f1": 0.9678,
+          "support": 1172
+        }
+      },
+      "confusion_matrix": [
+        [
+          811,
+          37,
+          49
+        ],
+        [
+          9,
+          309,
+          13
+        ],
+        [
+          9,
+          6,
+          1157
+        ]
+      ],
+      "false_block_rate_allow": 0.0546,
+      "false_block_rate_legit": 0.0505,
+      "unsafe_miss_rate": 0.0077,
+      "unsafe_block_rate": 0.9872,
+      "legit_acceptance_rate": 0.9041,
+      "challenge_rate": 0.1467,
+      "families": {
+        "icu:big_share": {
+          "n": 14,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.9286,
+          "pred_block": 0.0714
+        },
+        "icu:drift_other_hospital": {
+          "n": 74,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "icu:drift_status": {
+          "n": 53,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "icu:exfil": {
+          "n": 59,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "icu:ok": {
+          "n": 264,
+          "true_label": "ALLOW",
+          "pred_allow": 0.947,
+          "pred_challenge": 0.0417,
+          "pred_block": 0.0114
+        },
+        "icu:over_capacity": {
+          "n": 28,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "icu:over_limit": {
+          "n": 54,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:capability_mismatch": {
+          "n": 43,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:expired_intent": {
+          "n": 23,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "misc:rate_burst": {
+          "n": 71,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "misc:stale_intent": {
+          "n": 39,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:bad_supplier": {
+          "n": 18,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:inconsistent": {
+          "n": 46,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:injected_amount": {
+          "n": 63,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0159,
+          "pred_block": 0.9841
+        },
+        "purchase:ok": {
+          "n": 263,
+          "true_label": "ALLOW",
+          "pred_allow": 0.9392,
+          "pred_challenge": 0.0456,
+          "pred_block": 0.0152
+        },
+        "purchase:over_budget": {
+          "n": 144,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "purchase:over_ceiling": {
+          "n": 66,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "purchase:price_anomaly": {
+          "n": 47,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "purchase:salami": {
+          "n": 63,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "reroute:closed_route": {
+          "n": 52,
+          "true_label": "BLOCK",
+          "pred_allow": 0.1154,
+          "pred_challenge": 0.0,
+          "pred_block": 0.8846
+        },
+        "reroute:diverting_dest": {
+          "n": 54,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "reroute:eta_challenge": {
+          "n": 49,
+          "true_label": "CHALLENGE",
+          "pred_allow": 0.0,
+          "pred_challenge": 1.0,
+          "pred_block": 0.0
+        },
+        "reroute:injected": {
+          "n": 129,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "reroute:injected_in_scope": {
+          "n": 117,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0256,
+          "pred_challenge": 0.0,
+          "pred_block": 0.9744
+        },
+        "reroute:injected_partial": {
+          "n": 129,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        },
+        "reroute:ok": {
+          "n": 369,
+          "true_label": "ALLOW",
+          "pred_allow": 0.8753,
+          "pred_challenge": 0.0108,
+          "pred_block": 0.1138
+        },
+        "reroute:out_of_scope_dest": {
+          "n": 69,
+          "true_label": "BLOCK",
+          "pred_allow": 0.0,
+          "pred_challenge": 0.0,
+          "pred_block": 1.0
+        }
+      }
+    }
+  },
+  "test_all_models": {
+    "logistic_regression": {
+      "hybrid_macro_f1": 0.9355,
+      "ml_only_macro_f1": 0.9126
+    },
+    "random_forest": {
+      "hybrid_macro_f1": 0.9446,
+      "ml_only_macro_f1": 0.9213
+    },
+    "hist_gradient_boosting": {
+      "hybrid_macro_f1": null,
+      "ml_only_macro_f1": null,
+      "note": "no threshold met the false-block constraint on validation"
+    },
+    "mlp": {
+      "hybrid_macro_f1": 0.9561,
+      "ml_only_macro_f1": 0.9417
+    },
+    "xgboost": {
+      "hybrid_macro_f1": null,
+      "ml_only_macro_f1": null,
+      "note": "no threshold met the false-block constraint on validation"
+    },
+    "torch_mlp": {
+      "hybrid_macro_f1": 0.9375,
+      "ml_only_macro_f1": 0.9275
+    }
+  },
+  "calibration": {
+    "p_block_ece_10bin": 0.0274,
+    "multiclass_brier": 0.1042,
+    "note": "risk scores are reported as model scores; calibration measured here, not assumed"
+  },
+  "ablation": {
+    "all features": {
+      "hybrid_macro_f1_test": 0.9375
+    }
+  },
+  "platform": {
+    "architecture": "s390x",
+    "system": "Linux",
+    "release": "6.8.0-147-generic",
+    "python": "3.12.15",
+    "cpu_count": 2,
+    "packages": {
+      "numpy": "2.0.2",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.0",
+      "xgboost": "3.4.1",
+      "torch": "2.11.0+cpu",
+      "torch_nnpa": "1.5.0+gite861108",
+      "tensorflow": "2.18.1",
+      "ibm-zdnn-plugin": "2.3.0"
+    }
+  },
+  "seed": 11,
+  "generated_at": "2026-10-17T09:19:51Z"
+}

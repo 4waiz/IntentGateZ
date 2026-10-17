@@ -98,6 +98,6 @@
     "op_cancel_dispatch"
   ],
   "injection_scorer": "scikit-learn TF-IDF + LogisticRegression (feed, rationale channels)",
-  "generated_in_s": 10.9,
+  "generated_in_s": 13.0,
   "generator": "ml/generate_dataset.py"
 }
