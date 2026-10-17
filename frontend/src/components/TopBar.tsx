@@ -15,7 +15,7 @@ const TABS: { id: View; label: string }[] = [
 function GatewayPill() {
   const health = useStore((s) => s.health);
   const ok = useStore((s) => s.backendOk);
-  const live = useStore((s) => s.liveConnected);
+  const live = useStore((s) => s.liveConnected && s.backendOk);
   const modelOk = health?.model.available ?? false;
   const title = health
     ? `Gateway ${health.version} · uptime ${duration(health.uptime_s)} · risk model: ${health.model.runtime} (${health.model.version})`

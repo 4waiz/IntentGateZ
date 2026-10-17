@@ -9,6 +9,9 @@ import { getState, setState } from "./store";
  */
 let es: EventSource | null = null;
 let retryTimer: number | null = null;
+/** The server pings every 15 s; silence for longer than this means the stream is stale. */
+const STALE_MS = 25000;
+let lastMessageAt = 0;
 let refreshTimer: number | null = null;
 const intervals: number[] = [];
 
@@ -33,16 +36,21 @@ function connect(): void {
   if (!id) return;
   const source = new EventSource(api.eventsUrl(id));
   es = source;
-  source.onopen = () => setState({ liveConnected: true });
+  lastMessageAt = Date.now();
+  source.onopen = () => {
+    lastMessageAt = Date.now();
+    setState({ liveConnected: true });
+  };
   source.onmessage = (m: MessageEvent<string>) => {
+    lastMessageAt = Date.now();
     let ev: LiveEvent;
     try {
       ev = JSON.parse(m.data) as LiveEvent;
     } catch {
       return;
     }
+    if (!getState().liveConnected) setState({ liveConnected: true });
     if (ev.type === "ping") return;
-    setState({ liveConnected: true });
     scheduleRefresh();
   };
   source.onerror = () => {
@@ -60,6 +68,13 @@ export function startLive(): void {
     window.setInterval(() => void refreshDecisions(), 4000),
     window.setInterval(() => void refreshAudit(), 7000),
     window.setInterval(() => void refreshHealth(), 5000),
+    window.setInterval(() => {
+      // A proxied stream can hang silently (e.g. the gateway restarted): reconnect.
+      if (es && Date.now() - lastMessageAt > STALE_MS) {
+        setState({ liveConnected: false });
+        connect();
+      }
+    }, 5000),
   );
 }
 
